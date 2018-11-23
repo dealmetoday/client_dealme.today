@@ -5,7 +5,6 @@ const express        = require("express");
 const bodyParser     = require("body-parser");
 const app            = express();
 
-const port = 3000;
 const localUrl = "mongodb://localhost:27017";
 const dbName = "mainDB";
 
@@ -15,8 +14,8 @@ app.use(bodyParser.json({ limit: "50mb", extended: true}));
 
 require("./routes")(app)
 
-app.listen(port, "0.0.0.0", () => {
-    console.log("We are live on " + port);
+app.listen(process.env.PORT || 5000, () => {
+    console.log("We are live");
 })
 
 // MongoClient.connect(localUrl, (err, database) => {
