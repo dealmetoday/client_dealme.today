@@ -2,7 +2,7 @@
 
 const Utils = require("./utils");
 
-module.exports = function(app, db) {
+module.exports = function(app) {
 /******************************************************************************/
     app.get("/", function(request, response) {
         console.log("nANI");
