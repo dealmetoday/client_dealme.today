@@ -9,8 +9,32 @@
   <title>Mern Stack Boilerplate</title>
 </head>
 <body>
-  <div id="root"></div>
+<script>
+  window.fbAsyncInit = function () {
+    FB.init({
+      appId: '794859637527349',
+      autoLogAppEvents: true,
+      xfbml: true,
+      version: 'v2.11'
+    });
+
+    // Broadcast an event when FB object is ready
+    var fbInitEvent = new Event('FBObjectReady');
+    document.dispatchEvent(fbInitEvent);
+  };
+
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<div id="root"></div>
 </body>
 <!-- Prompt a message in the browser if users disabled JS -->
 <noscript>Your browser does not support JavaScript!</noscript>
+<script src="https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 </html>

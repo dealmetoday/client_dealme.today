@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha",
     "lint": "eslint client/src",
-    "start": "set NODE_ENV=development && webpack-dev-server --open --watch --hot ",
-    "build": "webpack ",
+    "start": "set NODE_ENV=production && set HTTPS=true && webpack-dev-server --open --watch --hot ",
+    "build": "set NODE_ENV=production webpack ",
     "serve": "nodemon backend/server.js",
     "dbon": "mongod"
   },
@@ -25,6 +25,9 @@
   "author": "Fayvor George",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^3.8.3",
+    "@nhducit/react-facebook-login": "^3.4.1",
+    "auth0-js": "^9.9.0",
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-core": "6.25.0",
@@ -55,6 +58,7 @@
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.4.0",
+    "react-facebook-login": "^4.1.1",
     "react-icons": "^3.0.5",
     "react-modal": "^3.5.1",
     "react-redux": "^5.0.7",

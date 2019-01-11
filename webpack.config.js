@@ -38,9 +38,10 @@ const common = {
 };
 
 let config;
-console.log(process.env.NODE_ENV)
-//switch(process.env.NODE_ENV) {
-  //case 'production':
+let env = process.env.NODE_ENV;
+
+switch(env.trim()) {
+  case 'production':
     config = merge(
         common,
         { devtool: 'source-map' },
@@ -55,9 +56,8 @@ console.log(process.env.NODE_ENV)
           ],
         },
     );
-   // break;
- /* case 'development':
-    console.log("inDevelopment")
+    break;
+ case 'development':
     config = merge(
         common,
         { devtool: 'eval-source-map' },
@@ -66,7 +66,8 @@ console.log(process.env.NODE_ENV)
           port: process.env.port,
         }),
     );
-    break;*/
-//}
+    break;
+
+}
 
 module.exports = config;
