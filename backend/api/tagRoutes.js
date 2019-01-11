@@ -6,8 +6,8 @@ module.exports = function(app, dbConn) {
   // Create
   app.post('/tags', function(req, res) {
     const jsonData = req.body;
-
-    var newID = mongoose.Types.ObjectId();
+    const newID = mongoose.Types.ObjectId();
+    
     var newObj = new Tag({ _id: newID, key: jsonData.key});
 
     newObj.save((err, result) => Utils.callBack(res, err, result));

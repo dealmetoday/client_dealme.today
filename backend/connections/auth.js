@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const schemas = require('../model/schemas')
+const userAuth = require('../model/authModel').userAuth
+const storeAuth = require('../model/authModel').storeAuth
 const constants = require('../constants')
 const json = require('../data/auth.json')
 
@@ -7,10 +8,6 @@ mongoose.connect('mongodb://localhost/auth', { useNewUrlParser: true })
   .then(() => {
       console.log('Connected to Auth Database.');
       mongoose.connection.db.dropDatabase();
-
-      // Grabbing the constructors
-      var userAuth = mongoose.model(constants.USERS + "_AUTH", schemas.authSchema, constants.USERS);
-      var storeAuth = mongoose.model(constants.STORES + "AUTH", schemas.authSchema, constants.STORES);
 
       // Get data from auth.json and insert into the database
       for (var index in json) {

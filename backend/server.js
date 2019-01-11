@@ -13,14 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // connect to DBs
 var tagsDB = require('./connections/tags')
-// var authDB = require('./connections/auth')
+var authDB = require('./connections/auth')
 // var userDB = require('./connections/users')
 // var mallDB = require('./connections/malls')
 // var checkInDB = require('./connections/checkin')
 
 // connect routes for CRUD for the different databases
 require('./api/tagRoutes')(app, tagsDB);
-// require('./api/authRoutes')(app, authDB);
+require('./api/authRoutes')(app, authDB);
 // require('./api/userRoutes')(app, userDB);
 // require('./api/mallRoutes')(app, mallDB);
 // require('./api/checkinRoutes')(app, checkInDB);
