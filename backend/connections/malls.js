@@ -1,17 +1,12 @@
 const mongoose = require('mongoose')
 const schemas = require('../model/schemas')
+const constants = require('../constants')
 const json = require('../data/malls.json')
-const driver = require('../API')
-
-var API = driver.API;
-const MALLS = 'MALLS'
-const STORES = 'STORES'
 
 mongoose.connect('mongodb://localhost/malls', { useNewUrlParser: true })
   .then(() => {
       console.log('Connected to Malls Database.');
       mongoose.connection.db.dropDatabase();
-      thisDriver = new API(mongoose.connection);
 
       // Grabbing the constructors
       var Mall = null;
@@ -24,8 +19,8 @@ mongoose.connect('mongodb://localhost/malls', { useNewUrlParser: true })
         var currMall = currI[0];
         mallID = currMall.id;
 
-        Mall = mongoose.model(MALLS, schemas.mallSchema, mallID);
-        Store = mongoose.model(STORES, schemas.storeSchema, mallID);
+        Mall = mongoose.model(constants.MALLS, schemas.mallSchema, mallID);
+        Store = mongoose.model(constants.STORES, schemas.storeSchema, mallID);
 
         var newMall = new Mall(
           {

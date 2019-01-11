@@ -1,16 +1,12 @@
 const mongoose = require('mongoose')
 const schemas = require('../model/schemas')
+const constants = require('../constants')
 const json = require('../data/checkin.json')
-const driver = require('../API')
-
-var API = driver.API;
-const CHECKIN = 'CHECKIN'
 
 mongoose.connect('mongodb://localhost/checkin', { useNewUrlParser: true })
   .then(() => {
       console.log('Connected to CheckIn Database.');
       mongoose.connection.db.dropDatabase();
-      thisDriver = new API(mongoose.connection);
 
       // Grabbing the constructors
       var CheckIn = null;
@@ -20,7 +16,7 @@ mongoose.connect('mongodb://localhost/checkin', { useNewUrlParser: true })
         var currObj = json[index];
         mallID = currObj.mall;
 
-        CheckIn = mongoose.model(CHECKIN, schemas.checkInSchema, mallID);
+        CheckIn = mongoose.model(constants.CHECKIN, schemas.checkInSchema, mallID);
 
         var newObj = new CheckIn(
           {
