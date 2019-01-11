@@ -5,6 +5,7 @@ import 'normalize.css/normalize.css';
 import App from './components/App';
 import configureStore from './store/configureStore';
 const store = configureStore();
+import registerServiceWorker from './registerServiceWorker';
 
 import './styles/main.scss';
 
@@ -12,3 +13,5 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>, document.getElementById('root'))
+
+registerServiceWorker();
