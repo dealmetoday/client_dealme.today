@@ -11,11 +11,22 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// connect to DB
-const options = { useNewUrlParser: true }
-mongoose.connect('mongodb://localhost/mern_app', options)
-  .then(() => console.log('connected to DB...'))
-  .catch(err => console.log('Could not connect', err))
+// connect to DBs
+var tagsDB = require('./connections/tags')
+var authDB = require('./connections/auth')
+var authDB = require('./connections/users')
+var mallDB = require('./connections/malls')
+var checkInDB = require('./connections/checkin')
+
+var newID = mongoose.Types.ObjectId();
+var today = Date.now();
+
+app.use('/', (req, res) => {
+  res.json({
+    id: newID,
+    time: today
+  })
+})
 
 app.use('/details', (req, res) => {
   res.json({
