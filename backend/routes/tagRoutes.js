@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const Utils = require('./utils')
 const Tag = require('../model/tagModel')
 
-module.exports = function(app, dbConn) {
+module.exports = function(app) {
   // Create
   app.post('/tags', function(req, res) {
     const jsonData = req.body;
     const newID = mongoose.Types.ObjectId();
-    
+
     var newObj = new Tag({ _id: newID, key: jsonData.key});
 
     newObj.save((err, result) => Utils.callBack(res, err, result));

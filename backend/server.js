@@ -12,20 +12,20 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // connect to DBs
-var tagsDB = require('./connections/tags')
-var authDB = require('./connections/auth')
-var userDB = require('./connections/users')
-// var mallDB = require('./connections/malls')
+// var tagsDB = require('./connections/tags')
+// var authDB = require('./connections/auth')
+// var userDB = require('./connections/users')
+var mallDB = require('./connections/malls')
 // var checkInDB = require('./connections/checkin')
-var dealsDB = require('./connections/deals')
+// var dealsDB = require('./connections/deals')
 
 // connect routes for CRUD for the different databases
-require('./api/tagRoutes')(app, tagsDB);
-// require('./api/authRoutes')(app, authDB);
-// require('./api/userRoutes')(app, userDB);
-// require('./api/mallRoutes')(app, mallDB);
-// require('./api/checkinRoutes')(app, checkInDB);
-// require('./api/dealRoutes')(app, dealsDB);
+require('./routes/tagRoutes')(app);
+require('./routes/authRoutes')(app);
+require('./routes/userRoutes')(app);
+require('./routes/mallRoutes')(app);
+// require('./routes/checkinRoutes')(app);
+require('./routes/dealRoutes')(app);
 
 var newID = mongoose.Types.ObjectId();
 var today = Date.now();

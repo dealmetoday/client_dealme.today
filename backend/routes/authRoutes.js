@@ -32,7 +32,13 @@ module.exports = function(app, dbConn) {
 
   // Read
   app.get('/auth', function(req, res) {
-    Tag.find((err, result) => Utils.callBack(res, err, result));
+    const jsonData = req.body;
+
+    if (jsonData["collection"] === constants.USERS) {
+      userAuth.findById(jsonData.id, (err, result) => Utils.callBack(res, err, result));
+    } else if (jsonData["collection"] === constants.STORES) {
+      storeAuth.findById(jsonData.id, (err, result) => Utils.callBack(res, err, result));
+    }
   });
 
   // Update
@@ -41,13 +47,14 @@ module.exports = function(app, dbConn) {
 
     var update =
     {
-      key: jsonData.update
+      role: jsonData.role,
+      password: jsonData.password
     };
 
-    if (jsonData.index == "name") {
-      Tag.findOneAndUpdate({ key: jsonData.key}, update, (err, result) => Utils.putCallback(res, err, result));
-    } else if (jsonData.index == "ID") {
-      Tag.findByIdAndUpdate(jsonData.key, update, (err, result) => Utils.putCallback(res, err, result));
+    if (jsonData["collection"] === constants.USERS) {
+      userAuth.findByIdAndUpdate(jsonData.id, update, (err, result) => Utils.putCallback(res, err, result));
+    } else if (jsonData["collection"] === constants.STORES) {
+      storeAuth.findByIdAndUpdate(jsonData.id, update, (err, result) => Utils.putCallback(res, err, result));
     }
   });
 
@@ -56,9 +63,9 @@ module.exports = function(app, dbConn) {
     const jsonData = req.body;
 
     if (jsonData["collection"] === constants.USERS) {
-      Tag.findByIdAndDelete(jsonData.id, (err, result) => Utils.callBack(res, err, result));
+      userAuth.findByIdAndDelete(jsonData.id, (err, result) => Utils.callBack(res, err, result));
     } else if (jsonData["collection"] === constants.STORES) {
-      Tag.findByIdAndDelete(jsonData.id, (err, result) => Utils.callBack(res, err, result));
+      storeAuth.findByIdAndDelete(jsonData.id, (err, result) => Utils.callBack(res, err, result));
     }
   });
 };

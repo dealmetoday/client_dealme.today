@@ -2,6 +2,7 @@ const constants = require('../constants')
 
 exports.callBack = function(res, err, result) {
   if (err) {
+    console.log(err);
     res.send(constants.ERR);
   } else {
     res.send(result);
@@ -10,6 +11,7 @@ exports.callBack = function(res, err, result) {
 
 exports.putCallback = function(res, err, output, type) {
   if (err) {
+    console.log(err);
     res.send(constants.ERR);
   }
   else {
@@ -35,3 +37,13 @@ exports.getObjCallback = function(res, err, output) {
     res.send(output[0]);
   }
 };
+
+// This should work both there and elsewhere.
+exports.isEmptyObject = function(obj) {
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      return false;
+    }
+  }
+  return true;
+}
