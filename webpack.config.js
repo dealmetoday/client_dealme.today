@@ -39,6 +39,7 @@ const common = {
 
 let config;
 let env = process.env.NODE_ENV;
+console.log(process.env.NODE_ENV)
 
 switch(env.trim()) {
   case 'production':
