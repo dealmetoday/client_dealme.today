@@ -2,6 +2,6 @@ const mongoose = require('mongoose')
 const schemas = require('../model/schemas')
 const constants = require('../constants')
 
-var User = mongoose.model(constants.USERS, schemas.userSchema, constants.USERS);
+var Deal = mongoose.model(constants.DEALS, schemas.dealSchema, constants.DEALS);
 
-module.exports = User;
+module.exports = Deal;

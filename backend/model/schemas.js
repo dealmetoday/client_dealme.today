@@ -85,3 +85,19 @@ var storeSchema = new Schema({
 
 exports.mallSchema = mallSchema
 exports.storeSchema = storeSchema
+
+// Deals
+var dealSchema = new Schema({
+  id: ID,
+  tags: [ID],
+  description: String,
+  creationDate: Date,
+  expiryDate: Date,
+  format: String,
+  usesLeft: Number,
+  views: Number,
+  mall: ID,
+  store: ID
+});
+
+exports.dealSchema = dealSchema
