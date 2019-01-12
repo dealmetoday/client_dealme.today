@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const schemas = require('../model/schemas')
+const Mall = require('../model/mallModel')
 const constants = require('../constants')
 const json = require('../data/malls.json')
 
@@ -9,7 +10,6 @@ mongoose.connect('mongodb://localhost/malls', { useNewUrlParser: true })
       mongoose.connection.db.dropDatabase();
 
       // Grabbing the constructors
-      var Mall = null;
       var Store = null;
       var mallID = null;
 
@@ -19,7 +19,6 @@ mongoose.connect('mongodb://localhost/malls', { useNewUrlParser: true })
         var currMall = currI[0];
         mallID = currMall.id;
 
-        Mall = mongoose.model(constants.MALLS, schemas.mallSchema, mallID);
         Store = mongoose.model(constants.STORES, schemas.storeSchema, mallID);
 
         var newMall = new Mall(
@@ -40,6 +39,7 @@ mongoose.connect('mongodb://localhost/malls', { useNewUrlParser: true })
               location: currStore.location,
               name: currStore.name,
               email: currStore.email,
+              tags: currStore.tags,
               description: currStore.description,
               parentCompany: currStore.parentCompany
             });

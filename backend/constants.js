@@ -1,6 +1,6 @@
 module.exports = Object.freeze({
   TAGS: 'TAGS',
-  MALLS: 'MALLS',
+  MALL_INDEX: 'MALL_INDEX',
   USERS: 'USERS',
   STORES: 'STORES',
   CHECKIN: 'CHECKIN',

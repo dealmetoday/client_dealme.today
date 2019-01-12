@@ -23,7 +23,7 @@ var mallDB = require('./connections/malls')
 require('./routes/tagRoutes')(app);
 require('./routes/authRoutes')(app);
 require('./routes/userRoutes')(app);
-require('./routes/mallRoutes')(app);
+require('./routes/mallRoutes')(app, mallDB);
 // require('./routes/checkinRoutes')(app);
 require('./routes/dealRoutes')(app);
 

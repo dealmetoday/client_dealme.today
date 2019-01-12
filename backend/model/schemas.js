@@ -79,6 +79,7 @@ var storeSchema = new Schema({
   location: [Number],
   name: String,
   email: String,
+  tags: [ID],
   description: String,
   parentCompany: String
 });
