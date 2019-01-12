@@ -35,4 +35,5 @@ function loadCheckin() {
 
   console.log('Finished populating the CheckIn database.');
 }
+
 module.exports = exports = mongoose;

@@ -40,4 +40,5 @@ function loadAuth() {
 
   console.log('Finished populating the Auth database.');
 }
+
 module.exports = exports = mongoose;

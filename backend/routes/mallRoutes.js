@@ -6,7 +6,7 @@ const storeSchema = require('../model/schemas').storeSchema
 
 var mallIDToModel = {}
 
-module.exports = function(app, dbConn) {
+module.exports = function(app) {
   /****************************************************************************/
   // Create
   app.post('/malls', function(req, res) {

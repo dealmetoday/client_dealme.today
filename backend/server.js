@@ -15,16 +15,16 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // var tagsDB = require('./connections/tags')
 // var authDB = require('./connections/auth')
 // var userDB = require('./connections/users')
-var mallDB = require('./connections/malls')
-// var checkInDB = require('./connections/checkin')
+// var mallDB = require('./connections/malls')
+var checkInDB = require('./connections/checkin')
 // var dealsDB = require('./connections/deals')
 
 // connect routes for CRUD for the different databases
 require('./routes/tagRoutes')(app);
 require('./routes/authRoutes')(app);
 require('./routes/userRoutes')(app);
-require('./routes/mallRoutes')(app, mallDB);
-// require('./routes/checkinRoutes')(app);
+require('./routes/mallRoutes')(app);
+require('./routes/checkinRoutes')(app);
 require('./routes/dealRoutes')(app);
 
 var newID = mongoose.Types.ObjectId();
