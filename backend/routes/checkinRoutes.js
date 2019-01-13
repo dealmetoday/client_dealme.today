@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
-const CheckIn = require('../model/checkinModel')
 
-module.exports = function(app, dbConn) {
-  /****************************************************************************/
+var CheckIn = null;
+
+module.exports = function(app, checkInDB) {
+  // Setting constructor
+  CheckIn = checkInDB.CheckIns;
+
   // Create
   app.post('/checkins', function(req, res) {
     const jsonData = req.body;

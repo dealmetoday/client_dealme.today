@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const schemas = require('../model/schemas')
 const Mall = require('../model/mallModel')
-const constants = require('../constants')
+const constants = require('../config/constants')
 const json = require('../data/malls.json')
 
 mongoose.connect('mongodb://localhost/malls', { useNewUrlParser: true })

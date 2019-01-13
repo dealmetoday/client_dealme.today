@@ -19,6 +19,7 @@ function loadTags() {
     newObj.save();
   }
 
-  console.log('Finished populating the Tags database.');}
+  console.log('Finished populating the Tags database.');
+}
 
 module.exports = mongoose;

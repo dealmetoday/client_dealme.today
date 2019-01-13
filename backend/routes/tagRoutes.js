@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
-const Tag = require('../model/tagModel')
 
-module.exports = function(app) {
+var Tag = null;
+
+module.exports = function(app, tagsDB) {
+  // Setting constructor
+  Tag = tagsDB.Tags;
+
   // Create
   app.post('/tags', function(req, res) {
     const jsonData = req.body;

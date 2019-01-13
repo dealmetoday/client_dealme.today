@@ -1,21 +1,20 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
-const constants = require('../constants')
-const Mall = require('../model/mallModel')
-const storeSchema = require('../model/schemas').storeSchema
+const constants = require('../config/constants')
 
-var mallIDToModel = {}
+var Mall = null;
+var Store = null;
 
-module.exports = function(app) {
+module.exports = function(app, mallsDB) {
+  // Setting constructor
+  Mall = mallsDB.Malls;
+  Store = mallsDB.Stores;
+
   /****************************************************************************/
   // Create
   app.post('/malls', function(req, res) {
     const jsonData = req.body;
-
-    // Store this for further use
     const newID = mongoose.Types.ObjectId();
-    const strID = String(newID);
-    mallIDToModel[strID] = mongoose.model(constants.STORES, storeSchema, strID);
 
     var newObj = new Mall(
       {
@@ -67,15 +66,12 @@ module.exports = function(app) {
   // Create
   app.post('/stores', function(req, res) {
     const jsonData = req.body;
-
-    // Retrieve constructor for model based on which Mall the store falls under
-    const mallID = jsonData.mall;
-    const Store = mallIDToModel[mallID]
     const newID = mongoose.Types.ObjectId();
 
     var newObj = new Store(
       {
         _id: newID,
+        mall: jsonData.mall,
         location: jsonData.location,
         name: jsonData.name,
         email: jsonData.email,
@@ -122,8 +118,10 @@ module.exports = function(app) {
 
       // If tags exist, then return stores that have tags user is interested in
       // Else, return all stores
-      const Store = mallIDToModel[closestMallID];
-      var query = {};
+      var query =
+      {
+        mall: closestMallID
+      };
 
       if ("tags" in jsonData) {
         query.tags = {
@@ -140,11 +138,8 @@ module.exports = function(app) {
     const jsonData = req.body;
 
     // Retrieve constructor for model based on which Mall the store falls under
-    const mallID = jsonData.mall;
     const storeID = jsonData.store;
     delete jsonData.store;
-
-    const Store = mallIDToModel[mallID];
 
     Store.findByIdAndUpdate(storeID, jsonData, (err, result) => Utils.putCallback(res, err, result));
   });
@@ -161,7 +156,7 @@ module.exports = function(app) {
   });
 };
 
-// Use Google API lateron
+// Use Google API later on
 function getDistance(arr1, arr2) {
   var p1 = { lat: arr1[0], long: arr1[1] };
   var p2 = { lat: arr2[0], long: arr2[1] };

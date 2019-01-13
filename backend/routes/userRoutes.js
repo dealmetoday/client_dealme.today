@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
-const User = require('../model/userModel')
 
-module.exports = function(app) {
+var User = null;
+
+module.exports = function(app, usersDB) {
+  // Setting constructor
+  User = usersDB.Users;
+
   // Create
   app.post('/users', function(req, res) {
     const jsonData = req.body;

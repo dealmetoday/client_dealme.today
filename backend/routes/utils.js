@@ -1,4 +1,4 @@
-const constants = require('../constants')
+const constants = require('../config/constants')
 
 exports.callBack = function(res, err, result) {
   if (err) {

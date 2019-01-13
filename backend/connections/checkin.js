@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const schemas = require('../model/schemas')
-const constants = require('../constants')
+const constants = require('../config/constants')
 const json = require('../data/checkin.json')
 
 mongoose.connect('mongodb://localhost/checkin', { useNewUrlParser: true })
