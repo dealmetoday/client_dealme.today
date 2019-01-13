@@ -1,7 +1,13 @@
+"use strict";
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const PATHS = require('./webpack-paths');
+const loaders = require('./webpack-loaders');
+const plugins = require('./webpack-plugins');
 
-module.exports = {
+const common = {
   entry: "./client/src/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
@@ -30,3 +36,37 @@ module.exports = {
     contentBase: path.resolve(__dirname, "dist")
   }
 };
+
+let config;
+console.log(process.env.NODE_ENV)
+//switch(process.env.NODE_ENV) {
+  //case 'production':
+    config = merge(
+        common,
+        { devtool: 'source-map' },
+        {
+          plugins: [
+            plugins.loaderOptions,
+            plugins.environmentVariables,
+            plugins.uglifyJs,
+            plugins.manifest, // Add the manifest plugin
+            plugins.sw,
+            plugins.copy
+          ],
+        },
+    );
+   // break;
+ /* case 'development':
+    console.log("inDevelopment")
+    config = merge(
+        common,
+        { devtool: 'eval-source-map' },
+        loaders.devServer({
+          host: process.env.host,
+          port: process.env.port,
+        }),
+    );
+    break;*/
+//}
+
+module.exports = config;
