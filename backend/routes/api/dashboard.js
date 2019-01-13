@@ -21,6 +21,10 @@ router.get("/", (req,res) => {
   })
 })
 
+router.get("/googleLogin", (req,res) => {
+  console.log(req.originalUrl)
+  console.log("in google login")
+})
 
 
 module.exports = router

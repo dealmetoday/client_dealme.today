@@ -11,7 +11,8 @@ const common = {
   entry: "./client/src/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "index_bundle.js"
+    filename: "index_bundle.js",
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -33,7 +34,8 @@ const common = {
   ],
   devtool: "cheap-module-eval-source-map",
   devServer: {
-    contentBase: path.resolve(__dirname, "dist")
+    contentBase: path.resolve(__dirname, "dist"),
+    historyApiFallback: true
   }
 };
 

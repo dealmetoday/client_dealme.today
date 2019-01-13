@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import configureStore from "../store/configureStore";
 const store = configureStore();
 import Home from '../routes/Home/Home';
+import LoggingIn from '../routes/transition/loggingIn'
 
 export default class App extends React.Component {
 
@@ -30,6 +31,7 @@ export default class App extends React.Component {
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/dashboard' component={Home}/>
+                <Route path='/loggingIn' component={LoggingIn}/>
               </Switch>
             </Router>
           </Provider>

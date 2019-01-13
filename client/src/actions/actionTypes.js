@@ -1,2 +1,16 @@
 export const FETCH_STUFF = 'FETCH_STUFF';
 export const RECEIVE_STUFF = 'RECEIVE_STUFF';
+
+
+// HOME SCREEN
+
+export const HOME_INIT = "HOME_INIT"
+
+// AUTHENTICATION
+
+export const AUTH_GOOGLE = "AUTH_GOOGLE";
+export const AUTH_FACEBOOK = "AUTH_FACEBOOK";
+export const AUTH_EMAIL = "AUTH_EMAIL";
+export const AUTH_SUCCESS = "AUTH_EMAIL_SUCCESS";
+export const AUTH_FAIL= "AUTH_FAIL";
+export const SEND_GOOGLE_PARAMS = "SEND_GOOGLE_PARAMS";
