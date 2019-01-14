@@ -34,7 +34,7 @@ module.exports = function(app, usersDB) {
     var newObj = new User(
       {
         _id: jsonData.token,
-        provider: "Facebook"
+        provider: "Facebook",
         email: jsonData.email,
         first: jsonData.first,
         middle: "",
