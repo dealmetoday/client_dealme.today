@@ -1,16 +1,59 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
-const User = require('../model/userModel')
 
-module.exports = function(app) {
+var User = null;
+
+module.exports = function(app, usersDB) {
+  // Setting constructor
+  User = usersDB.Users;
+
   // Create
-  app.post('/users', function(req, res) {
+  app.post('/users/email', function(req, res) {
     const jsonData = req.body;
     const newID = mongoose.Types.ObjectId();
 
     var newObj = new User(
       {
         _id: newID,
+        provider: "Email",
+        email: jsonData.email,
+        first: jsonData.first,
+        middle: "",
+        last: jsonData.last,
+        age: -1,
+        gender: "",
+        location: ""
+      });
+
+    newObj.save((err, result) => Utils.callBack(res, err, result));
+  });
+
+  app.post('users/facebook', function(req, res) {
+    const jsonData = req.body;
+
+    var newObj = new User(
+      {
+        _id: jsonData.token,
+        provider: "Facebook",
+        email: jsonData.email,
+        first: jsonData.first,
+        middle: "",
+        last: jsonData.last,
+        age: -1,
+        gender: "",
+        location: ""
+      });
+
+    newObj.save((err, result) => Utils.callBack(res, err, result));
+  });
+
+  app.post('users/google', function(req, res) {
+    const jsonData = req.body;
+
+    var newObj = new User(
+      {
+        _id: jsonData.token,
+        provider: "Google",
         email: jsonData.email,
         first: jsonData.first,
         middle: "",

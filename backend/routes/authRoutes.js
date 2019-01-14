@@ -1,10 +1,15 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
-const userAuth = require('../model/authModel').userAuth
-const storeAuth = require('../model/authModel').storeAuth
-const constants = require('../constants')
+const constants = require('../config/constants')
 
-module.exports = function(app, dbConn) {
+var userAuth = null;
+var storeAuth = null;
+
+module.exports = function(app, authDB) {
+  // Setting constructor
+  userAuth = authDB.UserAuths;
+  storeAuth = authDB.StoreAuths;
+
   // Create
   app.post('/auth', function(req, res) {
     const jsonData = req.body;
