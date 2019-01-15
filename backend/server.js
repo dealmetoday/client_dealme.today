@@ -3,6 +3,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const mongooseMulti = require('mongoose-multi')
+const dbConfig = require('./config/config')
+const schemaFile = require('./config/schemas')
+const init = require('./config/init')
 
 
 const app = express();
@@ -31,21 +35,17 @@ app.all('/', function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
-// connect to DBs
-// var tagsDB = require('./connections/tags')
-// var authDB = require('./connections/auth')
-// var userDB = require('./connections/users')
-// var mallDB = require('./connections/malls')
-var checkInDB = require('./connections/checkin')
-// var dealsDB = require('./connections/deals')
+// DB connections
+var databases = mongooseMulti.start(dbConfig.db, schemaFile);
+require('./routes/tagRoutes')(app, databases.tagsDB);
+require('./routes/authRoutes')(app, databases.authDB);
+require('./routes/userRoutes')(app, databases.usersDB);
+require('./routes/mallRoutes')(app, databases.mallsDB);
+require('./routes/checkinRoutes')(app, databases.checkInDB);
+require('./routes/dealRoutes')(app, databases.dealsDB);
 
-// connect routes for CRUD for the different databases
-require('./routes/tagRoutes')(app);
-require('./routes/authRoutes')(app);
-require('./routes/userRoutes')(app);
-require('./routes/mallRoutes')(app);
-require('./routes/checkinRoutes')(app);
-require('./routes/dealRoutes')(app);
+// Initialize all the databases
+init(databases);
 
 var newID = mongoose.Types.ObjectId();
 var today = Date.now();

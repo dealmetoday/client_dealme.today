@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
-const Deal = require('../model/dealModel')
 
-module.exports = function(app) {
+var Deal = null;
+
+module.exports = function(app, dealsDB) {
+  // Setting constructor
+  Deal = dealsDB.Deals;
+
   // Create
   app.post('/deals', function(req, res) {
     const jsonData = req.body;

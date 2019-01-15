@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
-const userAuth = require('../model/authModel').userAuth
-const storeAuth = require('../model/authModel').storeAuth
-const constants = require('../constants')
+const constants = require('../config/constants')
 const json = require('../data/auth.json')
 
 mongoose.connect('mongodb://localhost/auth', { useNewUrlParser: true })
