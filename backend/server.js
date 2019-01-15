@@ -50,27 +50,18 @@ init(databases);
 var newID = mongoose.Types.ObjectId();
 var today = Date.now();
 
+
+
+app.use('/api/dashboard', require("./routes/api/dashboard"));
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 app.use('/', (req, res) => {
   res.json({
     id: newID,
     time: today
   })
 })
-
-app.use('/details', (req, res) => {
-  res.json({
-    app_name: 'MERN App',
-    developer: 'Fayvor George',
-    aka: 'synthesis',
-    info: 'This app is a demo on building mern stack applications with custom webpack and react setup. Have fun... Head over to the github page for more information'
-  })
-});
-
-app.use('/api/dashboard', require("./routes/api/dashboard"));
-app.use('/api/auth', require('./routes/api/auth'));
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
 
 app.listen(PORT, () => console.log(`App is running on port ${PORT}`));

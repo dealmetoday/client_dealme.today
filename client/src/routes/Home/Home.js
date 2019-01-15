@@ -3,6 +3,9 @@ import axios from 'axios'
 import "./styles/main.css"
 import Grid from "@material-ui/core/Grid"
 import AuthContainer from '../Auth/AuthContainer'
+import { connect } from 'react-redux';
+import {authEmail, authFacebook, authGoogle} from "../../actions/Auth";
+
 
 
 class Home extends React.Component {
@@ -16,6 +19,13 @@ class Home extends React.Component {
 
 
   componentWillMount() {
+
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot){
+    console.log(this.props.auth)
+    if (this.props.auth.isLoggedIn)
+    this.props.history.push('/user/profile')
 
   }
 
@@ -40,4 +50,11 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
