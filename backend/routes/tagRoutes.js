@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Utils = require('./utils')
+const constants = require('../config/constants')
 
 var Tag = null;
 
@@ -34,6 +35,10 @@ module.exports = function(app, tagsDB) {
     if (jsonData.index == "name") {
       Tag.findOneAndUpdate({ key: jsonData.key}, update, (err, result) => Utils.putCallback(res, err, result));
     } else if (jsonData.index == "ID") {
+      if (!(Utils.isValidObjectId(jsonData.key))) {
+        res.send(constants.ID_ERROR);
+        return;
+      }
       Tag.findByIdAndUpdate(jsonData.key, update, (err, result) => Utils.putCallback(res, err, result));
     }
   });
