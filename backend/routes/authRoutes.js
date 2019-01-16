@@ -144,14 +144,21 @@ module.exports = function(app, authDB) {
   );
   // redirect route for when facebook sucessfully authenticates user
   app.get('/auth/facebook/callback',
-    passport.authenticate('facebook'),
+    passport.authenticate('facebook',  { failureRedirect: '/loginError' }),
     (req,res) => {
-    console.log(req.user) //HERE IS YOUR USER DATA
+    console.log(req) //HERE IS YOUR USER DATA
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return;
       res.redirect(redirect + `user_id=${req.user.id}`)
     }
   )
+
+  app.get('/loginError', (req,res) => {
+    res.redirect('http://localhost:8080/')
+
+
+  })
+
 
      /* , { successRedirect: '/',
       failureRedirect: '/login' }))*/

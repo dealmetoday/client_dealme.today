@@ -1,5 +1,4 @@
 /node_modules/
+.idea/workspace.xml
 .env
 package-lock.json
-.idea/
-.idea/workspace.xml
