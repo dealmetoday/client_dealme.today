@@ -13,4 +13,4 @@ export const AUTH_FACEBOOK = "AUTH_FACEBOOK";
 export const AUTH_EMAIL = "AUTH_EMAIL";
 export const AUTH_SUCCESS = "AUTH_EMAIL_SUCCESS";
 export const AUTH_FAIL= "AUTH_FAIL";
-export const SEND_GOOGLE_PARAMS = "SEND_GOOGLE_PARAMS";
+export const UPDATE_LOGIN = "UPDATE_LOGIN";

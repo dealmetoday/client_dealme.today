@@ -22,7 +22,6 @@ class AuthContainer extends React.Component {
   }
 
   handleChange = name => event => {
-    console.log(emailValidator.validate(this.state.email))
     this.setState({
       [name]: event.target.value,
       isFormValid: (emailValidator.validate(this.state.email))
@@ -34,7 +33,6 @@ class AuthContainer extends React.Component {
       email: this.state.email,
       password: this.state.password
     }
-    console.log(credentials)
     this.props.authEmail(credentials)
 
   }

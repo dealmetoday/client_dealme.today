@@ -4,6 +4,7 @@ const constants = require('../config/constants')
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const CONFIG = require('../../config/config_dev');
 
 var userAuth = null;
@@ -33,6 +34,16 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    //TODO find user in database here and store in a user obnject
+    return done(null, user)
+  }
+))
+
+function done(user) {
+  //TODO callback for when authentication is done
+}
 
 function extractProfile (profile) {
   let imageUrl = '';
@@ -45,24 +56,6 @@ function extractProfile (profile) {
     image: imageUrl
   };
 }
-
-function addTemplateVariables (req, res, next) {
-  res.locals.profile = req.user;
-  res.locals.login = `/auth/login?return=${encodeURIComponent(req.originalUrl)}`;
-  res.locals.logout = `/auth/logout?return=${encodeURIComponent(req.originalUrl)}`;
-  next();
-}
-
-function authRequired (req, res, next) {
-  if (!req.user) {
-    req.session.oauth2return = req.originalUrl;
-    return res.redirect('/auth/login');
-  }
-  next();
-}
-
-
-
 
 
 module.exports = function(app, authDB) {
@@ -124,7 +117,6 @@ module.exports = function(app, authDB) {
     }
     next();
   },
-
     passport.authenticate('facebook', { scope: ['email'] })
   );
 
@@ -138,8 +130,8 @@ module.exports = function(app, authDB) {
       // TODO call a function here to check to see if user exist in our database, and if not then create a new user
       console.log(req.user) // HERE IS YOUR USER DATA
       const redirect = req.session.oauth2return || '/user?';
-      delete req.session.oauth2return;
-      res.redirect(`http://localhost:8080/user/profile/user_id=${req.user.id}`);
+      delete req.session.oauth2return
+      res.redirect(`http://localhost:8080/auth/success#user_id=${req.user.id}`);
     }
   );
   // redirect route for when facebook sucessfully authenticates user
@@ -149,9 +141,17 @@ module.exports = function(app, authDB) {
     console.log(req) //HERE IS YOUR USER DATA
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return;
-      res.redirect(`http://localhost:8080/user/profile/user_id=${req.user.id}`)
+      res.redirect(`http://localhost:8080/auth/success#user_id=${req.user.id}`)
     }
   )
+
+  app.get('/auth/login/email',
+      passport.authenticate('local', { failureRedirect: '/loginError' }),
+    function(req,res) {
+    res.redirect(`http://localhost:8080/auth/success#user_id=${req.user.id}`)
+
+      }
+    )
 
   app.get('/loginError', (req,res) => {
     res.redirect('http://localhost:8080/')

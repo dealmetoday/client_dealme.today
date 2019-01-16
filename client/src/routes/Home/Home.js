@@ -23,7 +23,6 @@ class Home extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    console.log(this.props.auth)
     if (this.props.auth.isLoggedIn)
     this.props.history.push('/user/profile')
 

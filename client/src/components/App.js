@@ -1,15 +1,16 @@
 import React from 'react'
-import axios from 'axios'
 import "./main.css"
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import {Provider} from 'react-redux';
 import configureStore from "../store/configureStore";
 const store = configureStore();
 import Home from '../routes/Home/Home';
 import LoggingIn from '../routes/transition/loggingIn'
 import UserContainer from '../routes/User/UserContainer';
+import AuthSuccess from "./AuthSuccess";
+import {PrivateRoute} from './PrivateRoute';
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
+class App extends React.Component {
 
   constructor(props){
     super(props);
@@ -25,20 +26,25 @@ export default class App extends React.Component {
 
 
     render() {
-        const { username } = this.state;
         return (
-          <Provider store={store}>
             <Router>
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/dashboard' component={Home}/>
                 <Route path='/loggingIn' component={LoggingIn}/>
-                <Route path='/user/profile' component={UserContainer}/>
+                <Route path="/auth/success" component={AuthSuccess} />
+                <PrivateRoute path='/user/profile' component={UserContainer} isAuthenticated={this.props.auth.isLoggedIn}/>
               </Switch>
             </Router>
-          </Provider>
-
         );
     }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

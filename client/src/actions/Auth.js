@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {AUTH_FACEBOOK, AUTH_GOOGLE, AUTH_EMAIL, AUTH_SUCCESS, AUTH_FAIL} from "./actionTypes";
+import {AUTH_FACEBOOK, AUTH_GOOGLE, AUTH_EMAIL, AUTH_SUCCESS, AUTH_FAIL, UPDATE_LOGIN} from "./actionTypes";
 import CONFIGS from '../../../config/config_dev'
 
 export const authFacebook = () => dispatch => {
@@ -12,7 +12,7 @@ export const authGoogle = () => dispatch => {
 
 export const authEmail = (credentials) => dispatch => {
 
-  axios.put(`${CONFIGS.SERVER_PATH}/auth/login/email`, {params: credentials}).then(response => {
+  axios.get(`${CONFIGS.SERVER_PATH}/auth/login/email`, {params: credentials}).then(response => {
 
     dispatch({
       type: AUTH_SUCCESS,
@@ -25,4 +25,14 @@ export const authEmail = (credentials) => dispatch => {
   })
 
 
+}
+
+export const updateLogin = (user_id) => dispatch => {
+  dispatch({
+    type: UPDATE_LOGIN,
+    payload: {
+      userId: user_id,
+      isLoggedIn: true
+    }
+  })
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import queryString from 'query-string'
 import { connect } from 'react-redux';
-import {sendParams} from '../../actions/loggingIn'
+import {updateLogin} from '../../actions/Auth'
 
 
 class LoggingIn extends React.Component{
@@ -11,7 +11,8 @@ class LoggingIn extends React.Component{
 
   componentWillMount(){
     let params = queryString.parse(this.props.location.hash)
-    this.props.sendParams(params);
+    this.props.updateLogin(params.user_id)
+    this.props.history.push('/user/profile')
 
   }
 
@@ -29,7 +30,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = ({
-  sendParams
+  updateLogin
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggingIn);
