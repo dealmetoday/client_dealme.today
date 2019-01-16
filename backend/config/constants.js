@@ -10,5 +10,9 @@ module.exports = Object.freeze({
   ERR:
   {
     "Error" : "An error has occured"
-  }
+  },
+  ID_ERROR:
+  {
+    "Error" : "Input ID is not a valid ObjectID"
+  },
 });
