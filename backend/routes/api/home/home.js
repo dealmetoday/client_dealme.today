@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require("axios");
-const CONFIGS = require("../../../config/config_dev");
+const CONFIGS = require("../../../../config/config_dev");
 
 router.get("/", (req,res) => {
   axios.get(`${CONFIGS.FACEBOOK_GRAPH_API}/oauth/access_token?client_id=${CONFIGS.FACEBOOK_APP_ID}&redirect_uri=${CONFIGS.REDIRECT_PATH}&client_secret=${CONFIGS.FACEBOOK_CLIENT_SECRET}&code=${req.query.code}`).then(resp => {

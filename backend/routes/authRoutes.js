@@ -139,7 +139,7 @@ module.exports = function(app, authDB) {
       console.log(req.user) // HERE IS YOUR USER DATA
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return;
-      res.redirect(redirect + `user_id=${req.user.id}`);
+      res.redirect(`http://localhost:8080/user/profile/user_id=${req.user.id}`);
     }
   );
   // redirect route for when facebook sucessfully authenticates user
@@ -149,7 +149,7 @@ module.exports = function(app, authDB) {
     console.log(req) //HERE IS YOUR USER DATA
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return;
-      res.redirect(redirect + `user_id=${req.user.id}`)
+      res.redirect(`http://localhost:8080/user/profile/user_id=${req.user.id}`)
     }
   )
 
@@ -159,9 +159,6 @@ module.exports = function(app, authDB) {
 
   })
 
-
-     /* , { successRedirect: '/',
-      failureRedirect: '/login' }))*/
 
   passport.serializeUser((user, cb) => {
     cb(null, user);

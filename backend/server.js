@@ -52,7 +52,7 @@ var today = Date.now();
 
 
 
-app.use('/api/dashboard', require("./routes/api/dashboard"));
+app.use('/api/dashboard', require("./routes/api/home/home"));
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();
