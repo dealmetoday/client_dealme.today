@@ -56,6 +56,11 @@ module.exports = function(app, authDB) {
       password: jsonData.password
     };
 
+    if (!(Utils.isValidObjectId(jsonData.id))) {
+      res.send(constants.ID_ERROR);
+      return;
+    }
+
     if (jsonData["collection"] === constants.USERS) {
       userAuth.findByIdAndUpdate(jsonData.id, update, (err, result) => Utils.putCallback(res, err, result));
     } else if (jsonData["collection"] === constants.STORES) {
