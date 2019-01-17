@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="06399373-c930-4b7d-be5b-b83aae6b4cd4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/AuthSuccess.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/PrivateRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/authRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/authRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/Auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/actionTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/loggingIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/loggingIn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/stuffActions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/routes/Auth/AuthContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/routes/Auth/AuthContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/routes/Home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/routes/Home/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/routes/transition/loggingIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/routes/transition/loggingIn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/Auth.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -43,6 +28,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="config_dev.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/config_dev.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="92" selection-start-line="6" selection-start-column="92" selection-end-line="6" selection-end-column="92" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="authRoutes.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/routes/authRoutes.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -64,12 +58,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dealRoutes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/routes/dealRoutes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-433" />
           </provider>
         </entry>
       </file>
@@ -99,27 +100,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
               <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/reducers/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrivateRoute.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/PrivateRoute.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -296,25 +276,7 @@
             <path>
               <item name="deal.io.proto" type="b2602c69:ProjectViewProjectNode" />
               <item name="deal.io.proto" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="deal.io.proto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="deal.io.proto" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="deal.io.proto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="deal.io.proto" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="deal.io.proto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="deal.io.proto" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -371,7 +333,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74104000" />
+    <option name="totallyTimeSpent" value="74824000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -443,7 +405,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/src/components/common/socialLogin.js" />
     <entry file="file://$PROJECT_DIR$/webpack-paths.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -576,13 +537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config_dev.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="92" selection-start-line="6" selection-start-column="92" selection-end-line="6" selection-end-column="92" />
         </state>
       </provider>
     </entry>
@@ -747,6 +701,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/routes/dealRoutes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-433" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config_dev.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="92" selection-start-line="6" selection-start-column="92" selection-end-line="6" selection-end-column="92" />
         </state>
       </provider>
     </entry>
