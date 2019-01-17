@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha",
     "lint": "eslint client/src",
-    "start": "set NODE_ENV=development && webpack-dev-server --open --watch --hot ",
-    "build": "webpack ",
+    "start": "NODE_ENV=development webpack-dev-server --open --watch --hot ",
+    "build": "set NODE_ENV=production webpack ",
     "serve": "npm run clean && nodemon backend/server.js",
     "clean": "mongo backend/dropDB.js",
     "dbon": "sudo service mongod start"
@@ -26,6 +26,9 @@
   "author": "Fayvor George",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^3.8.3",
+    "@nhducit/react-facebook-login": "^3.4.1",
+    "auth0-js": "^9.9.0",
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-core": "6.25.0",
@@ -40,8 +43,10 @@
     "cors": "^2.8.4",
     "css-loader": "^1.0.0",
     "dotenv": "^6.0.0",
+    "email-validator": "^2.0.4",
     "express": "^4.16.3",
     "express-validator": "^5.3.0",
+    "googleapis": "^36.0.0",
     "http-auth": "^3.2.3",
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
@@ -52,16 +57,23 @@
     "node-sass": "^4.9.2",
     "normalize.css": "^8.0.0",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.4.0",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^4.0.1",
     "react-icons": "^3.0.5",
     "react-modal": "^3.5.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-social-login-buttons": "^2.3.0",
     "redux": "^4.0.0",
     "redux-devtools": "^3.4.1",
     "redux-logger": "^3.0.6",
@@ -84,5 +96,6 @@
     "eslint-plugin-react": "^7.11.1",
     "html-webpack-plugin": "^3.2.0",
     "nodemon": "^1.18.4"
-  }
+  },
+  "proxy": "http://127.0.0.1:5000"
 }

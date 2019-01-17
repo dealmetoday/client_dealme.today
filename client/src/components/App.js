@@ -1,54 +1,50 @@
 import React from 'react'
-import axios from 'axios'
+import "./main.css"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import configureStore from "../store/configureStore";
+const store = configureStore();
+import Home from '../routes/Home/Home';
+import LoggingIn from '../routes/transition/loggingIn'
+import UserContainer from '../routes/User/UserContainer';
+import AuthSuccess from "./AuthSuccess";
+import {PrivateRoute} from './PrivateRoute';
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
-  state = {
-    getDetails: false,
-    app_name: '',
-    developer: '',
-    aka: '',
-    info: ''
+class App extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      username: null
+    }
   }
 
-  onClick = () => {
-    axios({
-      url: 'http://localhost:5000/details',
-      method: 'GET'
-    })
-      .then((res) => {
-        this.setState(() => ({
-          getDetails: true,
-          app_name: res.data.app_name,
-          developer: res.data.developer,
-          aka: res.data.aka,
-          info: res.data.info
-        }))
-    })
-  }
 
-  render() {
-    return (
-      <main>
-				<header>
-					<h2>MERN Stack Boilerplate</h2>
-					<button onClick={this.onClick}>Get Details</button>
-				</header>
+    componentWillMount() {
 
-        {this.state.getDetails &&
-          <section>
-						<p><span>Title:</span> {this.state.app_name}</p>
-						<p>
-							<span>Developer:</span> {this.state.developer} aka {this.state.aka}
-						</p>
-						<p><span>Important:</span> {this.state.info}</p>
-						<p>
-							Link to <a href="https://github.com/phavor/minimal-mern-template" target="_blank">
-								github
-							</a>
-						</p>
-					</section>}
-      </main>
-    );
-  }
+    }
+
+
+    render() {
+        return (
+            <Router>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/dashboard' component={Home}/>
+                <Route path='/loggingIn' component={LoggingIn}/>
+                <Route path="/auth/success" component={AuthSuccess} />
+                <PrivateRoute path='/user/profile' component={UserContainer} isAuthenticated={this.props.auth.isLoggedIn}/>
+              </Switch>
+            </Router>
+        );
+    }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

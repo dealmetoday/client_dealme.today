@@ -13,8 +13,10 @@
     "ecmaFeatures": {
       "jsx": true,
       "modules": true,
-      "experimentalObjectRestSpread": true
+      "experimentalObjectRestSpread": true,
+      "spread": true
     }
+
   },
   "rules": {
     "no-unused-vars": "off",

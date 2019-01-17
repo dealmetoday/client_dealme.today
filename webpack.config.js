@@ -11,7 +11,8 @@ const common = {
   entry: "./client/src/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "index_bundle.js"
+    filename: "index_bundle.js",
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -33,14 +34,17 @@ const common = {
   ],
   devtool: "cheap-module-eval-source-map",
   devServer: {
-    contentBase: path.resolve(__dirname, "dist")
+    contentBase: path.resolve(__dirname, "dist"),
+    historyApiFallback: true
   }
 };
 
 let config;
+let env = process.env.NODE_ENV;
 console.log(process.env.NODE_ENV)
-//switch(process.env.NODE_ENV) {
-  //case 'production':
+
+switch(env.trim()) {
+  case 'production':
     config = merge(
         common,
         { devtool: 'source-map' },
@@ -55,9 +59,8 @@ console.log(process.env.NODE_ENV)
           ],
         },
     );
-   // break;
- /* case 'development':
-    console.log("inDevelopment")
+    break;
+ case 'development':
     config = merge(
         common,
         { devtool: 'eval-source-map' },
@@ -66,7 +69,8 @@ console.log(process.env.NODE_ENV)
           port: process.env.port,
         }),
     );
-    break;*/
-//}
+    break;
+
+}
 
 module.exports = config;
