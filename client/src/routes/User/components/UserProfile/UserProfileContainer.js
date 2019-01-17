@@ -1,7 +1,7 @@
 import React from 'react'
 import UserProfile from './UserProfile';
 import { connect } from 'react-redux';
-import * as emailValidator from "email-validator/index";
+import "./userProfileContainer.css";
 
 
 
@@ -26,9 +26,10 @@ class UserProfileContainer extends React.Component {
   };
 
   render(){
+    console.log(this.props.user)
     return (
       <div className={'user-profile-Container'}>
-        <UserProfile user={this.props.user} handleChange={this.handleChange} profile={this.state}/>
+        <UserProfile user={this.props.user} handleChange={this.handleChange}/>
       </div>
     )
   }
@@ -40,7 +41,7 @@ class UserProfileContainer extends React.Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  user: state.auth.user
+  user: state.user
 });
 
 const mapDispatchToProps = ({

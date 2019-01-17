@@ -27,6 +27,7 @@ class App extends React.Component {
 
     render() {
         return (
+          <div className={'app-container'}>
             <Router>
               <Switch>
                 <Route exact path='/' component={Home} />
@@ -36,6 +37,7 @@ class App extends React.Component {
                 <PrivateRoute path='/user/profile' component={UserContainer} isAuthenticated={this.props.auth.isLoggedIn}/>
               </Switch>
             </Router>
+          </div>
         );
     }
 }

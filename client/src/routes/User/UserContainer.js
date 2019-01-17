@@ -2,6 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid'
 import UserProfileContainer from './components/UserProfile/UserProfileContainer'
+import NavBar from './components/NavBar/NavBar'
+import BottomNav from '../layout/BottomNav/BottomNav'
+import './styles/userContainer.css'
+
 
 
 
@@ -17,16 +21,9 @@ class UserContainer extends React.Component {
   render(){
     return (
       <div className={'user-container'}>
-        <Grid container>
-          <Grid item xs={12}>
-            <div style={{textAlign: "center"}}>
-              <h1>Welcome {this.props.user.firstName}</h1>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <UserProfileContainer/>
-          </Grid>
-        </Grid>
+        <NavBar/>
+        <UserProfileContainer/>
+        <BottomNav/>
       </div>
 
     )

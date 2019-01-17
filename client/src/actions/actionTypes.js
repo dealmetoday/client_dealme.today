@@ -14,3 +14,6 @@ export const AUTH_EMAIL = "AUTH_EMAIL";
 export const AUTH_SUCCESS = "AUTH_EMAIL_SUCCESS";
 export const AUTH_FAIL= "AUTH_FAIL";
 export const UPDATE_LOGIN = "UPDATE_LOGIN";
+
+// USER
+export const GET_USER_PROFILE = "GET_USER_PROFILE";
