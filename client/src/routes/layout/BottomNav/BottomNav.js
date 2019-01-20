@@ -8,6 +8,7 @@ import MoneyIcon from '@material-ui/icons/AttachMoney';
 import SettingsIcon from '@material-ui/icons/Settings';
 import InfoIcon from '@material-ui/icons/Info';
 import { connect } from 'react-redux';
+import {changePage} from "../../../actions/App";
 
 
 const styles = {
@@ -22,7 +23,6 @@ class BottomNav extends React.Component {
     super(props)
 
     this.state = {
-      value:0
     }
     this.handleChange.bind(this)
   }
@@ -32,13 +32,13 @@ class BottomNav extends React.Component {
 
     switch(value){
       case 0:
-        this.props.handleChange("/deals");
+        this.props.handleChange("/deals", value);
         break;
       case 1:
-        this.props.handleChange("/user/profile")
+        this.props.handleChange("/user/profile", value)
         break;
       case 2:
-        this.props.handleChange("/about")
+        this.props.handleChange("/about", value)
         break
     }
 
@@ -46,7 +46,8 @@ class BottomNav extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
+    const value  = this.props.app.pageValue;
+    console.log(this.props)
 
     return (
       <BottomNavigation
@@ -68,10 +69,11 @@ BottomNav.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  app: state.app,
 });
 
 const mapDispatchToProps = ({
+  changePage
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)(BottomNav)

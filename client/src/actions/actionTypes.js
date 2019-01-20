@@ -4,7 +4,11 @@ export const RECEIVE_STUFF = 'RECEIVE_STUFF';
 
 // HOME SCREEN
 
-export const HOME_INIT = "HOME_INIT"
+export const HOME_INIT = "HOME_INIT";
+
+//APP
+
+export const CHANGE_PAGE = "CHANGE_PAGE";
 
 // AUTHENTICATION
 
@@ -17,3 +21,7 @@ export const UPDATE_LOGIN = "UPDATE_LOGIN";
 
 // USER
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
+
+// Deals
+
+export const GET_DEALS = "GET_DEALS";

@@ -69,7 +69,6 @@ class UserProfileContainer extends React.Component {
   }
 
   render(){
-    console.log(this.props.user)
     return (
       <div className={'user-profile-Container'}>
         <UserModal

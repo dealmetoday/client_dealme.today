@@ -12,7 +12,7 @@ class LoggingIn extends React.Component{
   componentWillMount(){
     let params = queryString.parse(this.props.location.hash)
     this.props.updateLogin(params.user_id)
-    this.props.history.push('/user/profile')
+    this.props.history.push('/deals')
 
   }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {AUTH_FACEBOOK, AUTH_GOOGLE, AUTH_EMAIL, AUTH_SUCCESS, AUTH_FAIL, UPDATE_LOGIN} from "./actionTypes";
+import {AUTH_SUCCESS, UPDATE_LOGIN} from "./actionTypes";
 import CONFIGS from '../../../config/config_dev'
 
 export const authFacebook = () => dispatch => {

@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import Grid from '@material-ui/core/Grid'
 import UserProfileContainer from './components/UserProfile/UserProfileContainer'
 import NavBar from './components/NavBar/NavBar'
 import BottomNav from '../layout/BottomNav/BottomNav'
 import './styles/userContainer.css'
+import {changePage} from "../../actions/App";
 
 
 
@@ -18,7 +18,8 @@ class UserContainer extends React.Component {
   componentWillmounte(){
 
   }
-  handleRouteChange = (path) => {
+  handleRouteChange = (path, value) => {
+    this.props.changePage(value)
     this.props.history.push(path)
   }
 
@@ -46,6 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = ({
+  changePage
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer);
