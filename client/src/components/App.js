@@ -34,7 +34,7 @@ class App extends React.Component {
                 <Route path='/dashboard' component={Home}/>
                 <Route path='/loggingIn' component={LoggingIn}/>
                 <Route path="/auth/success" component={AuthSuccess} />
-                <PrivateRoute path='/user/profile' component={UserContainer} isAuthenticated={this.props.auth.isLoggedIn}/>
+                <PrivateRoute path='/user/profile' component={UserContainer} isAuthenticated={this.props.auth.isLoggedIn} location={this.props.location} history={this.props.history}/>
               </Switch>
             </Router>
           </div>

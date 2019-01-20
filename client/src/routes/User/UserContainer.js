@@ -12,10 +12,14 @@ import './styles/userContainer.css'
 class UserContainer extends React.Component {
   constructor(props){
     super(props)
+    this.handleRouteChange.bind(this)
   }
 
   componentWillmounte(){
 
+  }
+  handleRouteChange = (path) => {
+    this.props.history.push(path)
   }
 
   render(){
@@ -23,7 +27,7 @@ class UserContainer extends React.Component {
       <div className={'user-container'}>
         <NavBar/>
         <UserProfileContainer/>
-        <BottomNav/>
+        <BottomNav handleChange={this.handleRouteChange}/>
       </div>
 
     )
