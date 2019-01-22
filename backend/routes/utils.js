@@ -47,3 +47,8 @@ exports.isEmptyObject = function(obj) {
   }
   return true;
 }
+
+exports.isValidObjectId = function(idString) {
+  var matches = idString.match(/^[0-9a-fA-F]$/);
+  return matches == null;
+}
