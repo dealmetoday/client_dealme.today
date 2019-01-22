@@ -10,7 +10,8 @@
     "build": "set NODE_ENV=production webpack ",
     "serve": "npm run clean && nodemon backend/server.js",
     "clean": "mongo backend/dropDB.js",
-    "dbon": "sudo service mongod start"
+    "dbon": "sudo service mongod start",
+    "heroku-postbuild": "npm run serve && npm start"
   },
   "repository": {
     "type": "git",
