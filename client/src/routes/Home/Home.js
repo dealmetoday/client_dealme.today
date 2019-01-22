@@ -24,7 +24,7 @@ class Home extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot){
     if (this.props.auth.isLoggedIn)
-    this.props.history.push('/deals')
+    this.props.history.push('/deals');
 
   }
 
