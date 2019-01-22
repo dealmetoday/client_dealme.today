@@ -1,32 +1,34 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import Grid from '@material-ui/core/Grid'
 import UserProfileContainer from './components/UserProfile/UserProfileContainer'
+import NavBar from './components/NavBar/NavBar'
+import BottomNav from '../layout/BottomNav/BottomNav'
+import './styles/userContainer.css'
+import {changePage} from "../../actions/App";
+
 
 
 
 class UserContainer extends React.Component {
   constructor(props){
     super(props)
+    this.handleRouteChange.bind(this)
   }
 
   componentWillmounte(){
 
   }
+  handleRouteChange = (path, value) => {
+    this.props.changePage(value)
+    this.props.history.push(path)
+  }
 
   render(){
     return (
       <div className={'user-container'}>
-        <Grid container>
-          <Grid item xs={12}>
-            <div style={{textAlign: "center"}}>
-              <h1>Welcome {this.props.user.firstName}</h1>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <UserProfileContainer/>
-          </Grid>
-        </Grid>
+        <NavBar/>
+        <UserProfileContainer/>
+        <BottomNav handleChange={this.handleRouteChange}/>
       </div>
 
     )
@@ -45,6 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = ({
+  changePage
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer);

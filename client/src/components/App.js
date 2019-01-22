@@ -9,6 +9,7 @@ import UserContainer from '../routes/User/UserContainer';
 import AuthSuccess from "./AuthSuccess";
 import {PrivateRoute} from './PrivateRoute';
 import { connect } from 'react-redux';
+import DealsContainer from "../routes/Deals/DealsContainer";
 
 class App extends React.Component {
 
@@ -27,15 +28,19 @@ class App extends React.Component {
 
     render() {
         return (
+          <div className={'app-container'}>
             <Router>
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/dashboard' component={Home}/>
                 <Route path='/loggingIn' component={LoggingIn}/>
                 <Route path="/auth/success" component={AuthSuccess} />
-                <PrivateRoute path='/user/profile' component={UserContainer} isAuthenticated={this.props.auth.isLoggedIn}/>
+                <PrivateRoute path='/user/profile' component={UserContainer} isAuthenticated={this.props.auth.isLoggedIn} location={this.props.location} history={this.props.history}/>
+                <PrivateRoute path='/deals' component={DealsContainer} isAuthenticated={this.props.auth.isLoggedIn} location={this.props.location} history={this.props.history}/>
+
               </Switch>
             </Router>
+          </div>
         );
     }
 }

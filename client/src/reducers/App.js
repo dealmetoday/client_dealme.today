@@ -1,12 +1,10 @@
-import {APP_INIT} from '../actions/actionTypes';
-import initialState from "./initialState";
+import {APP_INIT, CHANGE_PAGE} from '../actions/actionTypes';
 
-initialState ={
+const initialState = {
   googleAuthUrl: '',
   facebookAuthURL: '',
-  isLoggedIn: false
-
-
+  isLoggedIn: false,
+  pageValue: 0
 }
 
 
@@ -16,6 +14,11 @@ export default (state = initialState, action) => {
       return {
         ...state
       };
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        pageValue: action.payload
+      }
     default:
       return state;
   }
