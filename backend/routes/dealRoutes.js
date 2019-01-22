@@ -16,12 +16,14 @@ module.exports = function(app, dealsDB) {
       {
         _id: newID,
         tags: jsonData.tags,
+        isActive: jsonData.isActive,
         description: jsonData.description,
         creationDate: jsonData.creationDate,
         expiryDate: jsonData.expiryDate,
         format: jsonData.format,
         usesLeft: jsonData.usesLeft,
         views: jsonData.views,
+        claims: jsonData.claims,
         mall: jsonData.mall,
         store: jsonData.store
       });
