@@ -50,7 +50,10 @@ class Deals extends React.Component {
       <div className={'deal-cards-list'}>
         {
           deals.map((aDeal, index) => {
-           return( <DealCard key={'_deal'+index} deal={aDeal}/>)
+            let store = this.props.stores.filter(aStore => {
+              return aStore["_id"] === aDeal.store
+            })
+           return( <DealCard key={'_deal'+index} deal={aDeal} store={store}/>)
           })
         }
 
