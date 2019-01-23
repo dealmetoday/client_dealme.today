@@ -59,10 +59,9 @@ class Deals extends React.Component {
 
 
   render() {
-    const { classes } = this.props;
-    const expireyTime = (
-      <Moment date={this.props.deal.expiryDate}/>
-    )
+    const { classes,store } = this.props;
+    console.log(store)
+
 
     return (
       <Card className={classes.card}>
@@ -93,8 +92,8 @@ class Deals extends React.Component {
             <Typography paragraph>
               <Grid container>
                 <Grid item xs={12}>
-                  <p>Store: {this.props.deal.store} <br/>
-                    Description: {this.props.deal.description}</p>
+                  <p>Store: {store[0].name} <br/>
+                    Description: {store[0].description}</p>
                 </Grid>
                 <Grid item xs={8} />
                 <Grid item xs={2}>

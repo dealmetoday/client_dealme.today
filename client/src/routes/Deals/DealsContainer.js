@@ -20,10 +20,11 @@ class DealsContainer extends React.Component {
 
 
   render() {
+    const {stores} = this.props.mall
     return (
       <div className={'deals-container'}>
         <NavBar/>
-        <Deals deals={this.props.deals.deals}/>
+        <Deals deals={this.props.deals.deals} stores={stores}/>
         <BottomNav handleChange={this.handleRouteChange}/>
       </div>
     )
@@ -38,7 +39,8 @@ class DealsContainer extends React.Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   user: state.auth.user,
-  deals: state.deals
+  deals: state.deals,
+  mall: state.mall
 });
 
 const mapDispatchToProps = ({

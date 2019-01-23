@@ -12,7 +12,7 @@
     "serve-prod": "nodemon backend/server.js",
     "clean": "mongo backend/dropDB.js",
     "dbon": "sudo service mongod start",
-    "postinstall": "npm run serve-prod & npm start"
+    "heroku-postbuild": "npm run serve-prod && npm start"
   },
   "repository": {
     "type": "git",
