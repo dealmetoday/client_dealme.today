@@ -4,9 +4,16 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const mongooseMulti = require('mongoose-multi')
-const dbConfig = require('./config/config')
+let dbConfig;
 const schemaFile = require('./config/schemas')
 const init = require('./config/init')
+
+if(process.env.NODE_ENV === 'production'){
+  dbConfig = require('./config/prod-config')
+}
+else{
+  dbConfig = require('./config/dev-config')
+}
 
 
 const app = express();
