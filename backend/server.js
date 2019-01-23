@@ -38,8 +38,8 @@ app.all('/', function(req, res, next) {
 // DB connections
 var databases = mongooseMulti.start(dbConfig.db, schemaFile);
 require('./routes/tagRoutes')(app, databases.tagsDB);
-require('./routes/authRoutes')(app, databases.authDB);
-require('./routes/userRoutes')(app, databases.usersDB);
+require('./routes/authRoutes')(app, databases.authDB, databases.usersDB);
+require('./routes/userRoutes')(app, databases.usersDB, databases.dealsDB);
 require('./routes/mallRoutes')(app, databases.mallsDB);
 require('./routes/checkinRoutes')(app, databases.checkInDB);
 require('./routes/dealRoutes')(app, databases.dealsDB);

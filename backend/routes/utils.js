@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const constants = require('../config/constants')
 
 exports.callBack = function(res, err, result) {
@@ -38,6 +39,14 @@ exports.getObjCallback = function(res, err, output) {
   }
 };
 
+exports.redirectCallback = function(res, redirect, isFirst, id) {
+  if (isFirst) {
+    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
+  } else {
+    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
+  }
+}
+
 // This should work both there and elsewhere.
 exports.isEmptyObject = function(obj) {
   for (var key in obj) {
@@ -51,4 +60,56 @@ exports.isEmptyObject = function(obj) {
 exports.isValidObjectId = function(idString) {
   var matches = idString.match(/^[0-9a-fA-F]$/);
   return matches == null;
+}
+
+exports.dealsQuery = function(obj) {
+  var query = obj;
+  if ("expiryDate" in query) {
+    query.expiryDate = {
+      $gte: jsonData.expiryDate
+    }
+  }
+  if ("available" in query) {
+    if (query.available) {
+      query.usesLeft = {
+        $ne: 0
+      }
+      query.isActive = true;
+    } else {
+      query.usesLeft = 0
+      query.isActive = false;
+    }
+    delete query.available;
+
+    return query;
+}
+
+exports.usersQuery = function(obj) {
+  var query =
+  {
+    email: obj.email,
+    first: obj.first_name,
+    last: obj.last_name
+  }
+
+  return query
+}
+
+exports.createUser = function(User, inputObj) {
+  const newID = mongoose.Types.ObjectId();
+
+  var newObj = new User(
+    {
+      _id: newID,
+      provider: "Email",
+      email: inputObj.email,
+      first: inputObj.first,
+      middle: "",
+      last: inputObj.last,
+      age: -1,
+      gender: "",
+      location: ""
+    });
+
+  return newObj;
 }

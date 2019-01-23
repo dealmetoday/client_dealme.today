@@ -38,24 +38,8 @@ module.exports = function(app, dealsDB) {
     if (Utils.isEmptyObject(jsonData)) {
       Deal.find((err, result) => Utils.callBack(res, err, result));
     } else {
-      var query = jsonData;
-      if ("expiryDate" in query) {
-        query.expiryDate = {
-          $gte: jsonData.expiryDate
-        }
-      }
-      if ("available" in query) {
-        if (query.available) {
-          query.usesLeft = {
-            $ne: 0
-          }
-        } else {
-          query.usesLeft = 0
-        }
-        delete query.available;
-      }
-
-      Deal.find(jsonData, (err, result) => Utils.callBack(res, err, result));
+      const query = Utils.dealsQuery(jsonData);
+      Deal.find(query, (err, result) => Utils.callBack(res, err, result));
     }
   });
 
