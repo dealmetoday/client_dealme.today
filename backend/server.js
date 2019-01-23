@@ -4,15 +4,19 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const mongooseMulti = require('mongoose-multi')
-let dbConfig;
 const schemaFile = require('./config/schemas')
 const init = require('./config/init')
 
+let dbConfig, IPADDR;
+
 if(process.env.NODE_ENV === 'production'){
   dbConfig = require('./config/prod-config')
+  IPADDR = '18.191.87.9';
+
 }
 else{
   dbConfig = require('./config/dev-config')
+  IPADDR = 'localhost'
 }
 
 
@@ -32,7 +36,7 @@ app.use(function(req, res, next) {
 
 // connect to DB
 const options = { useNewUrlParser: true };
-mongoose.connect('mongodb://localhost/mern_app', options)
+mongoose.connect(`mongodb://${IPADDR}/mern_app`, options)
   .then(() => console.log('connected to DB...'))
   .catch(err => console.log('Could not connect', err));
 
