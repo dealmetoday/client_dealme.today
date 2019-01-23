@@ -22,6 +22,10 @@ export const UPDATE_LOGIN = "UPDATE_LOGIN";
 // USER
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
 
-// Deals
+// DEALS
 
 export const GET_DEALS = "GET_DEALS";
+
+// STORES
+
+export const GET_STORES = "GET_STORES";
