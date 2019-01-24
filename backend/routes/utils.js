@@ -8,7 +8,7 @@ exports.callBack = function(res, err, result) {
   } else {
     res.send(result);
   }
-}
+};
 
 exports.putCallback = function(res, err, output, type) {
   if (err) {
@@ -45,7 +45,7 @@ exports.redirectCallback = function(res, redirect, isFirst, id) {
   } else {
     res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
   }
-}
+};
 
 // This should work both there and elsewhere.
 exports.isEmptyObject = function(obj) {
@@ -55,12 +55,12 @@ exports.isEmptyObject = function(obj) {
     }
   }
   return true;
-}
+};
 
 exports.isValidObjectId = function(idString) {
   var matches = idString.match(/^[0-9a-fA-F]$/);
   return matches == null;
-}
+};
 
 exports.dealsQuery = function(obj) {
   var query = obj;
@@ -82,7 +82,8 @@ exports.dealsQuery = function(obj) {
     delete query.available;
 
     return query;
-}
+  }
+};
 
 exports.usersQuery = function(obj) {
   var query =
@@ -93,7 +94,7 @@ exports.usersQuery = function(obj) {
   }
 
   return query
-}
+};
 
 exports.createUser = function(User, inputObj) {
   const newID = mongoose.Types.ObjectId();
@@ -112,4 +113,4 @@ exports.createUser = function(User, inputObj) {
     });
 
   return newObj;
-}
+};
