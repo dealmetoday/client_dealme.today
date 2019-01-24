@@ -34,7 +34,7 @@ passport.use(new FacebookStrategy({
     clientID: CONFIG.FACEBOOK_APP_ID,
     clientSecret: CONFIG.FACEBOOK_CLIENT_SECRET,
     callbackURL: "http://localhost:5000/auth/facebook/callback",
-    profileFields: ['id', 'first_name', 'last_name', 'photos', 'email']
+    profileFields: ['id', 'displayName', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, done) {
     done(null, extractProfile(profile));
@@ -54,12 +54,14 @@ function done(user) {
 
 function extractProfile (profile) {
   let imageUrl = '';
+  let names = profile.displayName.split(" ");
   if (profile.photos && profile.photos.length) {
     imageUrl = profile.photos[0].value;
   }
   return {
     id: profile.id,
-    displayName: profile.displayName,
+    firstName: names[0],
+    lastName: names[1],
     email: profile.email,
     image: imageUrl
   };

@@ -89,8 +89,8 @@ exports.usersQuery = function(obj) {
   var query =
   {
     email: obj.email,
-    first: obj.first_name,
-    last: obj.last_name
+    first: obj.firstName,
+    last: obj.lastName
   }
 
   return query
