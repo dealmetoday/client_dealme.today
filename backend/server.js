@@ -11,15 +11,15 @@ const path = require('path')
 
 let dbConfig, IPADDR;
 
-/*if(process.env.NODE_ENV === 'production'){
+if(process.env.NODE_ENV === 'production'){
   dbConfig = require('./config/prod-config')
   IPADDR = '18.191.87.9';
 
 }
-else{*/
+else{
   dbConfig = require('./config/dev-config')
   IPADDR = 'localhost'
-//}
+}
 
 
 const app = express();
