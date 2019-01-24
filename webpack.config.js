@@ -6,11 +6,12 @@ const merge = require('webpack-merge');
 const PATHS = require('./webpack-paths');
 const loaders = require('./webpack-loaders');
 const plugins = require('./webpack-plugins');
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 const common = {
   entry: "./client/src/index.js",
   output: {
-    path: path.resolve(__dirname, "./dist"),
+    path: path.resolve(__dirname, "./backend/dist"),
     filename: "index_bundle.js",
     publicPath: '/'
   },
@@ -19,7 +20,10 @@ const common = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        loader: "babel-loader",
+        options: {
+          presets:['react']
+        }
       },
       {
         test: /\.s?css$/,
@@ -30,7 +34,8 @@ const common = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./client/public/index.html"
-    })
+    }),
+    new MinifyPlugin({},{})
   ],
   devtool: "cheap-module-eval-source-map",
   devServer: {
@@ -47,12 +52,12 @@ switch(env.trim()) {
   case 'production':
     config = merge(
         common,
-        { devtool: 'source-map' },
+        { devtool: "cheap-module-source-map" },
         {
           plugins: [
             plugins.loaderOptions,
             plugins.environmentVariables,
-            plugins.uglifyJs,
+            //plugins.uglifyJs,
             plugins.manifest, // Add the manifest plugin
             plugins.sw,
             plugins.copy

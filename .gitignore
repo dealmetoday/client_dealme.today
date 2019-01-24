@@ -2,3 +2,4 @@
 .idea/workspace.xml
 .env
 package-lock.json
+/dist/

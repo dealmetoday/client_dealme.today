@@ -6,18 +6,20 @@ const passport = require('passport');
 const mongooseMulti = require('mongoose-multi')
 const schemaFile = require('./config/schemas')
 const init = require('./config/init')
+const path = require('path')
+
 
 let dbConfig, IPADDR;
 
-if(process.env.NODE_ENV === 'production'){
+/*if(process.env.NODE_ENV === 'production'){
   dbConfig = require('./config/prod-config')
   IPADDR = '18.191.87.9';
 
 }
-else{
+else{*/
   dbConfig = require('./config/dev-config')
   IPADDR = 'localhost'
-}
+//}
 
 
 const app = express();
@@ -41,7 +43,7 @@ mongoose.connect(`mongodb://${IPADDR}/mern_app`, options)
   .catch(err => console.log('Could not connect', err));
 
 
-app.all('/', function(req, res, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
@@ -64,15 +66,26 @@ var today = Date.now();
 
 
 app.use('/api/dashboard', require("./routes/api/home/home"));
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
-app.use('/', (req, res) => {
+// app.all('/*', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   next();
+// });
+/*app.use('/', (req, res) => {
   res.json({
     id: newID,
     time: today
   })
-})
+})*/
+
+console.log('IF PRODUCTION')
+if (process.env.NODE_ENV === 'production') {
+  console.log('in production')
+  console.log(path.join(__dirname, 'dist'))
+  app.use(express.static(path.join(__dirname, 'dist')));
+  console.log(path.resolve(__dirname, './dist/index.html'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './dist/index.html'));
+  });
+}
 
 app.listen(PORT, () => console.log(`App is running on port ${PORT}`));

@@ -5,7 +5,14 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-const CONFIG = require('../../config/config_dev');
+let CONFIG;
+if(process.env.NODE_ENV === 'production') {
+  CONFIG = require('../../config/config_prod');
+
+}
+else{
+  CONFIG = require('../../config/config_dev');
+}
 
 var userAuth = null;
 var storeAuth = null;
@@ -13,8 +20,8 @@ var storeAuth = null;
 passport.use(new GoogleStrategy({
   clientID: CONFIG.GOOGLE_CLIENT_ID,
   clientSecret: CONFIG.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:5000/auth/google/callback',
-  accessType: 'offline'
+  callbackURL: `${CONFIG.SERVER_PATH}/auth/google/callback`
+  //accessType: 'offline'
 }, (accessToken, refreshToken, profile, cb) => {
   // Extract the minimal profile information we need from the profile object
   // provided by Google

@@ -7,12 +7,12 @@
     "test": "mocha",
     "lint": "eslint client/src",
     "start": "NODE_ENV=development webpack-dev-server --open --watch --hot ",
-    "build": "set NODE_ENV=production webpack ",
+    "build": "NODE_ENV=production webpack",
     "serve": "npm run clean && nodemon backend/server.js",
-    "serve-prod": "NODE_ENV=production nodemon backend/server.js",
+    "serve-prod": "NODE_ENV=production node backend/server.js",
     "clean": "mongo backend/dropDB.js",
     "dbon": "sudo service mongod start",
-    "heroku-postbuild": "npm build"
+    "heroku-postbuild": "node_ENV=production npm run build & npm run serve-prod"
   },
   "repository": {
     "type": "git",
@@ -94,6 +94,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "babel-minify-webpack-plugin": "^0.3.1",
     "concurrently": "^4.0.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.1.0",
