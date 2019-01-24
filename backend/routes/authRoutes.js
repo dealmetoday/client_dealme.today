@@ -34,7 +34,7 @@ passport.use(new FacebookStrategy({
     clientID: CONFIG.FACEBOOK_APP_ID,
     clientSecret: CONFIG.FACEBOOK_CLIENT_SECRET,
     callbackURL: "http://localhost:5000/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'photos', 'email']
+    profileFields: ['id', 'first_name', 'last_name', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, done) {
     done(null, extractProfile(profile));
@@ -60,15 +60,17 @@ function extractProfile (profile) {
   return {
     id: profile.id,
     displayName: profile.displayName,
+    email: profile.email,
     image: imageUrl
   };
 }
 
 
-module.exports = function(app, authDB) {
-  // Setting constructor
+module.exports = function(app, authDB, usersDB) {
+  // Setting constructors
   userAuth = authDB.UserAuths;
   storeAuth = authDB.StoreAuths;
+  User = usersDB.Users;
 
   // Create
   app.post('/auth', function(req, res) {
@@ -134,31 +136,78 @@ module.exports = function(app, authDB) {
     // Redirect back to the original page, if any
     // User information is stored in req.user and information is taken from extractProfile
     (req, res) => {
-      // TODO call a function here to check to see if user exist in our database, and if not then create a new user
+      // Check to see if user exist in database
+      // If not, create and return the new userID
+      // If yes, return userID
       console.log(req.user) // HERE IS YOUR USER DATA
+
+      const query = Utils.usersQuery(req.user)
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return
-      res.redirect(`http://localhost:8080/auth/success#user_id=${req.user.id}`);
+
+
+      User.findOne(query, function(err, result) {
+        // If result exists, return that userID
+        // If result doesn't exist, create user and return newID
+        if (result) {
+          Utils.redirectCallback(res, redirect, result.id)
+        } else {
+          const newUser = Utils.createUser(query);
+          newUser.save((err, result) => Utils.redirectCallback(res, redirect, result.id));
+        }
+      });
     }
   );
   // redirect route for when facebook sucessfully authenticates user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook',  { failureRedirect: '/loginError' }),
     (req,res) => {
-    console.log(req) //HERE IS YOUR USER DATA
+      // Check to see if user exist in database
+      // If not, create and return the new userID
+      // If yes, return userID
+      console.log(req) //HERE IS YOUR USER DATA
+
+      const query = Utils.usersQuery(req)
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return;
-      res.redirect(`http://localhost:8080/auth/success#user_id=${req.user.id}`)
+
+      User.findOne(query, function(err, result) {
+        // If result exists, return that userID
+        // If result doesn't exist, create user and return newID
+        if (result) {
+          Utils.redirectCallback(res, redirect, result.id)
+        } else {
+          const newUser = Utils.createUser(query);
+          newUser.save((err, result) => Utils.redirectCallback(res, redirect, result.id));
+        }
+      });
     }
   )
 
   app.get('/auth/login/email',
-      passport.authenticate('local', { failureRedirect: '/loginError' }),
-    function(req,res) {
-    res.redirect(`http://localhost:8080/auth/success#user_id=${req.user.id}`)
+    passport.authenticate('local', { failureRedirect: '/loginError' }),
+    (req,res) => {
+      // Check to see if user exist in database
+      // If not, create and return the new userID
+      // If yes, return userID
+      console.log(req) //HERE IS YOUR USER DATA
 
-      }
-    )
+      const query = Utils.usersQuery(req)
+      const redirect = req.session.oauth2return || '/user?';
+      delete req.session.oauth2return;
+
+      User.findOne(query, function(err, result) {
+        // If result exists, return that userID
+        // If result doesn't exist, create user and return newID
+        if (result) {
+          Utils.redirectCallback(res, redirect, result.id)
+        } else {
+          const newUser = Utils.createUser(query);
+          newUser.save((err, result) => Utils.redirectCallback(res, redirect, result.id));
+        }
+      });
+    }
+  )
 
   app.get('/loginError', (req,res) => {
     res.redirect('http://localhost:8080/')

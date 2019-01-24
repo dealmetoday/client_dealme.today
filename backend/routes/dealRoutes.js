@@ -16,12 +16,14 @@ module.exports = function(app, dealsDB) {
       {
         _id: newID,
         tags: jsonData.tags,
+        isActive: jsonData.isActive,
         description: jsonData.description,
         creationDate: jsonData.creationDate,
         expiryDate: jsonData.expiryDate,
         format: jsonData.format,
         usesLeft: jsonData.usesLeft,
         views: jsonData.views,
+        claims: jsonData.claims,
         mall: jsonData.mall,
         store: jsonData.store
       });
@@ -36,24 +38,8 @@ module.exports = function(app, dealsDB) {
     if (Utils.isEmptyObject(jsonData)) {
       Deal.find((err, result) => Utils.callBack(res, err, result));
     } else {
-      var query = jsonData;
-      if ("expiryDate" in query) {
-        query.expiryDate = {
-          $gte: jsonData.expiryDate
-        }
-      }
-      if ("available" in query) {
-        if (query.available) {
-          query.usesLeft = {
-            $ne: 0
-          }
-        } else {
-          query.usesLeft = 0
-        }
-        delete query.available;
-      }
-
-      Deal.find(jsonData, (err, result) => Utils.callBack(res, err, result));
+      const query = Utils.dealsQuery(jsonData);
+      Deal.find(query, (err, result) => Utils.callBack(res, err, result));
     }
   });
 

@@ -3,9 +3,10 @@ const Utils = require('./utils')
 
 var User = null;
 
-module.exports = function(app, usersDB) {
-  // Setting constructor
+module.exports = function(app, usersDB, dealsDB) {
+  // Setting constructors
   User = usersDB.Users;
+  Deal = dealsDB.Deals;
 
   // Create
   app.post('/users/email', function(req, res) {
@@ -91,5 +92,21 @@ module.exports = function(app, usersDB) {
     const jsonData = req.body;
 
     User.findByIdAndDelete(jsonData.id, (err, result) => Utils.callBack(res, err, result));
+  });
+
+  /****************************************************************************/
+  // Get user profile by ID
+  app.get('/user/profile', function(req, res) {
+    const jsonData = req.body;
+
+    User.findById(jsonData.id, (err, result) => Utils.callBack(res, err, result));
+  });
+
+  // Get deals for a specific User
+  app.get('/user/deals', function(req, res) {
+    const jsonData = req.body;
+    const query = Utils.dealsQuery(jsonData);
+
+    Deal.find(query, (err, result) => Utils.callBack(res, err, result));
   });
 };

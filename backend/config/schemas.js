@@ -31,12 +31,14 @@ module.exports = {
     Deal: new Schema({
       id: ID,
       tags: [ID],
+      isActive: Boolean,
       description: String,
       creationDate: Date,
       expiryDate: Date,
       format: String,
       usesLeft: Number,
       views: Number,
+      claims: Number,
       mall: ID,
       store: ID
     })

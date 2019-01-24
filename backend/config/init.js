@@ -81,12 +81,14 @@ function loadDeals() {
     var newObj = new Deal({
       _id: currObj.id,
       tags: currObj.tags,
+      isActive: currObj.isActive,
       description: currObj.description,
       creationDate: currObj.creationDate,
       expiryDate: currObj.expiryDate,
       format: currObj.format,
       usesLeft: currObj.usesLeft,
       views: currObj.views,
+      claims: currObj.claims,
       mall: currObj.mall,
       store: currObj.store
     })
