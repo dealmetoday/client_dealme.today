@@ -12,7 +12,7 @@
     "serve-prod": "NODE_ENV=production node backend/server.js",
     "clean": "mongo backend/dropDB.js",
     "dbon": "sudo service mongod start",
-    "heroku-postbuild": "node_ENV=production npm run build & npm run serve-prod"
+    "heroku-postbuild": "node_ENV=production npm run build && npm run serve-prod"
   },
   "repository": {
     "type": "git",
