@@ -92,6 +92,7 @@ exports.usersQuery = function(obj) {
     first: obj.firstName,
     last: obj.lastName
   }
+  console.log(query)
 
   return query
 };
