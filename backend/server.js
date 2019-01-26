@@ -60,24 +60,10 @@ require('./routes/dealRoutes')(app, databases.dealsDB);
 // Initialize all the databases
 init(databases);
 
-var newID = mongoose.Types.ObjectId();
-var today = Date.now();
-
-
-
 app.use('/api/dashboard', require("./routes/api/home/home"));
-// app.all('/*', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   next();
-// });
-/*app.use('/', (req, res) => {
-  res.json({
-    id: newID,
-    time: today
-  })
-})*/
 
 if (process.env.NODE_ENV === 'production') {
+  console.log(process.env.NODE_ENV);
   app.use(express.static(path.join(__dirname, 'dist')));
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, './dist/index.html'));

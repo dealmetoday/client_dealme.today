@@ -8,7 +8,7 @@
     "lint": "eslint client/src",
     "start": "NODE_ENV=development webpack-dev-server --open --watch --hot ",
     "build": "NODE_ENV=production webpack",
-    "serve": "npm run clean && nodemon backend/server.js",
+    "serve": "NODE_ENV=development npm run clean && nodemon backend/server.js",
     "serve-prod": "NODE_ENV=production node backend/server.js",
     "clean": "mongo backend/dropDB.js",
     "dbon": "sudo service mongod start",
