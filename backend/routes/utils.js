@@ -41,9 +41,9 @@ exports.getObjCallback = function(res, err, output) {
 
 exports.redirectCallback = function(res, redirect, isFirst, id) {
   if (isFirst) {
-    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
+    res.redirect(`http://dealme.today:5000/auth/success#user_id=${id}`)
   } else {
-    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
+    res.redirect(`http://dealme.today:5000/auth/success#user_id=${id}`)
   }
 };
 
