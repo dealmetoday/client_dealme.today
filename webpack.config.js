@@ -11,7 +11,7 @@ const MinifyPlugin = require("babel-minify-webpack-plugin");
 const common = {
   entry: "./client/src/index.js",
   output: {
-    path: path.resolve(__dirname, "./backend/dist"),
+    path: path.resolve(__dirname, "./dist"),
     filename: "index_bundle.js",
     publicPath: '/'
   },
@@ -46,7 +46,6 @@ const common = {
 
 let config;
 let env = process.env.NODE_ENV;
-console.log(process.env.NODE_ENV)
 
 switch(env.trim()) {
   case 'production':

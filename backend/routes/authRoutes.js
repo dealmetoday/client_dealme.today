@@ -5,22 +5,15 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-let CONFIG;
-if(process.env.NODE_ENV === 'production') {
-  CONFIG = require('../../config/config_prod');
-
-}
-else{
-  CONFIG = require('../../config/config_dev');
-}
+const configs = require('../../config/config');
 
 var userAuth = null;
 var storeAuth = null;
 
 passport.use(new GoogleStrategy({
-  clientID: CONFIG.GOOGLE_CLIENT_ID,
-  clientSecret: CONFIG.GOOGLE_CLIENT_SECRET,
-  callbackURL: `${CONFIG.SERVER_PATH}/auth/google/callback`,
+  clientID: configs.GOOGLE_CLIENT_ID,
+  clientSecret: configs.GOOGLE_CLIENT_SECRET,
+  callbackURL: `${configs.SERVER_URL}/auth/google/callback`,
   accessType: 'offline'
 }, (accessToken, refreshToken, profile, cb) => {
   // Extract the minimal profile information we need from the profile object
@@ -31,9 +24,9 @@ passport.use(new GoogleStrategy({
 
 
 passport.use(new FacebookStrategy({
-    clientID: CONFIG.FACEBOOK_APP_ID,
-    clientSecret: CONFIG.FACEBOOK_CLIENT_SECRET,
-    callbackURL: "http://localhost:5000/auth/facebook/callback",
+    clientID: configs.FACEBOOK_APP_ID,
+    clientSecret: configs.FACEBOOK_CLIENT_SECRET,
+    callbackURL: `${configs.SERVER_URL}/auth/facebook/callback`,
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, done) {
@@ -52,23 +45,14 @@ function done(user) {
   //TODO callback for when authentication is done
 }
 
-//TODO make a differnt method for facebook and google
 
 function extractProfile (profile, provider) {
   let imageUrl = '';
-  let email;
+  let email = profile.emails[0].value;;
   let names = profile.displayName.split(" ");
   if (profile.photos && profile.photos.length) {
     imageUrl = profile.photos[0].value;
   }
-  if(provider === 'google'){
-    email = profile.emails[0].value
-  }
-  else if (provider === 'facebook') {
-    email = profile.email
-  }
-
-
   return {
     id: profile.id,
     firstName: names[0],
@@ -178,17 +162,16 @@ module.exports = function(app, authDB, usersDB) {
       // If yes, return userID
        //HERE IS YOUR USER DATA
 
-      const query = Utils.usersQuery(req)
+      const query = Utils.usersQuery(req.user)
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return;
       User.findOne(query, function(err, result) {
         // If result exists, return that userID
         // If result doesn't exist, create user and return newID
-        console.log("Result: ", result)
         if (result) {
           Utils.redirectCallback(res, redirect, result.id)
         } else {
-          const newUser = Utils.createUser(query);
+          const newUser = Utils.createUser(User, query);
           newUser.save((err, result) => Utils.redirectCallback(res, redirect, result.id));
         }
       });
@@ -221,9 +204,7 @@ module.exports = function(app, authDB, usersDB) {
   )
 
   app.get('/loginError', (req,res) => {
-    res.redirect('http://localhost:8080/')
-
-
+    res.redirect(configs.CLIENT_URL);
   })
 
 

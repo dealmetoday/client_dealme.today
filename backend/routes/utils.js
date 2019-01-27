@@ -92,12 +92,12 @@ exports.usersQuery = function(obj) {
     first: obj.firstName,
     last: obj.lastName
   }
-  console.log(query)
-
   return query
 };
 
 exports.createUser = function(User, inputObj) {
+
+  //TODO newID seems to be undefined
   const newID = mongoose.Types.ObjectId();
 
   var newObj = new User(
