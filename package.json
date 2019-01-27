@@ -9,7 +9,7 @@
     "start": "NODE_ENV=development webpack-dev-server --open --watch --hot ",
     "build": "NODE_ENV=production webpack",
     "serve": "NODE_ENV=development npm run clean && nodemon backend/server.js",
-    "serve-prod": "NODE_ENV=production node backend/server.js",
+    "serve-prod": "NODE_ENV=production node backend/server.js -port 80",
     "clean": "mongo backend/dropDB.js",
     "dbon": "sudo service mongod start"
   },
