@@ -9,19 +9,19 @@ const init = require('./config/init')
 const path = require('path')
 
 
-let dbConfig, IPADDR;
+let dbConfig;
 
 if(process.env.NODE_ENV === 'production'){
   dbConfig = require('./config/prod-config')
-
 }
 else{
   dbConfig = require('./config/dev-config')
 }
 
+const  PORT = process.env.PORT || 5000
+
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 app.use(passport.initialize());
 app.use(passport.session());
 
