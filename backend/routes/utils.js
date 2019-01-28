@@ -82,6 +82,7 @@ exports.dealsQuery = function(obj) {
     delete query.available;
 
     return query;
+  }
 }
 
 exports.usersQuery = function(obj) {
