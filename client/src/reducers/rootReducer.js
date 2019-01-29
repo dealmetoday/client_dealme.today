@@ -1,16 +1,16 @@
 import {combineReducers} from 'redux';
-import stuff from './stuffReducer';
 import auth from './auth';
 import user from './user';
 import app from './App';
 import deals from './Deals';
+import mall from './mall'
 
 const rootReducer = combineReducers({
-  stuff,
   auth,
   user,
   app,
-  deals
+  deals,
+  mall
 });
 
 export default rootReducer;

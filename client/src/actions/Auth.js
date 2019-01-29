@@ -1,27 +1,22 @@
 import axios from 'axios'
 import {AUTH_SUCCESS, UPDATE_LOGIN} from "./actionTypes";
-import CONFIGS from '../../../config/config_dev'
+import configs from '../../../config/config'
 
 export const authFacebook = () => dispatch => {
-  window.open(`http://localhost:5000/auth/login/facebook`)
+  window.open(`${configs.SERVER_URL}/auth/login/facebook`)
 }
 
 export const authGoogle = () => dispatch => {
-  window.open(`http://localhost:5000/auth/login/google`)
+  window.open(`${configs.SERVER_URL}/auth/login/google`)
 }
 
 export const authEmail = (credentials) => dispatch => {
 
-  axios.get(`${CONFIGS.SERVER_PATH}/auth/login/email`, {params: credentials}).then(response => {
-
+  axios.get(`${configs.SERVER_PATH}/auth/login/email`, {params: credentials}).then(response => {
     dispatch({
       type: AUTH_SUCCESS,
       payload: response.data
-
-
     })
-
-
   })
 
 

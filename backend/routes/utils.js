@@ -8,7 +8,7 @@ exports.callBack = function(res, err, result) {
   } else {
     res.send(result);
   }
-}
+};
 
 exports.putCallback = function(res, err, output, type) {
   if (err) {
@@ -41,11 +41,11 @@ exports.getObjCallback = function(res, err, output) {
 
 exports.redirectCallback = function(res, redirect, isFirst, id) {
   if (isFirst) {
-    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
+    res.redirect(`http://dealme.today:5000/auth/success#user_id=${id}`)
   } else {
-    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
+    res.redirect(`http://dealme.today:5000/auth/success#user_id=${id}`)
   }
-}
+};
 
 exports.findIdCallback = function(res, err, result) {
   if (err) {
@@ -62,12 +62,12 @@ exports.isEmptyObject = function(obj) {
     }
   }
   return true;
-}
+};
 
 exports.isValidObjectId = function(idString) {
   var matches = idString.match(/^[0-9a-fA-F]$/);
   return matches == null;
-}
+};
 
 exports.dealsQuery = function(obj) {
   var query = obj;
@@ -90,20 +90,25 @@ exports.dealsQuery = function(obj) {
 
     return query;
   }
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> master
 
 exports.usersQuery = function(obj) {
   var query =
   {
     email: obj.email,
-    first: obj.first_name,
-    last: obj.last_name
+    first: obj.firstName,
+    last: obj.lastName
   }
-
   return query
-}
+};
 
 exports.createUser = function(User, inputObj) {
+
+  //TODO newID seems to be undefined
   const newID = mongoose.Types.ObjectId();
 
   var newObj = new User(
@@ -120,4 +125,4 @@ exports.createUser = function(User, inputObj) {
     });
 
   return newObj;
-}
+};

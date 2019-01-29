@@ -5,32 +5,32 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-const CONFIG = require('../../config/config_dev');
+const configs = require('../../config/config');
 
 var userAuth = null;
 var storeAuth = null;
 
 passport.use(new GoogleStrategy({
-  clientID: CONFIG.GOOGLE_CLIENT_ID,
-  clientSecret: CONFIG.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:5000/auth/google/callback',
+  clientID: configs.GOOGLE_CLIENT_ID,
+  clientSecret: configs.GOOGLE_CLIENT_SECRET,
+  callbackURL: `${configs.SERVER_URL}/auth/google/callback`,
   accessType: 'offline'
 }, (accessToken, refreshToken, profile, cb) => {
   // Extract the minimal profile information we need from the profile object
   // provided by Google
-  cb(null, extractProfile(profile));
+  cb(null, extractProfile(profile, 'google'));
 }));
 
 
 
 passport.use(new FacebookStrategy({
-    clientID: CONFIG.FACEBOOK_APP_ID,
-    clientSecret: CONFIG.FACEBOOK_CLIENT_SECRET,
-    callbackURL: "http://localhost:5000/auth/facebook/callback",
-    profileFields: ['id', 'first_name', 'last_name', 'photos', 'email']
+    clientID: configs.FACEBOOK_APP_ID,
+    clientSecret: configs.FACEBOOK_CLIENT_SECRET,
+    callbackURL: `${configs.SERVER_URL}/auth/facebook/callback`,
+    profileFields: ['id', 'displayName', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, done) {
-    done(null, extractProfile(profile));
+    done(null, extractProfile(profile, 'facebook'));
   }
 ));
 
@@ -45,15 +45,19 @@ function done(user) {
   //TODO callback for when authentication is done
 }
 
-function extractProfile (profile) {
+
+function extractProfile (profile, provider) {
   let imageUrl = '';
+  let email = profile.emails[0].value;;
+  let names = profile.displayName.split(" ");
   if (profile.photos && profile.photos.length) {
     imageUrl = profile.photos[0].value;
   }
   return {
     id: profile.id,
-    displayName: profile.displayName,
-    email: profile.email,
+    firstName: names[0],
+    lastName: names[1],
+    email,
     image: imageUrl
   };
 }
@@ -132,8 +136,6 @@ module.exports = function(app, authDB, usersDB) {
       // Check to see if user exist in database
       // If not, create and return the new userID
       // If yes, return userID
-      console.log(req.user) // HERE IS YOUR USER DATA
-
       const query = Utils.usersQuery(req.user)
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return
@@ -145,7 +147,7 @@ module.exports = function(app, authDB, usersDB) {
         if (result) {
           Utils.redirectCallback(res, redirect, result.id)
         } else {
-          const newUser = Utils.createUser(query);
+          const newUser = Utils.createUser(User, query);
           newUser.save((err, result) => Utils.redirectCallback(res, redirect, result.id));
         }
       });
@@ -158,19 +160,18 @@ module.exports = function(app, authDB, usersDB) {
       // Check to see if user exist in database
       // If not, create and return the new userID
       // If yes, return userID
-      console.log(req) //HERE IS YOUR USER DATA
+       //HERE IS YOUR USER DATA
 
-      const query = Utils.usersQuery(req)
+      const query = Utils.usersQuery(req.user)
       const redirect = req.session.oauth2return || '/user?';
       delete req.session.oauth2return;
-
       User.findOne(query, function(err, result) {
         // If result exists, return that userID
         // If result doesn't exist, create user and return newID
         if (result) {
           Utils.redirectCallback(res, redirect, result.id)
         } else {
-          const newUser = Utils.createUser(query);
+          const newUser = Utils.createUser(User, query);
           newUser.save((err, result) => Utils.redirectCallback(res, redirect, result.id));
         }
       });
@@ -203,9 +204,7 @@ module.exports = function(app, authDB, usersDB) {
   )
 
   app.get('/loginError', (req,res) => {
-    res.redirect('http://localhost:8080/')
-
-
+    res.redirect(configs.CLIENT_URL);
   })
 
 
