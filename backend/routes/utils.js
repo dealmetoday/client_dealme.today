@@ -11,12 +11,12 @@ exports.callBack = function(res, err, result) {
 };
 
 exports.putCallback = function(res, err, output, type) {
+  console.log(output.claims)
   if (err) {
-    console.log(err);
     res.send(constants.ERR);
   }
   else {
-      var retVal = {"Updated": "Updated"};
+      var retVal = {"Updated": "Updated", message: `Congrats! Thanks for claiming your deal. ${output.claims} have claimed this deal so far`};
       res.send(retVal);
   }
 };
@@ -90,11 +90,7 @@ exports.dealsQuery = function(obj) {
 
     return query;
   }
-<<<<<<< HEAD
 }
-=======
-};
->>>>>>> master
 
 exports.usersQuery = function(obj) {
   var query =

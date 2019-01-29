@@ -108,7 +108,7 @@ module.exports = function(app, dealsDB, usersDB) {
                 // Should never get here
                 res.send(constants.ERR);
               } else {
-                Deal.findOneAndUpdate({_id: dealID}, {$inc: {'claims': 1}}, (err, result) => Utils.putCallback(res, err, null, null));
+                Deal.findOneAndUpdate({_id: dealID}, {$inc: {'claims': 1}}, (err, result) => Utils.putCallback(res, err, result, null));
               }
             });
           }

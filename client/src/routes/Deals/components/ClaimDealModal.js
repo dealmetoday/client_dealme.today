@@ -47,10 +47,11 @@ class ClaimDealModal extends React.Component {
 
   handleScan(data) {
     if (data) {
-      axios.put(data).then(res => {
-        console.log(res)
+      let info = data.split("?");
+      axios.defaults.baseURL = 'http://localhost:5000';
+      axios.put(`/deals/claim?${info[1]}`).then(res => {
         this.setState({
-          result: `Deal Claimed!  ${data}`,
+          result: res.data.message,
           claimed: true
         });
       })
@@ -87,12 +88,12 @@ class ClaimDealModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <QrReader
-              delay={300}
+            {!this.state.claimed?  <QrReader
+              delay={1000}
               onError={this.handleError}
               onScan={this.handleScan}
               style={{ width: "100%" }}
-            />
+            /> : null}
             <p>{this.state.result}</p>
             <Button onClick={this.props.handleCloseClaims}>CLOSE</Button>
           </div>
