@@ -47,6 +47,13 @@ exports.redirectCallback = function(res, redirect, isFirst, id) {
   }
 };
 
+exports.findIdCallback = function(res, err, result) {
+  if (err) {
+    console.log(err);
+    res.send(constants.NOT_FOUND_ERROR);
+  }
+}
+
 // This should work both there and elsewhere.
 exports.isEmptyObject = function(obj) {
   for (var key in obj) {
@@ -83,7 +90,11 @@ exports.dealsQuery = function(obj) {
 
     return query;
   }
+<<<<<<< HEAD
+}
+=======
 };
+>>>>>>> master
 
 exports.usersQuery = function(obj) {
   var query =

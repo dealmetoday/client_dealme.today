@@ -53,7 +53,7 @@ require('./routes/authRoutes')(app, databases.authDB, databases.usersDB);
 require('./routes/userRoutes')(app, databases.usersDB, databases.dealsDB);
 require('./routes/mallRoutes')(app, databases.mallsDB);
 require('./routes/checkinRoutes')(app, databases.checkInDB);
-require('./routes/dealRoutes')(app, databases.dealsDB);
+require('./routes/dealRoutes')(app, databases.dealsDB, databases.usersDB);
 
 // Initialize all the databases
 init(databases);
