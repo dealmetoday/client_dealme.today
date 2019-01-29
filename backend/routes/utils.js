@@ -11,12 +11,12 @@ exports.callBack = function(res, err, result) {
 };
 
 exports.putCallback = function(res, err, output, type) {
+  console.log(output.claims)
   if (err) {
-    console.log(err);
     res.send(constants.ERR);
   }
   else {
-      var retVal = {"Updated": "Updated"};
+      var retVal = {"Updated": "Updated", message: `Congrats! Thanks for claiming your deal. ${output.claims} have claimed this deal so far`};
       res.send(retVal);
   }
 };
@@ -41,9 +41,9 @@ exports.getObjCallback = function(res, err, output) {
 
 exports.redirectCallback = function(res, redirect, isFirst, id) {
   if (isFirst) {
-    res.redirect(`http://dealme.today:5000/auth/success#user_id=${id}`)
+    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
   } else {
-    res.redirect(`http://dealme.today:5000/auth/success#user_id=${id}`)
+    res.redirect(`http://localhost:8080/auth/success#user_id=${id}`)
   }
 };
 
@@ -90,11 +90,7 @@ exports.dealsQuery = function(obj) {
 
     return query;
   }
-<<<<<<< HEAD
 }
-=======
-};
->>>>>>> master
 
 exports.usersQuery = function(obj) {
   var query =

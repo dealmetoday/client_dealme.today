@@ -5,12 +5,16 @@ import BottomNav from '../layout/BottomNav/BottomNav';
 import {changePage} from "../../actions/App";
 import Deals from './Deals';
 import './styles/DealsContainers.css'
+import ClaimDealModal from "./components/ClaimDealModal";
 
 
 
 class DealsContainer extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      claimsModalOpen: false
+    }
   }
 
   handleRouteChange = (path, value) => {
@@ -18,13 +22,25 @@ class DealsContainer extends React.Component {
     this.props.changePage(value)
   }
 
+  handleOpenClaims = () => {
+    this.setState({
+      claimsModalOpen: true
+    })
+  }
+
+  handleCloseClaims = () => {
+    this.setState({
+      claimsModalOpen: false
+    })
+  }
 
   render() {
     const {stores} = this.props.mall
     return (
       <div className={'deals-container'}>
+        <ClaimDealModal isOpened={this.state.claimsModalOpen} handleCloseClaims={this.handleCloseClaims}/>
         <NavBar/>
-        <Deals deals={this.props.deals.deals} stores={stores}/>
+        <Deals deals={this.props.deals.deals} stores={stores} handleOpenClaims={this.handleOpenClaims} handleCloseClaims={this.handleCloseClaims}/>
         <BottomNav handleChange={this.handleRouteChange}/>
       </div>
     )

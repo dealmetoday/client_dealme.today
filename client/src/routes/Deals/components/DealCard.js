@@ -97,7 +97,7 @@ class Deals extends React.Component {
                 </Grid>
                 <Grid item xs={8} />
                 <Grid item xs={2}>
-                  <Button variant="contained" color="primary" className={classes.button}>
+                  <Button variant="contained" color="primary" className={classes.button} onClick={this.props.handleOpenClaims}>
                     CLAIM
                   </Button>
                 </Grid>

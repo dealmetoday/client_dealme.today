@@ -53,7 +53,7 @@ class Deals extends React.Component {
             let store = this.props.stores.filter(aStore => {
               return aStore["_id"] === aDeal.store
             })
-           return( <DealCard key={'_deal'+index} deal={aDeal} store={store}/>)
+           return( <DealCard key={'_deal'+index} deal={aDeal} store={store} handleOpenClaims={this.props.handleOpenClaims}  handleCloseClaims={this.props.handleCloseClaims}/>)
           })
         }
 
