@@ -92,17 +92,28 @@ module.exports = function(app, dealsDB, usersDB) {
       if (err || result.length === 0) {
         res.send(constants.NOT_FOUND_ERROR);
       } else {
-        // Deal exists. Append it to the given user's deal history
-        User.findOneAndUpdate({_id: userID}, {$push: {'dealHistory': dealID}}, (err, result) => {
+        // Check if user exists
+        User.find({_id: userID}, (err, result) => {
           if (err || result.length === 0) {
-            // User does not exist, send error
             res.send(constants.NOT_FOUND_ERROR);
+          } else if (result[0].dealHistory.indexOf(dealID) !== -1) {
+            // If this user has already claimed the deal, do not claim it again
+            res.send(constants.DUPLICATE_ERROR);
           } else {
-            // User has been updated. Increment the number of claims on the given deal
-            Deal.findOneAndUpdate({_id: dealID}, {$inc: {'claims': 1}}, (err, result) => Utils.callBack(res, err, result));
+            console.log(result[0].dealHistory);
+            console.log(result[0].dealHistory.indexOf(dealID));
+            // Add the deal into the user's deal history and increment the deal's number of claims.
+            User.findOneAndUpdate({_id: userID}, {$push: {'dealHistory': dealID}}, (err, result) => {
+              if (err || !result) {
+                // Should never get here
+                res.send(constants.ERR);
+              } else {
+                Deal.findOneAndUpdate({_id: dealID}, {$inc: {'claims': 1}}, (err, result) => Utils.putCallback(res, err, null, null));
+              }
+            });
           }
-        })
+        }).limit(1);
       }
-    }).limit(1);  // Limit the deal search to 1 to save a bit of time
+    }).limit(1);
   });
 };

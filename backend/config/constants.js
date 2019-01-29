@@ -19,4 +19,8 @@ module.exports = Object.freeze({
   {
     "Error" : "Given ID does not exist in the database"
   },
+  DUPLICATE_ERROR:
+  {
+    "Error" : "Performed duplicate action"
+  },
 });
