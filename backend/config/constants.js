@@ -15,4 +15,8 @@ module.exports = Object.freeze({
   {
     "Error" : "Input ID is not a valid ObjectID"
   },
+  NOT_FOUND_ERROR:
+  {
+    "Error" : "Given ID does not exist in the database"
+  },
 });
