@@ -10,7 +10,7 @@ export default class AuthSuccess extends Component {
   componentDidMount() {
     console.log(this.props.location.hash.slice(1))
     const url = `/loggingIn#${this.props.location.hash.slice(1)}`;
-    window.opener.open(url, '_self');
+    window.opener.open(url, '_parent');
     window.opener.focus();
     window.close();
   }

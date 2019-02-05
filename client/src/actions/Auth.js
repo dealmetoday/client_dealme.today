@@ -7,7 +7,8 @@ export const authFacebook = () => dispatch => {
 }
 
 export const authGoogle = () => dispatch => {
-  window.open(`${configs.SERVER_URL}/auth/login/google`)
+  console.log("Hi")
+  window.open(`${configs.SERVER_URL}/auth/login/google`, '_self');
 }
 
 export const authEmail = (credentials) => dispatch => {
