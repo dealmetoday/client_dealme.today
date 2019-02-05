@@ -40,7 +40,7 @@ const Auth = (props) => {
             <Grid item xs={1}/>
             <Grid item xs={1}/>
             <Grid item xs={10}>
-              <GoogleLoginButton onClick={props.authGoogle}/>
+              <GoogleLoginButton onClick={()=> props.history.push('/auth/login/google')}/>
             </Grid>
           <Grid container>
             <Grid item xs={3}/>

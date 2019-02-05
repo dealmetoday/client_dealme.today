@@ -1,8 +1,8 @@
 let configs;
 if(process.env.NODE_ENV === 'production') {
   configs = {
-    SERVER_URL:'http://dealme.today',
-    CLIENT_URL:'http://dealme.today:8080',
+    SERVER_URL:'https://www.dealme.today',
+    CLIENT_URL:'https://www.dealme.today',
     FACEBOOK_GRAPH_API: "https://graph.facebook.com/v3.2",
     FACEBOOK_APP_ID : "794859637527349",
     FACEBOOK_CLIENT_SECRET : "c010fc0b17f887cb8fa9fb1658ad210f",

@@ -39,7 +39,7 @@ class Home extends React.Component {
           <Grid container>
             <Grid item xs={1}/>
             <Grid item xs={10}>
-              <AuthContainer/>
+              <AuthContainer history={this.props.history}/>
             </Grid>
           </Grid>
         </Grid>

@@ -45,6 +45,7 @@ class AuthContainer extends React.Component {
             handleChange={this.handleChange}
             isFormValid={this.state.isFormValid}
             handleFormLogin={this.handleFormLogin}
+            history={this.props.history}
       />
     )
 

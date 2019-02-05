@@ -31,7 +31,7 @@ class App extends React.Component {
           <div className={'app-container'}>
             <Router>
               <Switch>
-                <Route exact path='/' component={Home} />
+                <Route exact path='/' component={Home} location={this.props.location} history={this.props.history}/>
                 <Route path='/dashboard' component={Home}/>
                 <Route path='/loggingIn' component={LoggingIn}/>
                 <Route path="/auth/success" component={AuthSuccess} />
