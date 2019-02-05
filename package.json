@@ -7,9 +7,9 @@
     "test": "mocha",
     "lint": "eslint client/src",
     "start": "NODE_ENV=development webpack-dev-server --open --watch --hot ",
-    "build": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=production webpack --env production --profile --color",
     "serve": "NODE_ENV=development npm run clean && nodemon backend/server.js",
-    "serve-prod": "NODE_ENV=production node backend/server.js -port 80",
+    "serve-prod": "NODE_ENV=production node backend/server.js -port 5000",
     "clean": "mongo backend/dropDB.js",
     "dbon": "sudo service mongod start"
   },
