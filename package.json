@@ -1,30 +1,26 @@
 {
-  "name": "mern-webpack-template",
+  "name": "dealme.today",
   "version": "1.0.0",
-  "description": "A MERN stack setup with custom React config",
-  "main": "./client/index.js",
+  "description": "dealme.today - online discount platform",
+  "main": ".index.js",
   "scripts": {
     "test": "mocha",
-    "lint": "eslint client/src",
+    "lint": "eslint /src",
     "start": "NODE_ENV=development webpack-dev-server --open --watch --hot ",
-    "build": "NODE_ENV=production webpack --env production --profile --color",
-    "serve": "NODE_ENV=development npm run clean && nodemon backend/server.js",
-    "serve-prod": "NODE_ENV=production node backend/server.js -port 5000",
-    "clean": "mongo backend/dropDB.js",
-    "dbon": "sudo service mongod start"
+    "build": "NODE_ENV=production webpack --env production --profile --color"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:phavor/minimal-mern-template.git git@gitlab.com:boilerplates_and_templates/MERN-stack/minimal-mern-template.git"
+    "url": "https://github.com/RyanLiu6/client_dealme.today"
   },
   "keywords": [
     "mern",
     "react",
-    "mongodb",
-    "boilerplate",
-    "templates"
+    "promotions",
+    "deals",
+    "discount"
   ],
-  "author": "Fayvor George",
+  "author": "Ryan Liu, Alfred Hong, Mihailo Stefanovic",
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^3.8.3",
@@ -55,8 +51,6 @@
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
-    "mongoose": "^5.2.13",
-    "mongoose-multi": "^0.4.4",
     "morgan": "^1.9.1",
     "node-sass": "^4.9.2",
     "normalize.css": "^8.0.0",

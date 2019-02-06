@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {AUTH_SUCCESS, UPDATE_LOGIN} from "./actionTypes";
-import configs from '../../../config/config'
+import configs from '../../config/config'
 
 export const authFacebook = () => dispatch => {
   window.open(`${configs.SERVER_URL}/auth/login/facebook`)

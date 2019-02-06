@@ -9,7 +9,7 @@ const plugins = require('./webpack-plugins');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 const common = {
-  entry: "./client/src/index.js",
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "index_bundle.js",
@@ -33,7 +33,7 @@ const common = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./client/public/index.html"
+      template: "./public/index.html"
     }),
     new MinifyPlugin({},{})
   ],

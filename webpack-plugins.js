@@ -62,5 +62,5 @@ exports.sw = new SWPrecacheWebpackPlugin({
 
 // Export copy-webpack-plugin instance
 exports.copy = new CopyWebpackPlugin([
-    { from: './client/src/pwa' }, // define the path of the files to be copied
+    { from: './src/pwa' }, // define the path of the files to be copied
 ]);
