@@ -12,7 +12,7 @@ if(process.env.NODE_ENV === 'production') {
 }
 else{
   configs = {
-    SERVER_URL:'http://localhost:5000',
+    SERVER_URL:'http://ec2-3-16-78-171.us-east-2.compute.amazonaws.com:5000',
     CLIENT_URL:'http://localhost:8080',
     FACEBOOK_GRAPH_API: "https://graph.facebook.com/v3.2",
     FACEBOOK_APP_ID : "794859637527349",
@@ -24,5 +24,3 @@ else{
 }
 
 module.exports = configs
-
-

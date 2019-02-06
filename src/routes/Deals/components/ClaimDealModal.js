@@ -40,7 +40,7 @@ class ClaimDealModal extends React.Component {
     }
     this.handleScan = this.handleScan.bind(this);
   }
-  
+
   handleError(err) {
     console.error(err);
   }
@@ -48,7 +48,7 @@ class ClaimDealModal extends React.Component {
   handleScan(data) {
     if (data) {
       let info = data.split("?");
-      axios.defaults.baseURL = 'http://localhost:5000';
+      axios.defaults.baseURL = 'http://ec2-3-16-78-171.us-east-2.compute.amazonaws.com:5000';
       axios.put(`/deals/claim?${info[1]}`).then(res => {
         this.setState({
           result: res.data.message,
