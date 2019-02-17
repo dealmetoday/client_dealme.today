@@ -1,7 +1,8 @@
 {
-  "presets": ["env", "react"],
-  "plugins": [
-    "transform-class-properties",
-    "transform-object-rest-spread"
-  ]
+  "presets": ["module:metro-react-native-babel-preset"],
+  "env": {
+    "production": {
+      "plugins": ["ignite-ignore-reactotron"]
+    }
+  }
 }
