@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, TouchableOpacity} from 'react-native'
 import { Header, Left, Body, Right, Button, Title, Form, Item, Picker, Icon, Text } from 'native-base'
 import { Input} from 'react-native-elements'
+import HeaderNav from '../../Components/HeaderNav'
+import FooterNav from '../../Components/FooterNav'
+import { createStackNavigator, createAppContainer } from 'react-navigation'
+import UserDealsScreen from '../UserScreen/UserDealsScreen'
 
 // Styles
-import styles from './Styles/LaunchScreenStyles'
+import styles from '../Styles/LaunchScreenStyles'
 
-export default class UserProfileScreen extends Component {
+class UserProfileScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -21,9 +25,18 @@ export default class UserProfileScreen extends Component {
     });
   }
 
+  handleBackButton = () => {
+    this.props.navigation.pop()
+  }
+
+  openDealScreen = () => {
+    this.props.navigation.navigate('UserDealsScreen')
+  }
+
   render () {
     return (
       <View style={styles.mainContainer}>
+        <HeaderNav handleBackButton={this.handleBackButton} />
         <ScrollView style={styles.container}>
           <View>
             <Form>
@@ -77,7 +90,33 @@ export default class UserProfileScreen extends Component {
             </Button>
           </View>
         </ScrollView>
+        <FooterNav openDealsScreen={this.openDealScreen}/>
+
       </View>
     )
   }
 }
+
+const stackNavigator = createStackNavigator({
+  UserProfileScreen: {screen: UserProfileScreen},
+  UserDealsScreen: {screen: UserDealsScreen}
+}, {
+  cardStyle: {
+    opacity: 1
+  },
+  initialRouteName: 'UserProfileScreen',
+  headerMode: 'none',
+  // Keeping this here for future when we can make
+  navigationOptions: {
+    header: {
+      left: (
+        <TouchableOpacity onPress={() => window.alert('pop')} ><Icon name={'close'} /></TouchableOpacity>
+      ),
+      style: {
+        backgroundColor: '#3e243f'
+      }
+    }
+  }
+})
+
+export default createAppContainer(stackNavigator);

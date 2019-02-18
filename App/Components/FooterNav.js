@@ -11,7 +11,7 @@ class FooterNav extends Component {
     return (
       <Footer>
         <FooterTab>
-          <Button>
+          <Button onPress={this.props.openDealsScreen}>
             <Icon name='apps' />
           </Button>
           <Button>
@@ -20,7 +20,7 @@ class FooterNav extends Component {
           <Button active>
             <Icon active name='navigate' />
           </Button>
-          <Button>
+          <Button onPress={this.props.openProfileScreen}>
             <Icon name='person' />
           </Button>
         </FooterTab>

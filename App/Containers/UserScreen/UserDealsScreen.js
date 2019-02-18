@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Image } from 'react-native'
-import { Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title, Footer, FooterTab } from 'native-base'
-import FringeLogo from '../Images/onTheFringe.png'
-import FringeBanner from '../Images/onTheFringeBanner.png'
+import { Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base'
+import FringeLogo from '../../Images/onTheFringe.png'
+import FringeBanner from '../../Images/onTheFringeBanner.png'
+import HeaderNav from '../../Components/HeaderNav'
+import FooterNav from '../../Components/FooterNav'
 
 // Styles
-import styles from './Styles/LaunchScreenStyles'
+import styles from '../Styles/LaunchScreenStyles'
 
-export default class UserProfileScreen extends Component {
+export default class UserDealsScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       isSigninInProgress: false
     }
   }
+  handleBackButton = () => {
+    this.props.navigation.pop()
+  }
+
+  openProfileScreen = () => {
+    this.props.navigation.navigate('UserProfileScreen')
+  }
 
   render () {
     return (
       <View style={styles.mainContainer}>
+        <HeaderNav handleBackButton={this.handleBackButton} />
         <ScrollView style={styles.container}>
           <Content>
             <View style={styles.section} >
@@ -60,17 +70,17 @@ export default class UserProfileScreen extends Component {
                   <Left>
                     <Thumbnail source={FringeLogo} />
                     <Body>
-                    <Text>On the Fringe</Text>
-                    <Text note>Hair Salon</Text>
+                      <Text>On the Fringe</Text>
+                      <Text note>Hair Salon</Text>
                     </Body>
                   </Left>
                 </CardItem>
                 <CardItem>
                   <Body>
-                  <Image source={FringeBanner} style={{height: 150, width: '100%', flex: 1}} />
-                  <Text>
-                    $2 off your next haircut
-                  </Text>
+                    <Image source={FringeBanner} style={{height: 150, width: '100%', flex: 1}} />
+                    <Text>
+                      $2 off your next haircut
+                    </Text>
                   </Body>
                 </CardItem>
                 <CardItem>
@@ -88,6 +98,7 @@ export default class UserProfileScreen extends Component {
             </View>
           </Content>
         </ScrollView>
+        <FooterNav openProfileScreen={this.openProfileScreen} />
       </View>
     )
   }

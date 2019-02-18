@@ -14,7 +14,7 @@ class HeaderNav extends Component {
     return (
       <Header>
         <Left>
-          <Button hasText transparent>
+          <Button hasText transparent onPress={this.props.handleBackButton}>
             <Text>Back</Text>
           </Button>
         </Left>
