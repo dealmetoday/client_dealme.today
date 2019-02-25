@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>9</integer>
+	<key>logs</key>
+	<dict>
+		<key>585FBBB3-D882-44F5-8C92-6AA1B6662151</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>585FBBB3-D882-44F5-8C92-6AA1B6662151.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>W</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>Boilerplate project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Boilerplate</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>572775707.92279994</real>
+			<key>timeStoppedRecording</key>
+			<real>572775710.18518305</real>
+			<key>title</key>
+			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>585FBBB3-D882-44F5-8C92-6AA1B6662151</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

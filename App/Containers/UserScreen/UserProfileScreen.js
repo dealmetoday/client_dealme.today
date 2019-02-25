@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { ScrollView, View } from 'react-native'
-import { Button, Form, Item, Picker, Icon, Text } from 'native-base'
-import { Input } from 'react-native-elements'
+import { Button, Form, Item, Picker, Icon, Text, Input } from 'native-base'
 import HeaderNav from '../../Components/HeaderNav'
 import FooterNav from '../../Components/FooterNav'
 
 // SCREENS
 // Styles
 import styles from '../Styles/LaunchScreenStyles'
+
 
 const ageList = [
   {
@@ -70,6 +70,8 @@ export default class UserProfileScreen extends Component {
     }
     this.handleInputChange.bind(this)
     this.onValueChange.bind(this)
+    this.openQRScreen.bind(this)
+    this.openDealScreen.bind(this)
   }
 
   onValueChange (value, field) {
@@ -85,28 +87,35 @@ export default class UserProfileScreen extends Component {
   openDealScreen = () => {
     this.props.navigation.navigate('UserDealsScreen')
   }
-  openProfileSCreen = () => {
-    this.props.navigation.navigate('UserProfileScreen')
+
+  openQRScreen = () => {
+    console.log('HI')
+    this.props.navigation.navigate('UserQRScreen')
   }
+
   handleInputChange (event, field) {
-    console.log(event.nativeEvent)
-    console.log(field)
     this.setState({
       [ field ]: event.nativeEvent.text
     })
   }
 
-  renderedAgeList = () => {
-    Object.keys(ageList).forEach(key => {
-      return <Picker.Item label={ageList[key]} value={key} />
-    })
+  handleSaveProfile = () => {
+    const {firstName, lastName, email, age, gender} = this.state
+    let updatedProfile = {
+      firstName,
+      lastName,
+      email,
+      age,
+      gender
+    }
+    console.log(updatedProfile)
   }
 
   render () {
 
     return (
       <View style={styles.mainContainer}>
-        <HeaderNav handleBackButton={this.handleBackButton} />
+        <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'Profile'} rightLabel={'Save'} />
         <ScrollView style={styles.container}>
           <View>
             <Form>
@@ -164,7 +173,7 @@ export default class UserProfileScreen extends Component {
             </Button>
           </View>
         </ScrollView>
-        <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen}/>
+        <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} />
 
       </View>
     )

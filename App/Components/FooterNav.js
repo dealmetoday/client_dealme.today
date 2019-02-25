@@ -3,10 +3,6 @@ import { Button, Icon, Footer, FooterTab } from 'native-base'
 import { connect } from 'react-redux'
 
 class FooterNav extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return (
       <Footer>
@@ -14,7 +10,7 @@ class FooterNav extends Component {
           <Button onPress={this.props.openDealsScreen}>
             <Icon name='apps' />
           </Button>
-          <Button>
+          <Button onPress={this.props.openQRScreen}>
             <Icon name='camera' />
           </Button>
           <Button active>
@@ -30,11 +26,10 @@ class FooterNav extends Component {
 }
 
 const mapStateToProps = state => ({
-  nav: state.nav
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatch
+  dispatch,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FooterNav)

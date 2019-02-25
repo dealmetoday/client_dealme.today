@@ -9,6 +9,7 @@ import FooterNav from '../../Components/FooterNav'
 // Styles
 import styles from '../Styles/LaunchScreenStyles'
 
+
 export default class UserDealsScreen extends Component {
   constructor (props) {
     super(props)
@@ -23,11 +24,15 @@ export default class UserDealsScreen extends Component {
   openProfileScreen = () => {
     this.props.navigation.navigate('UserProfileScreen')
   }
+  handleLogout = () => {
+    console.log("logging out")
+  }
 
   render () {
     return (
       <View style={styles.mainContainer}>
-        <HeaderNav handleBackButton={this.handleBackButton} />
+        <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleLogout} leftLabel={'Back'} title={'Deals'} rightLabel={'Logout'} />
+
         <ScrollView style={styles.container}>
           <Content>
             <View style={styles.section} >

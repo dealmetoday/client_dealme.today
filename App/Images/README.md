@@ -1,2 +1,1 @@
-### Images folder
-Holds all images for the applications.
+This directory contains the application's images.

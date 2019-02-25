@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { Header, Left, Body, Right, Button, Title, Form, Item, Picker, Icon, Text } from 'native-base'
+import { Header, Left, Body, Right, Button, Title, Text } from 'native-base'
 import { connect } from 'react-redux'
-import StartupActions from '../Redux/StartupRedux'
 
-
+// This is a generic header component for the App.
+// When using this component, please specify the methods for
+// the Left and Right button as props. Also specify the labels for the
+// Left, Title, and Right buttons as props
 
 class HeaderNav extends Component {
   constructor (props) {
@@ -14,16 +16,16 @@ class HeaderNav extends Component {
     return (
       <Header>
         <Left>
-          <Button hasText transparent onPress={this.props.handleBackButton}>
-            <Text>Back</Text>
+          <Button hasText transparent onPress={this.props.handleLeftButton}>
+            <Text>{this.props.leftLabel}</Text>
           </Button>
         </Left>
         <Body>
-        <Title>Profile</Title>
+        <Title>{this.props.title}</Title>
         </Body>
         <Right>
-          <Button hasText transparent>
-            <Text>Save</Text>
+          <Button hasText transparent onPress={this.props.handleRightButton}>
+            <Text>{this.props.rightLabel}</Text>
           </Button>
         </Right>
       </Header>

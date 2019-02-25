@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from '../../Themes/'
+import { Metrics, ApplicationStyles } from '../Styles'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
     paddingBottom: Metrics.baseMargin,
-    height: '100%'
+    height: '100%',
   },
   centered: {
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 })
 
 // MAIN COLORS
