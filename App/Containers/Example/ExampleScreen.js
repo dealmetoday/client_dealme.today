@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Platform, Text, View, Button, Linking } from 'react-native'
+import { Platform, Text, View, Button, Linking, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
 import SafariView from 'react-native-safari-view'
+import SignUpForm from '../../Components/SignUpForm'
+
+
 
 
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
@@ -21,6 +24,13 @@ const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu.',
   android: 'Double tap R on your keyboard to reload,\nShake or press menu button for dev menu.',
 })
+
+const MailIcon = {
+  name: 'mail',
+  size: 24,
+  color: '#F5B512',
+  iconStyle: {paddingRight: 16, left: 0}
+}
 
 class ExampleScreen extends Component {
   constructor(props) {
@@ -91,24 +101,25 @@ class ExampleScreen extends Component {
 
     return (
       <View style={Style.container}>
-        <Text style={Style.title}>TheCodingMachine boilerplate</Text>
-        <Text style={Style.text}>To get started, edit App.js</Text>
-        <Text style={Style.instructions}>{instructions}</Text>
-        <Text style={Style.loading}>{isLoading}</Text>
-        {user && !error ? (
-          <Text style={Style.result}>{result}</Text>
-        ) : (
-          <Text style={Style.error}>{error}</Text>
-        )}
-        <Button onPress={this.props.fetchUser} title="Refresh" />
+        <ScrollView contentContainerStyle={Style.container}>
+          <View style={{...Style.section, alignItems: 'center', height: '33%'}}>
+            <Text style={{textAlign: 'center', color: '#7C2218', marginTop: '45%', fontSize: 72, fontWeight: '600'}} h1>Dealme</Text>
+          </View>
 
-        <GoogleSigninButton
-          style={{ width: '100%', height: 48 }}
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Light}
-          onPress={this._signInServer}
-          disabled={this.state.isSigninInProgress}
-        />
+          <View style={{...Style.section, height: '15%'}} >
+            <GoogleSigninButton
+              style={{ width: '100%', height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Light}
+              onPress={this._signInServer}
+              disabled={this.state.isSigninInProgress} />
+          </View>
+          <View style={Style.section} >
+            <Text style={{textAlign: 'center', marginBottom: 12}} h3> Sign Up</Text>
+            <SignUpForm Icon={MailIcon} />
+          </View>
+
+        </ScrollView>
       </View>
     )
   }
