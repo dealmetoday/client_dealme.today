@@ -8,6 +8,10 @@ target 'Boilerplate' do
   # Pods for Boilerplate
   pod 'GoogleSignIn', '~> 4.4.0'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
   target 'BoilerplateTests' do
     inherit! :search_paths
     # Pods for testing

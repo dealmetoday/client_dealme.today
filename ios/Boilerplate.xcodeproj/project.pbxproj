@@ -61,6 +61,8 @@
 		C7EF05172224FDFE00D53600 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF05142224FDFE00D53600 /* Bolts.framework */; };
 		C7EF05182224FDFE00D53600 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF05152224FDFE00D53600 /* FBSDKCoreKit.framework */; };
 		C7EF051F2224FFD800D53600 /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF051E2224FFC700D53600 /* libRCTFBLogin.a */; };
+		C7EF0526222508BD00D53600 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF05252225089700D53600 /* libRNCamera.a */; };
+		C7EF052D22250A2F00D53600 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF052C22250A2300D53600 /* libReactNativePermissions.a */; };
 		D5F55E7BAA2644E29D218B74 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5850D036223542B9B01A44FF /* libRNGoogleSignin.a */; };
 		D7D5B3ABE09748488632AC01 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F1CCB6B199B4486EBD01012A /* FontAwesome5_Regular.ttf */; };
 		EB3251F4A8874C20AF52B0AC /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83ECEED7B35A43E39016D8EF /* libRNGestureHandler.a */; };
@@ -369,6 +371,20 @@
 			remoteGlobalIDString = 4F3A6B5B1ACFBCC500CA65F7;
 			remoteInfo = RCTFBLogin;
 		};
+		C7EF05242225089700D53600 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7EF05202225089700D53600 /* RNCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RNCamera;
+		};
+		C7EF052B22250A2300D53600 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7EF052722250A2300D53600 /* ReactNativePermissions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
+			remoteInfo = ReactNativePermissions;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -423,6 +439,8 @@
 		C7EF05142224FDFE00D53600 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../../FacebookSDKs-iOS-4.40.0/Bolts.framework"; sourceTree = "<group>"; };
 		C7EF05152224FDFE00D53600 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../../FacebookSDKs-iOS-4.40.0/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		C7EF05192224FFC700D53600 /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBLogin.xcodeproj; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; };
+		C7EF05202225089700D53600 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
+		C7EF052722250A2300D53600 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		CB92C4C4FBB939212088F641 /* Pods-Boilerplate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Boilerplate.debug.xcconfig"; path = "Target Support Files/Pods-Boilerplate/Pods-Boilerplate.debug.xcconfig"; sourceTree = "<group>"; };
 		D23C6CD59DC74AA68DABE8EA /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		D59E2272B06B4F7D9A1BC2FE /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
@@ -447,6 +465,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7EF052D22250A2F00D53600 /* libReactNativePermissions.a in Frameworks */,
+				C7EF0526222508BD00D53600 /* libRNCamera.a in Frameworks */,
 				C7EF051F2224FFD800D53600 /* libRCTFBLogin.a in Frameworks */,
 				C76BDFF72223DC630006A251 /* libSafariViewManager.a in Frameworks */,
 				C7EF05172224FDFE00D53600 /* Bolts.framework in Frameworks */,
@@ -658,6 +678,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C7EF052722250A2300D53600 /* ReactNativePermissions.xcodeproj */,
+				C7EF05202225089700D53600 /* RNCamera.xcodeproj */,
 				C7EF05192224FFC700D53600 /* RCTFBLogin.xcodeproj */,
 				C76BDFCA2223DC380006A251 /* SafariViewManager.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -786,6 +808,22 @@
 			isa = PBXGroup;
 			children = (
 				C7EF051E2224FFC700D53600 /* libRCTFBLogin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C7EF05212225089700D53600 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C7EF05252225089700D53600 /* libRNCamera.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C7EF052822250A2300D53600 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C7EF052C22250A2300D53600 /* libReactNativePermissions.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -955,6 +993,14 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = C7EF052822250A2300D53600 /* Products */;
+					ProjectRef = C7EF052722250A2300D53600 /* ReactNativePermissions.xcodeproj */;
+				},
+				{
+					ProductGroup = C7EF05212225089700D53600 /* Products */;
+					ProjectRef = C7EF05202225089700D53600 /* RNCamera.xcodeproj */;
 				},
 				{
 					ProductGroup = C76BDF7D2223D2CA0006A251 /* Products */;
@@ -1265,6 +1311,20 @@
 			fileType = archive.ar;
 			path = libRCTFBLogin.a;
 			remoteRef = C7EF051D2224FFC700D53600 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C7EF05252225089700D53600 /* libRNCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCamera.a;
+			remoteRef = C7EF05242225089700D53600 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C7EF052C22250A2300D53600 /* libReactNativePermissions.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativePermissions.a;
+			remoteRef = C7EF052B22250A2300D53600 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
