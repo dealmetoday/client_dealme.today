@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/alfredhong/react-native-boilerplate/ios/Pods/Target\ Support\ Files/Pods-BoilerplateTests/Pods-BoilerplateTests-dummy.m
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/Target\ Support\ Files/Pods-BoilerplateTests/Pods-BoilerplateTests-dummy.m

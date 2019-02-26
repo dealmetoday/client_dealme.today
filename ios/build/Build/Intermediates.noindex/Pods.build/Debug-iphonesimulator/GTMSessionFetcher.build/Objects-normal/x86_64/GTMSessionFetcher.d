@@ -1,4 +1,4 @@
 dependencies: \
-  /Users/alfredhong/react-native-boilerplate/ios/Pods/GTMSessionFetcher/Source/GTMSessionFetcher.m \
-  /Users/alfredhong/react-native-boilerplate/ios/Pods/Target\ Support\ Files/GTMSessionFetcher/GTMSessionFetcher-prefix.pch \
-  /Users/alfredhong/react-native-boilerplate/ios/Pods/GTMSessionFetcher/Source/GTMSessionFetcher.h
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GTMSessionFetcher/Source/GTMSessionFetcher.m \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/Target\ Support\ Files/GTMSessionFetcher/GTMSessionFetcher-prefix.pch \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GTMSessionFetcher/Source/GTMSessionFetcher.h

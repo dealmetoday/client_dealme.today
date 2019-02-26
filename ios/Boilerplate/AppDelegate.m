@@ -7,9 +7,12 @@
 
 #import "AppDelegate.h"
 
+
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNGoogleSignin.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @implementation AppDelegate
 
@@ -44,4 +47,16 @@
                           annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+  [FBSDKAppEvents activateApp];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                        openURL:url
+                                              sourceApplication:sourceApplication
+                                                     annotation:annotation];
+}
+
 @end
+

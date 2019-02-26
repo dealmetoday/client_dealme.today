@@ -7,6 +7,7 @@ import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
 import SafariView from 'react-native-safari-view'
 import SignUpForm from '../../Components/SignUpForm'
+var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 
 
 
@@ -107,6 +108,7 @@ class ExampleScreen extends Component {
           </View>
 
           <View style={{...Style.section, height: '15%'}} >
+            <FBLogin style={{width: '100%', height: 48}}/>
             <GoogleSigninButton
               style={{ width: '100%', height: 48 }}
               size={GoogleSigninButton.Size.Wide}

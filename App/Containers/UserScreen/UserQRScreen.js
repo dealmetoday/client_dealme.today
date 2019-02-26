@@ -52,7 +52,7 @@ export default class UserQRScreen extends Component {
 
     return (
       <View style={styles.mainContainer}>
-        <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'Profile'} rightLabel={'Save'} />
+        <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'QR Scan'} rightLabel={'Save'} />
         <ScrollView style={styles.container}>
           <View>
 
