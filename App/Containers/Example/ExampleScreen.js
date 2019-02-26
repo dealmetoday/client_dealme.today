@@ -86,6 +86,9 @@ class ExampleScreen extends Component {
       console.log(error)
     }
   }
+  handleLogin(data) {
+    console.log(data.credentials)
+  }
 
   render() {
     let isLoading = this.props.userIsLoading ? 'Data are loading...' : ''
@@ -108,7 +111,10 @@ class ExampleScreen extends Component {
           </View>
 
           <View style={{...Style.section, height: '15%'}} >
-            <FBLogin style={{width: '100%', height: 48}}/>
+            <FBLogin style={{width: '100%', height: 48}}
+                     onLogin={this.handleLogin}
+                     permissions={["email","user_friends"]}
+            />
             <GoogleSigninButton
               style={{ width: '100%', height: 48 }}
               size={GoogleSigninButton.Size.Wide}
