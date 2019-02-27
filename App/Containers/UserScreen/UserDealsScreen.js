@@ -28,6 +28,15 @@ export default class UserDealsScreen extends Component {
     console.log("logging out")
   }
 
+  openDealScreen = () => {
+    this.props.navigation.navigate('UserDealsScreen')
+  }
+
+  openQRScreen = () => {
+    console.log('HI')
+    this.props.navigation.navigate('UserQRScreen')
+  }
+
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -103,7 +112,7 @@ export default class UserDealsScreen extends Component {
             </View>
           </Content>
         </ScrollView>
-        <FooterNav openProfileScreen={this.openProfileScreen} />
+        <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} active={'DealsScreen'}/>
       </View>
     )
   }

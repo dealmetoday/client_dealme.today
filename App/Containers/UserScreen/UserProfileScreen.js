@@ -173,7 +173,7 @@ export default class UserProfileScreen extends Component {
             </Button>
           </View>
         </ScrollView>
-        <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} />
+        <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} active={'ProfileScreen'}/>
 
       </View>
     )

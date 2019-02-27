@@ -33,6 +33,15 @@ export default class UserQRScreen extends Component {
     this.props.navigation.navigate('UserDealsScreen')
   }
 
+  openQRScreen = () => {
+    console.log('HI')
+    this.props.navigation.navigate('UserQRScreen')
+  }
+
+  openProfileScreen = () => {
+    this.props.navigation.navigate('UserProfileScreen')
+  }
+
   bottomView = () => {
     return(
       <View style={{flex:1,flexDirection:'row',backgroundColor:'#0000004D'}}>
@@ -55,7 +64,7 @@ export default class UserQRScreen extends Component {
 
     return (
       <View style={styles.mainContainer}>
-        <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'QR Scan'} rightLabel={'Save'} />
+        <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'QR Scan'} rightLabel={'Logout'} />
         <ScrollView style={styles.container}>
           <View>
             <QRCodeScanner
@@ -74,7 +83,7 @@ export default class UserQRScreen extends Component {
             />
           </View>
         </ScrollView>
-        <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen}/>
+        <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} active={'QRScreen'}/>
 
       </View>
     )

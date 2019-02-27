@@ -12,7 +12,7 @@ var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 
 
 
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin'
 
 /**
  * This is an example of a container component.
@@ -20,11 +20,6 @@ import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
  * This screen displays a little help message and informations about a fake user.
  * Feel free to remove it.
  */
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu.',
-  android: 'Double tap R on your keyboard to reload,\nShake or press menu button for dev menu.',
-})
 
 const MailIcon = {
   name: 'mail',
@@ -41,7 +36,6 @@ class ExampleScreen extends Component {
     }
   }
   componentDidMount() {
-    this.props.fetchUser()
     GoogleSignin.configure({
       webClientId: '84477259757-3di3d87li4lgq4pr7q7987h6n83f5boo.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: false, // if you want to access Google API on behalf of the user FROM YOUR SERVER
@@ -57,6 +51,24 @@ class ExampleScreen extends Component {
     this.navigate(event.url)
   }
 
+  signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      this.setState({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
   navigate = (url) => { // E
     const { navigate } = this.props.navigation
     const route = url.replace(/.*?:\/\//g, '')
@@ -69,9 +81,7 @@ class ExampleScreen extends Component {
 
   _signInServer = async () => {
     try {
-      console.log('button pressed')
       SafariView.addEventListener('onDismiss', () => {
-        console.log('Dissmissed')
         this.handleOpenURL({url: 'appdeal://LaunchScreen'})
       })
       SafariView.isAvailable()
@@ -91,18 +101,6 @@ class ExampleScreen extends Component {
   }
 
   render() {
-    let isLoading = this.props.userIsLoading ? 'Data are loading...' : ''
-    let user = this.props.user
-    let error = this.props.userErrorMessage
-    let result = null
-    if (user && !error) {
-      result =
-        "I'm a fake user, my name is " +
-        user.name +
-        '.\n' +
-        (this.props.liveInEurope ? 'I live in Europe !' : "I don't live in Europe.")
-    }
-
     return (
       <View style={Style.container}>
         <ScrollView contentContainerStyle={Style.container}>
@@ -119,7 +117,7 @@ class ExampleScreen extends Component {
               style={{ width: '100%', height: 48 }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Light}
-              onPress={this._signInServer}
+              onPress={this.signIn}
               disabled={this.state.isSigninInProgress} />
           </View>
           <View style={Style.section} >
@@ -133,11 +131,6 @@ class ExampleScreen extends Component {
   }
 }
 
-ExampleScreen.propsTypes = {
-  user: PropTypes.number,
-  userIsLoading: PropTypes.bool,
-  userErrorMessage: PropTypes.string,
-}
 
 const mapStateToProps = (state) => ({
   user: state.example.get('user').toJS(),
