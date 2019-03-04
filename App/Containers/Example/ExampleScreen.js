@@ -3,13 +3,12 @@ import { Platform, Text, View, Button, Linking, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
+import AuthActions from 'App/Stores/Auth/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
-import SafariView from 'react-native-safari-view'
 import SignUpForm from '../../Components/SignUpForm'
-var { FBLogin, FBLoginManager } = require('react-native-facebook-login');
-
-
+import axios from 'axios'
+let { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 
 
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin'
@@ -33,8 +32,12 @@ class ExampleScreen extends Component {
     super(props)
     this.state = {
       isSigninInProgress: false,
+      user: null
     }
+    this.handleEmailLogIn.bind(this)
+    this.handleEmailSignUp.bind(this)
   }
+
   componentDidMount() {
     GoogleSignin.configure({
       webClientId: '84477259757-3di3d87li4lgq4pr7q7987h6n83f5boo.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
@@ -45,18 +48,43 @@ class ExampleScreen extends Component {
       accountName: '', // [Android] specifies an account name on the device that should be used
       iosClientId: '84477259757-qst0agnr3uujrnmu73hsglf2stsf395e.apps.googleusercontent.com', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
     })
+    axios.get('https://api.dealme.today/pubkey').then(resp => {
+      this.props.updatePubKey(resp.data)
+    })
   }
 
-  handleOpenURL = (event) => { // D
-    this.navigate(event.url)
-  }
-
-  signIn = async () => {
+  handleGoogleLogin = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      this.setState({ userInfo });
-    } catch (error) {
+      console.log(userInfo)
+
+      axios.put('https://api.dealme.today/Auth/login/social',
+        {
+          email: "mihailo@shaw.ca",
+          firstName: "Mihailo",
+          lastName: "Stefanovic",
+          role: "user",
+          token: "asdasdasdsa"
+        }).then(resp => {
+        if(resp.data.status === 'Success'){
+          this.props.loginGoogleSuccess(resp.data.Bearer)
+          axios.defaults.headers.common = this.props.config
+          axios.get(`https://api.dealme.today/user/profile?id=${'5c386f357eb1a4767f9f1bb0'}`, {}, this.props.config).then( resp => {
+            this.props.updateUserProfile(resp.data)
+            this.props.navigation.navigate('UserScreen')
+          }).catch(error => {
+            console.log(error)
+          })
+        }
+        else {
+          console.log('Something went wrong!')
+        }
+      }).catch(error => {
+        console.log('Error: ' + error)
+      })
+    }
+    catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -69,36 +97,55 @@ class ExampleScreen extends Component {
     }
   };
 
+  handleFacebookLogin = async (user) => {
+    try{
+      axios.get(`https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${user.credentials.token }`).then(resp => {
+        let params = {
+          email: resp.data.email,
+          firstName: resp.data.first_name,
+          lastName: resp.data.last_name,
+          token: resp.data.id,
+          role: 'user'
+        }
+        axios.put('https://api.dealme.today/Auth/login/social', params).then(resp => {
+          console.log(resp)
+        }).catch(error => {
+          console.log(error)
+        })
+      })
+
+    }catch (error) {
+      console.log(error)
+    }
+  }
+
+  handleEmailSignUp = (email,password) => {
+    const key = {
+      key: this.props.auth.key,
+      padding: crypto.constants.RSA_PKCS1_PADDING
+    }
+    console.log(this.props.auth.pubKey)
+
+    let hashed = crypto.publicEncrypt(key,'password')
+    console.log(hashed)
+
+
+  }
+
+  handleEmailLogIn = (email,password) => {
+
+  }
+
   navigate = (url) => { // E
     const { navigate } = this.props.navigation
     const route = url.replace(/.*?:\/\//g, '')
     const routeName = route.split('/')[0]
-
     if (routeName === 'LaunchScreen') {
       navigate('UserScreen', {})
     };
   }
 
-  _signInServer = async () => {
-    try {
-      SafariView.addEventListener('onDismiss', () => {
-        this.handleOpenURL({url: 'appdeal://LaunchScreen'})
-      })
-      SafariView.isAvailable()
-        .then(
-          SafariView.show({ url: 'https://api.dealme.today/auth/login/google' })
-        )
-        .catch(error => {
-          // Fallback WebView code for iOS 8 and earlier
-          console.log(error)
-        })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  handleLogin(data) {
-    console.log(data.credentials)
-  }
+
 
   render() {
     return (
@@ -110,19 +157,19 @@ class ExampleScreen extends Component {
 
           <View style={{...Style.section, height: '15%'}} >
             <FBLogin style={{width: '100%', height: 48}}
-                     onLogin={this.handleLogin}
-                     permissions={["email","user_friends"]}
+                     onLogin={this.handleFacebookLogin}
+                     permissions={["email", "public_profile"]}
             />
             <GoogleSigninButton
-              style={{ width: '100%', height: 48 }}
+              style={{ width: 192, height: 48 }}
               size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Light}
-              onPress={this.signIn}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={this.handleGoogleLogin}
               disabled={this.state.isSigninInProgress} />
           </View>
           <View style={Style.section} >
-            <Text style={{textAlign: 'center', marginBottom: 12}} h3> Sign Up</Text>
-            <SignUpForm Icon={MailIcon} />
+            <Text style={{textAlign: 'center', marginBottom: 12}} h3> Log in or Sign up</Text>
+            <SignUpForm Icon={MailIcon} emailSignUp={this.handleEmailSignUp} emailLogIn={this.handleEmailLogIn}/>
           </View>
 
         </ScrollView>
@@ -137,10 +184,15 @@ const mapStateToProps = (state) => ({
   userIsLoading: state.example.get('userIsLoading'),
   userErrorMessage: state.example.get('userErrorMessage'),
   liveInEurope: liveInEurope(state),
+  auth: state.auth,
+  config: state.auth.config
+
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUser: () => dispatch(ExampleActions.fetchUser()),
+  loginGoogleSuccess: (Bearer)=> dispatch(ExampleActions.loginGoogleSuccess(Bearer)),
+  updateUserProfile: (id) => dispatch(AuthActions.updateUserProfile(id)),
+  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey))
 })
 
 export default connect(
