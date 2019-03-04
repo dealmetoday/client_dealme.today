@@ -5,36 +5,6 @@
 	<key>logFormatVersion</key>
 	<integer>9</integer>
 	<key>logs</key>
-	<dict>
-		<key>8FA4F7B2-12BC-4D33-BFFB-5B20525C9F56</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>8FA4F7B2-12BC-4D33-BFFB-5B20525C9F56.xcactivitylog</string>
-			<key>highLevelStatus</key>
-			<string>W</string>
-			<key>schemeIdentifier-containerName</key>
-			<string>Boilerplate project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Boilerplate</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
-			<key>timeStartedRecording</key>
-			<real>572932239.14159</real>
-			<key>timeStoppedRecording</key>
-			<real>572932243.04791403</real>
-			<key>title</key>
-			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
-			<key>uniqueIdentifier</key>
-			<string>8FA4F7B2-12BC-4D33-BFFB-5B20525C9F56</string>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

@@ -17,3 +17,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 DerivedData2
+
+ios/Pods/
+/ios/build/
+ios/build/*
