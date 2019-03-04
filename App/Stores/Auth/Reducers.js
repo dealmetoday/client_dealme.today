@@ -22,7 +22,8 @@ export const loginFacebookSuccess = (state, {user}, {Bearer}) => {
 
 export const loginGoogleSuccess = (state, {Bearer}) => {
   const config = {
-      Bearer: Bearer
+      Bearer: Bearer,
+      'Content-Type': 'application/json'
   }
   return ({
     ...state,

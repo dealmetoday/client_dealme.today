@@ -35,13 +35,6 @@ export default class SignUpForm extends Component {
       [ field ]: event.nativeEvent.text
     })
   }
-  handleSignUp() {
-
-  }
-  handleLogIn() {
-
-  }
-
 
   render () {
     return (
@@ -52,20 +45,20 @@ export default class SignUpForm extends Component {
           </Item>
           <Item inlineLabel>
             <Input
-                  placeholder={'Password'}
-                  onChange={event => this.handleInputChange(event, 'password')}
-                  value={this.state.password}
-                  secureTextEntry
+              placeholder={'Password'}
+              onChange={event => this.handleInputChange(event, 'password')}
+              value={this.state.password}
+              secureTextEntry
             />
           </Item>
         </Form>
         <View style={{flexDirection: 'row'}}>
-          <Button rounded style={buttonStyle} onPress={this.handleSignUp}>
+          <Button rounded style={buttonStyle} onPress={() => this.props.emailSignUp(this.state.email,this.state.password)}>
             <Text style={buttonTextStyle}>Sign Up</Text>
           </Button>
           <View style={{width: 15}} />
-          <Button rounded style={buttonStyle} onPress={this.handleLogIn}>
-            <Text style={buttonTextStyle}>Register</Text>
+          <Button rounded style={buttonStyle} onPress={() => this.props.emailLogIn(this.state.email,this.state.password)}>
+            <Text style={buttonTextStyle}>Log in</Text>
           </Button>
         </View>
       </View>

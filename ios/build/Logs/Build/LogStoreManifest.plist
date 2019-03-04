@@ -5,6 +5,65 @@
 	<key>logFormatVersion</key>
 	<integer>9</integer>
 	<key>logs</key>
-	<dict/>
+	<dict>
+		<key>4A3BE674-CBC5-4EBC-8947-9431481C364A</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>4A3BE674-CBC5-4EBC-8947-9431481C364A.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>W</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>Boilerplate project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Boilerplate</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>573366846.30677295</real>
+			<key>timeStoppedRecording</key>
+			<real>573366848.77694297</real>
+			<key>title</key>
+			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>4A3BE674-CBC5-4EBC-8947-9431481C364A</string>
+		</dict>
+		<key>99FBEECB-BF19-434A-8045-E5853FEA98FD</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>99FBEECB-BF19-434A-8045-E5853FEA98FD.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>W</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>Boilerplate project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Boilerplate</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>573366779.78606904</real>
+			<key>timeStoppedRecording</key>
+			<real>573366782.33912694</real>
+			<key>title</key>
+			<string>Building workspace Boilerplate with scheme Boilerplate and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>99FBEECB-BF19-434A-8045-E5853FEA98FD</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

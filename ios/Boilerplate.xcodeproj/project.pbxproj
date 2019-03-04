@@ -56,6 +56,7 @@
 		AE41E7E0BFD249068C70E708 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C77B89D2D7A84B36B7079DEA /* Feather.ttf */; };
 		BD95B6681E7D4DA5A4241290 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A90DE54ADDF41EEB8596F97 /* Foundation.ttf */; };
 		C1790C0254E1407EAD7E5D92 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD46959BCE948EBB6981058 /* Roboto.ttf */; };
+		C759FC59222CB77900A55643 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C759FC55222CB76E00A55643 /* libRNRandomBytes.a */; };
 		C76BDFF72223DC630006A251 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C76BDFF62223DC380006A251 /* libSafariViewManager.a */; };
 		C7EF05162224FDFE00D53600 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF04EB2224FDFE00D53600 /* FBSDKLoginKit.framework */; };
 		C7EF05172224FDFE00D53600 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF05142224FDFE00D53600 /* Bolts.framework */; };
@@ -343,6 +344,20 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		C759FC54222CB76E00A55643 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C759FC25222CB76E00A55643 /* RNRandomBytes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 73EEC9391BFE4B1D00D468EB;
+			remoteInfo = RNRandomBytes;
+		};
+		C759FC56222CB76E00A55643 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C759FC25222CB76E00A55643 /* RNRandomBytes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 163CDE4E2087CAD3001065FB;
+			remoteInfo = "RNRandomBytes-tvOS";
+		};
 		C76BDF822223D2CB0006A251 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E57D616985D64DA295E38FCD /* RNGestureHandler.xcodeproj */;
@@ -444,6 +459,7 @@
 		C07A3D1FA8844C1C9D577ED3 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		C2FAC58755DE4429934BBDAB /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		C344362F76204CCB81CF30D2 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		C759FC25222CB76E00A55643 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
 		C76BDFCA2223DC380006A251 /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "../node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
 		C77B89D2D7A84B36B7079DEA /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		C7EF04EB2224FDFE00D53600 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../FacebookSDKs-iOS-4.40.0/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
@@ -480,6 +496,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C759FC59222CB77900A55643 /* libRNRandomBytes.a in Frameworks */,
 				C7EF052D22250A2F00D53600 /* libReactNativePermissions.a in Frameworks */,
 				C7EF0526222508BD00D53600 /* libRNCamera.a in Frameworks */,
 				C7EF051F2224FFD800D53600 /* libRCTFBLogin.a in Frameworks */,
@@ -693,6 +710,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C759FC25222CB76E00A55643 /* RNRandomBytes.xcodeproj */,
 				C7EF052722250A2300D53600 /* ReactNativePermissions.xcodeproj */,
 				C7EF05202225089700D53600 /* RNCamera.xcodeproj */,
 				C7EF05192224FFC700D53600 /* RCTFBLogin.xcodeproj */,
@@ -797,6 +815,15 @@
 			children = (
 				ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */,
 				2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C759FC26222CB76E00A55643 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C759FC55222CB76E00A55643 /* libRNRandomBytes.a */,
+				C759FC57222CB76E00A55643 /* libRNRandomBytes-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1039,6 +1066,10 @@
 				{
 					ProductGroup = C76BDF7F2223D2CA0006A251 /* Products */;
 					ProjectRef = 2355C00CE62E484F8A59D32D /* RNGoogleSignin.xcodeproj */;
+				},
+				{
+					ProductGroup = C759FC26222CB76E00A55643 /* Products */;
+					ProjectRef = C759FC25222CB76E00A55643 /* RNRandomBytes.xcodeproj */;
 				},
 				{
 					ProductGroup = C76BDFCB2223DC380006A251 /* Products */;
@@ -1313,6 +1344,20 @@
 			fileType = archive.ar;
 			path = libRCTBlob.a;
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C759FC55222CB76E00A55643 /* libRNRandomBytes.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNRandomBytes.a;
+			remoteRef = C759FC54222CB76E00A55643 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C759FC57222CB76E00A55643 /* libRNRandomBytes-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNRandomBytes-tvOS.a";
+			remoteRef = C759FC56222CB76E00A55643 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C76BDF832223D2CB0006A251 /* libRNGestureHandler.a */ = {
