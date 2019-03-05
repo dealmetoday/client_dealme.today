@@ -7,6 +7,9 @@ import FooterNav from '../../Components/FooterNav'
 // SCREENS
 // Styles
 import styles from '../Styles/LaunchScreenStyles'
+import ExampleActions from '../../Stores/Example/Actions'
+import { connect } from 'react-redux'
+import AuthActions from '../../Stores/Auth/Actions'
 
 
 const ageList = [
@@ -61,7 +64,7 @@ const tagsList = {
 }
 
 
-export default class UserProfileScreen extends Component {
+class UserProfileScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -179,3 +182,20 @@ export default class UserProfileScreen extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  config: state.auth.config
+
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loginGoogleSuccess: (Bearer)=> dispatch(ExampleActions.loginGoogleSuccess(Bearer)),
+  updateUserProfile: (id) => dispatch(AuthActions.updateUserProfile(id)),
+  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserProfileScreen)

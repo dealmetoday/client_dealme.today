@@ -191,7 +191,7 @@ const stackNavigator = createStackNavigator({
   cardStyle: {
     opacity: 1
   },
-  initialRouteName: 'UserScreen',
+  initialRouteName: 'UserProfileScreen',
   headerMode: 'none',
   // Keeping this here for future when we can make
   navigationOptions: {

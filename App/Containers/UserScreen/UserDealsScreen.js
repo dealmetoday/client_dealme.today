@@ -5,6 +5,8 @@ import FringeLogo from '../../Images/onTheFringe.png'
 import FringeBanner from '../../Images/onTheFringeBanner.png'
 import HeaderNav from '../../Components/HeaderNav'
 import FooterNav from '../../Components/FooterNav'
+import { connect } from 'react-redux'
+
 
 // Styles
 import styles from '../Styles/LaunchScreenStyles'
@@ -117,3 +119,4 @@ export default class UserDealsScreen extends Component {
     )
   }
 }
+

@@ -35,7 +35,8 @@ class ExampleScreen extends Component {
     super(props)
     this.state = {
       isSigninInProgress: false,
-      user: null
+      user: null,
+      signUpErr: null
     }
     this.handleEmailLogIn.bind(this)
     this.handleEmailSignUp.bind(this)
@@ -61,15 +62,17 @@ class ExampleScreen extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo)
+      const params = {
+        email: userInfo.user.email,
+        firstName: userInfo.user.givenName,
+        lastName: userInfo.user.familyName,
+        role:'user',
+        token: userInfo.user.id
+      }
+      console.log(params)
 
-      axios.put('https://api.dealme.today/Auth/login/social',
-        {
-          email: "mihailo@shaw.ca",
-          firstName: "Mihailo",
-          lastName: "Stefanovic",
-          role: "user",
-          token: "asdasdasdsa"
-        }).then(resp => {
+      axios.put('https://api.dealme.today/Auth/login/social', params).then(resp => {
+        console.log(resp)
         if(resp.data.status === 'Success'){
           console.log(resp.data.Bearer)
           this.props.loginGoogleSuccess(resp.data.Bearer)
@@ -125,23 +128,36 @@ class ExampleScreen extends Component {
   }
 
   handleEmailSignUp = (email,password) => {
-    let buffer = Buffer.from(password)
-    let key = {
-      key: this.props.auth.pubKey,
-      padding: 1
+    if(this.validateEmail(email)) {
+      if(this.validatePass(password)) {
+        let buffer = Buffer.from(password)
+        let key = {
+          key: this.props.auth.pubKey,
+          padding: 1
+        }
+        let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
+        axios.defaults.headers.common = this.props.config
+        let params = {
+          data: hashed
+        }
+        axios.put('https://api.dealme.today/user/check', params).then(resp => {
+          console.log(resp)
+        }).catch(error => {
+          console.log(error)
+        })
+
+      }
+      else{
+        this.setState({
+          signUpErr: 'Invalid Password. Must contain: one lowercase letter, one uppercase letter, one number and minimum of 8 characters.'
+        })
+      }
     }
-    let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
-    axios.defaults.headers.common = {
-      Bearer: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJkZXZlbG9wZXIiLCJlbWFpbCI6ImRldkBkZXYuY29tIiwiaWQiOiJwODIxMzc1MDkxODI3MzE0MCIsImlhdCI6MTU1MTQxNzI1OSwiZXhwIjoxNTU0MDA5MjU5LCJhdWQiOiJhcGkuZGVhbG1lLnRvZGF5L2RldmVsb3BlciIsImlzcyI6ImRlYWxtZS50b2RheSIsInN1YiI6ImRldkBkZXYuY29tIn0.Wq_vpaPZMIzI22sbUy5FSI6ZqN9kpUvjETuwysPhl3L-xGhWB0gdNr28ev0oChwrNtR9r62FTAry5QxPH2eWdxQFxjLQ1Dwul-a-usGvyXtvjZjuKjBDaMOK7fOpnhzc1jQltlZi_yUt5WUW1nSL8DRm6PiCWSfR1ABSdDcjN-9XirQCRclwYZdSpQIyQ7vomJQU2o9eDSb6z4B-P-riaj6X1Z-B35Clp8XkTRD_fNyfzsd315k9uPJz7bNFcn64ioc1mSBa6KlmkxZqaEv5U0L8mPwnuUUokIJXtIQw2HiK1sb1s8nQ1wS4KliZnuiyYjaxMhqcYPJUW7fjuQJEzix9kpjyrxc33dFG62k_FjxPYFJsCTxd-lC07CYskZjLiQiCMMnPG-lRKmW9JePh7-ZnGo9cWZ3JGCvsap3vRZxU2hvv0-l09EHjeCRccj_t4RxPLVgVOT6TV0PKuaIV_PCtEKrhFa1SJE5y1iZIyQmZVBrD7alKRjiBQTfmHpbleQa1MCw2FSIJhr-9QKrN1K6ROx8P20CeMOEKiSwMwMqmyBAC_Pqk6xyOl1TCz_G6zncrr91PMjCyTZMf_It6cCSZbvkzoYCb7bDexUipUkwn_fWKc1X3bgWuOkd51tcNvdq0vVf7cxHxXyTCLcLCTaEttGz6XZTAWwJ0krI8aZE"
+    else {
+      this.setState({
+        signUpErr: 'invalid email'
+      })
     }
-    let params = {
-      data: hashed
-    }
-    axios.put('https://api.dealme.today/test/decrypt', params).then( resp => {
-      console.log(resp)
-    }).catch ( error => {
-      console.log(error)
-    })
 
 
   }
@@ -164,7 +180,7 @@ class ExampleScreen extends Component {
       if(resp.data.status === 'Success'){
         this.props.loginGoogleSuccess(resp.data.Bearer)
         axios.defaults.headers.common = this.props.config
-        axios.get(`https://api.dealme.today/user/profile?id=${'5c386f357eb1a4767f9f1bb0'}`, {}, this.props.config).then( resp => {
+        axios.get(`https://api.dealme.today/users?email=${email}`, {}, this.props.config).then( resp => {
           console.log(resp.data)
           this.props.updateUserProfile(resp.data)
           this.props.navigation.navigate('UserScreen')
@@ -193,6 +209,18 @@ class ExampleScreen extends Component {
     };
   }
 
+  validateEmail = (email) => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    return reg.test(email)
+  }
+
+  validatePass = (password) => {
+    let lowerCheck = /[a-z]/g;
+    let upperCheck = /[A-Z]/g;
+    let numCheck = /[0-9]/g;
+    return password.match(lowerCheck) && password.match(upperCheck) && password.match(numCheck) && password.length >= 8
+  }
+
   render() {
     return (
       <View style={Style.container}>
@@ -217,6 +245,7 @@ class ExampleScreen extends Component {
             <Text style={{textAlign: 'center', marginBottom: 12}} h3> Log in or Sign up</Text>
             <SignUpForm Icon={MailIcon} emailSignUp={this.handleEmailSignUp} emailLogIn={this.handleEmailLogIn}/>
           </View>
+          {this.state.signUpErr ? <Text style={{color: 'red'}}>{this.state.signUpErr}</Text> : null}
 
         </ScrollView>
       </View>
@@ -226,10 +255,6 @@ class ExampleScreen extends Component {
 
 
 const mapStateToProps = (state) => ({
-  user: state.example.get('user').toJS(),
-  userIsLoading: state.example.get('userIsLoading'),
-  userErrorMessage: state.example.get('userErrorMessage'),
-  liveInEurope: liveInEurope(state),
   auth: state.auth,
   config: state.auth.config
 
