@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
 import AuthActions from 'App/Stores/Auth/Actions'
-import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
 import SignUpForm from '../../Components/SignUpForm'
 import axios from 'axios'
@@ -62,35 +61,78 @@ class ExampleScreen extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       console.log(userInfo)
-      const params = {
+
+      console.log(this.props.config)
+
+
+      const testparams = {
         email: userInfo.user.email,
-        firstName: userInfo.user.givenName,
-        lastName: userInfo.user.familyName,
-        role:'user',
-        token: userInfo.user.id
+        first: userInfo.user.givenName,
+        last: userInfo.user.familyName,
+        password: '1'
+      }
+
+
+      axios.put('https://api.dealme.today/user/check', testparams).then(resp => {
+        if(resp.data.status === 'Success'){
+          console.log('User exists!')
+          let params = {
+            email: "alf.hong91@gmail.com",
+            firstName: "Alfred",
+            lastName: "Hong",
+            role: "user",
+            token: "117470481413872940183"
+          }
+          console.log(params)
+
+          let testParams = {
+            email: "mihailo@shaw.ca",
+            firstName: "Mihailo",
+            lastName: "Stefanovic",
+            role: "user",
+            token: "/7+0N/WFAj0qW4SQJDe3uQ=="
+          }
+          console.log(testParams)
+          axios.put('https://api.dealme.today/auth/login/social', testParams).then(resp => {
+            console.log(resp)
+            if(resp.data.status === 'Success'){
+              console.log(resp.data.Bearer)
+              this.props.loginGoogleSuccess(resp.data.Bearer)
+              axios.defaults.headers.common = this.props.config
+              axios.get(`https://api.dealme.today/user/profile?id=${'5c386f357eb1a4767f9f1bb0'}`, {}, this.props.config).then( resp => {
+                console.log(resp.data)
+                this.props.updateUserProfile(resp.data)
+                this.props.navigation.navigate('UserScreen')
+              }).catch(error => {
+                console.log(error)
+              })
+            }
+            else {
+              console.log('Something went wrong!')
+            }
+          }).catch(error => {
+            console.log('Error: ' + error)
+          })
+
+
+        }
+        else{
+          axios.post('https://api.dealme.today/users/google', testparams).then(resp => {
+            console.log(resp)
+          })
+        }
+
+      })
+
+      const test = {
+        "email": "mihailo@shaw.ca",
+        "firstName": "Mihailo",
+        "lastName": "Stefanovic",
+        "role": "user",
+        "token": "/7+0N/WFAj0qW4SQJDe3uQ=="
       }
       console.log(params)
 
-      axios.put('https://api.dealme.today/Auth/login/social', params).then(resp => {
-        console.log(resp)
-        if(resp.data.status === 'Success'){
-          console.log(resp.data.Bearer)
-          this.props.loginGoogleSuccess(resp.data.Bearer)
-          axios.defaults.headers.common = this.props.config
-          axios.get(`https://api.dealme.today/user/profile?id=${'5c386f357eb1a4767f9f1bb0'}`, {}, this.props.config).then( resp => {
-            console.log(resp.data)
-            this.props.updateUserProfile(resp.data)
-            this.props.navigation.navigate('UserScreen')
-          }).catch(error => {
-            console.log(error)
-          })
-        }
-        else {
-          console.log('Something went wrong!')
-        }
-      }).catch(error => {
-        console.log('Error: ' + error)
-      })
     }
     catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -180,7 +222,7 @@ class ExampleScreen extends Component {
       if(resp.data.status === 'Success'){
         this.props.loginGoogleSuccess(resp.data.Bearer)
         axios.defaults.headers.common = this.props.config
-        axios.get(`https://api.dealme.today/users?email=${email}`, {}, this.props.config).then( resp => {
+        axios.get(`https://api.dealme.today/user/profile?id=5c386f357eb1a4767f9f1baf`, {}, this.props.config).then( resp => {
           console.log(resp.data)
           this.props.updateUserProfile(resp.data)
           this.props.navigation.navigate('UserScreen')

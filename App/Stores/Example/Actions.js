@@ -27,7 +27,6 @@ const { Types, Creators } = createActions({
   fetchUserSuccess: ['user'],
   // An error occurred
   fetchUserFailure: ['errorMessage'],
-  loginGoogleSuccess: ['Bearer']
 })
 
 export const ExampleTypes = Types

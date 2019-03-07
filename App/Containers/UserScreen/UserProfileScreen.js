@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, View } from 'react-native'
-import { Button, Form, Item, Picker, Icon, Text, Input } from 'native-base'
+import { Button, Form, Item, Picker, Icon, Text, Input, Label } from 'native-base'
 import HeaderNav from '../../Components/HeaderNav'
 import FooterNav from '../../Components/FooterNav'
 
@@ -45,15 +45,15 @@ const ageList = [
 
 const genderList = [
   {
-    value: 1,
+    value: 'Female',
     label: 'Female'
   },
   {
-    value: 2,
+    value: "Male",
     label: 'Male'
   },
   {
-    value: 3,
+    value: 'Other',
     label: 'Other'
   }
 ]
@@ -75,6 +75,20 @@ class UserProfileScreen extends Component {
     this.onValueChange.bind(this)
     this.openQRScreen.bind(this)
     this.openDealScreen.bind(this)
+  }
+
+  componentDidMount(){
+    const {email, first, last, gender, age, location} = this.props.auth.profile;
+    this.setState({
+      firstName: first,
+      lastName: last,
+      email: email,
+      age,
+      gender,
+      location
+
+
+    })
   }
 
   onValueChange (value, field) {
@@ -122,33 +136,24 @@ class UserProfileScreen extends Component {
         <ScrollView style={styles.container}>
           <View>
             <Form>
-              <Item inlineLabel>
-                <Input placeholder={'First Name'} onChange={event => this.handleInputChange(event, 'firstName')} />
+              <Item fixedLabel>
+                <Label>First Name</Label>
+                <Input value={this.state.firstName} onChange={event => this.handleInputChange(event, 'firstName')} />
               </Item>
-              <Item inlineLabel last>
-                <Input placeholder={'Last Name'} onChange={event => this.handleInputChange(event, 'lastName')} />
+              <Item fixedLabel>
+                <Label>Last Name</Label>
+                <Input value={this.state.lastName} onChange={event => this.handleInputChange(event, 'lastName')} />
               </Item>
-              <Item inlineLabel>
-                <Input placeholder={'Email'} onChange={event => this.handleInputChange(event, 'email')} />
+              <Item fixedLabel>
+                <Label>Email</Label>
+                <Input value={this.state.email} onChange={event => this.handleInputChange(event, 'email')} />
               </Item>
-              <Item>
-                <Picker
-                  note
-                  mode='dropdown'
-                  selectedValue={this.state.age}
-                  onValueChange={value => this.onValueChange(value, 'age')}
-                  placeholder='Select Age Range'
-                  style={{ width: undefined }}
-                  iosIcon={<Icon name='arrow-down' />}
-                >
-                  {
-                    ageList.map(anOption => {
-                      return <Picker.Item key={anOption.value} label={anOption.label} value={anOption.value} />
-                    })
-                  }
-                </Picker>
+              <Item fixedLabel>
+                <Label>Age</Label>
+                <Input value={this.state.age} onChange={event => this.handleInputChange(event, 'age')} />
               </Item>
-              <Item inlineLabel last>
+              <Item fixedLabel>
+                <Label>Gender</Label>
                 <Picker
                   note
                   mode='dropdown'

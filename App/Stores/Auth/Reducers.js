@@ -27,7 +27,7 @@ export const loginGoogleSuccess = (state, {Bearer}) => {
   }
   return ({
     ...state,
-    config,
+    //config,
     signInMethod: 'social',
     isLoggedIn: true
   })

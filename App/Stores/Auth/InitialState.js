@@ -1,4 +1,3 @@
-import { Map } from 'immutable'
 
 /**
  * The initial values for the redux state.
@@ -6,7 +5,7 @@ import { Map } from 'immutable'
 export const INITIAL_STATE = {
   user: null,
   signInMethod: null,
-  config: null,
+  config: {},
   profile: null,
   isLoggedIn: false,
   pubKey: null
