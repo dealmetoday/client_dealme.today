@@ -19,9 +19,9 @@ import { createActions } from 'reduxsauce'
  * @see https://github.com/infinitered/reduxsauce#createactions
  */
 const { Types, Creators } = createActions({
-  loginFacebookSuccess: ['user'],
-  loginGoogleSuccess: ['Bearer'],
-  loginEmailSuccess: ['user'],
+  loginFacebookSuccess: ['Bearer', 'id'],
+  loginGoogleSuccess: ['Bearer', 'id'],
+  loginEmailSuccess: ['Bearer', 'id'],
   updateUserProfile:['profile'],
   updatePubKey: ['pubKey']
 })

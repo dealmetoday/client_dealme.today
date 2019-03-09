@@ -3,6 +3,7 @@ import { ScrollView, View } from 'react-native'
 import { Button, Form, Item, Picker, Icon, Text, Input, Label } from 'native-base'
 import HeaderNav from '../../Components/HeaderNav'
 import FooterNav from '../../Components/FooterNav'
+import axios from 'axios'
 
 // SCREENS
 // Styles
@@ -80,8 +81,8 @@ class UserProfileScreen extends Component {
   componentDidMount(){
     const {email, first, last, gender, age, location} = this.props.auth.profile;
     this.setState({
-      firstName: first,
-      lastName: last,
+      first: first,
+      last: last,
       email: email,
       age,
       gender,
@@ -117,15 +118,26 @@ class UserProfileScreen extends Component {
   }
 
   handleSaveProfile = () => {
-    const {firstName, lastName, email, age, gender} = this.state
+    let oldProfile = this.props.auth.profile;
+
     let updatedProfile = {
-      firstName,
-      lastName,
-      email,
-      age,
-      gender
+      id: this.props.auth.id,
+      first: this.state.first !== oldProfile.first ? this.state.first : oldProfile.first,
+      middle: this.state.middle !== oldProfile.middle ? this.state.middle : oldProfile.middle,
+      last: this.state.last !== oldProfile.last ? this.state.last : oldProfile.last,
+      email: this.state.email !== oldProfile.email ? this.state.email : oldProfile.email,
+      age: this.state.age !== oldProfile.age ? this.state.age : oldProfile.age,
+      gender: this.state.gender !== oldProfile.gender ? this.state.gender : oldProfile.gender,
+      location: this.state.location !== oldProfile.location ? this.state.location : oldProfile.location,
     }
     console.log(updatedProfile)
+    axios.defaults.headers.common = this.props.config
+
+    axios.put('https://api.dealme.today/users', updatedProfile).then(resp => {
+      console.log(resp)
+    }).catch( err => {
+      console.log(err)
+    })
   }
 
   render () {
@@ -138,11 +150,15 @@ class UserProfileScreen extends Component {
             <Form>
               <Item fixedLabel>
                 <Label>First Name</Label>
-                <Input value={this.state.firstName} onChange={event => this.handleInputChange(event, 'firstName')} />
+                <Input value={this.state.first} onChange={event => this.handleInputChange(event, 'first')} />
+              </Item>
+              <Item fixedLabel>
+                <Label>Middle Name</Label>
+                <Input value={this.state.middle} onChange={event => this.handleInputChange(event, 'middle')} />
               </Item>
               <Item fixedLabel>
                 <Label>Last Name</Label>
-                <Input value={this.state.lastName} onChange={event => this.handleInputChange(event, 'lastName')} />
+                <Input value={this.state.last} onChange={event => this.handleInputChange(event, 'last')} />
               </Item>
               <Item fixedLabel>
                 <Label>Email</Label>
@@ -150,7 +166,11 @@ class UserProfileScreen extends Component {
               </Item>
               <Item fixedLabel>
                 <Label>Age</Label>
-                <Input value={this.state.age} onChange={event => this.handleInputChange(event, 'age')} />
+                <Input keyboardType='numeric' value={this.state.age} onChange={event => this.handleInputChange(event, 'age')} />
+              </Item>
+              <Item fixedLabel>
+                <Label>Location</Label>
+                <Input value={this.state.location} onChange={event => this.handleInputChange(event, 'location')} />
               </Item>
               <Item fixedLabel>
                 <Label>Gender</Label>
@@ -176,7 +196,7 @@ class UserProfileScreen extends Component {
             </Form>
           </View>
           <View style={{}}>
-            <Button rounded light>
+            <Button rounded light onPress={this.handleSaveProfile}>
               <Text>Save</Text>
             </Button>
           </View>

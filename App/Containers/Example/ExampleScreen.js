@@ -53,6 +53,8 @@ class ExampleScreen extends Component {
     })
     axios.get('https://api.dealme.today/pubkey').then(resp => {
       this.props.updatePubKey(resp.data)
+    }).catch(err=>{
+      console.log(err)
     })
   }
 
@@ -60,46 +62,38 @@ class ExampleScreen extends Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo)
-
-      console.log(this.props.config)
-
-
+      let buffer = Buffer.from(userInfo.user.id)
+      let key = {
+        key: this.props.auth.pubKey,
+        padding: 1
+      }
+      let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
       const testparams = {
         email: userInfo.user.email,
         first: userInfo.user.givenName,
         last: userInfo.user.familyName,
-        password: '1'
+        password: hashed,
+        provider: "Google"
       }
-
-
       axios.put('https://api.dealme.today/user/check', testparams).then(resp => {
         if(resp.data.status === 'Success'){
           console.log('User exists!')
-          let params = {
-            email: "alf.hong91@gmail.com",
-            firstName: "Alfred",
-            lastName: "Hong",
-            role: "user",
-            token: "117470481413872940183"
-          }
-          console.log(params)
 
-          let testParams = {
-            email: "mihailo@shaw.ca",
-            firstName: "Mihailo",
-            lastName: "Stefanovic",
+          let params = {
+            email: userInfo.user.email,
+            firstName: userInfo.user.givenName,
+            lastName: userInfo.user.familyName,
+            token: hashed,
             role: "user",
-            token: "/7+0N/WFAj0qW4SQJDe3uQ=="
+            provider: "Google"
           }
-          console.log(testParams)
-          axios.put('https://api.dealme.today/auth/login/social', testParams).then(resp => {
-            console.log(resp)
+          axios.put('https://api.dealme.today/auth/login/social', params).then(resp => {
             if(resp.data.status === 'Success'){
-              console.log(resp.data.Bearer)
-              this.props.loginGoogleSuccess(resp.data.Bearer)
+              console.log(resp.data)
+              this.props.loginGoogleSuccess(resp.data.Bearer, resp.data.id)
+              console.log( this.props.config)
               axios.defaults.headers.common = this.props.config
-              axios.get(`https://api.dealme.today/user/profile?id=${'5c386f357eb1a4767f9f1bb0'}`, {}, this.props.config).then( resp => {
+              axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
                 console.log(resp.data)
                 this.props.updateUserProfile(resp.data)
                 this.props.navigation.navigate('UserScreen')
@@ -117,21 +111,10 @@ class ExampleScreen extends Component {
 
         }
         else{
-          axios.post('https://api.dealme.today/users/google', testparams).then(resp => {
-            console.log(resp)
-          })
         }
 
       })
 
-      const test = {
-        "email": "mihailo@shaw.ca",
-        "firstName": "Mihailo",
-        "lastName": "Stefanovic",
-        "role": "user",
-        "token": "/7+0N/WFAj0qW4SQJDe3uQ=="
-      }
-      console.log(params)
 
     }
     catch (error) {
@@ -149,19 +132,72 @@ class ExampleScreen extends Component {
 
   handleFacebookLogin = async (user) => {
     try{
+      console.log(user)
       axios.get(`https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${user.credentials.token }`).then(resp => {
-        let params = {
+
+        let buffer = Buffer.from(resp.data.id)
+        console.log(resp.data)
+        let key = {
+          key: this.props.auth.pubKey,
+          padding: 1
+        }
+        let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
+
+
+        const testparams = {
           email: resp.data.email,
-          firstName: resp.data.first_name,
-          lastName: resp.data.last_name,
-          token: resp.data.id,
+          first: resp.data.first_name,
+          last: resp.data.last_name,
+          password: hashed,
+          provider: "Facebook",
           role: 'user'
         }
-        axios.put('https://api.dealme.today/Auth/login/social', params).then(resp => {
-          console.log(resp)
-        }).catch(error => {
-          console.log(error)
+
+
+        axios.put('https://api.dealme.today/user/check', testparams).then(resp => {
+          if(resp.data.status === 'Success'){
+            console.log('User exists!')
+
+            let params = {
+              email: testparams.email,
+              firstName: testparams.first,
+              lastName: testparams.last,
+              token: hashed,
+              role: "user",
+              provider: "Facebook"
+            }
+            console.log(params)
+            axios.put('https://api.dealme.today/auth/login/social', params).then(resp => {
+              console.log(resp)
+              if(resp.data.status === 'Success'){
+                console.log(resp.data.id)
+                this.props.loginFacebookSuccess(resp.data.Bearer, resp.data.id)
+                console.log( this.props.config)
+                axios.defaults.headers.common = this.props.config
+                axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
+                  console.log(resp.data)
+                  this.props.updateUserProfile(resp.data)
+                  this.props.navigation.navigate('UserScreen')
+                }).catch(error => {
+                  console.log(error)
+                })
+              }
+              else {
+                console.log('Something went wrong!')
+              }
+            }).catch(error => {
+              console.log('Error: ' + error)
+            })
+
+
+          }
+          else{
+          }
+
+        }).catch(err => {
+          console.log(err)
         })
+
       })
 
     }catch (error) {
@@ -178,14 +214,30 @@ class ExampleScreen extends Component {
           padding: 1
         }
         let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
-        axios.defaults.headers.common = this.props.config
         let params = {
-          data: hashed
+          email: email,
+          role: "user",
+          provider: "Email",
+          password: hashed
         }
-        axios.put('https://api.dealme.today/user/check', params).then(resp => {
+        console.log(params)
+        axios.post('https://api.dealme.today/users/email', params).then(resp=>{
+
           console.log(resp)
-        }).catch(error => {
-          console.log(error)
+          if(resp.data.status === 'Success'){
+            this.props.loginEmailSuccess(resp.data.Bearer, resp.data.id)
+            console.log( this.props.config)
+            axios.defaults.headers.common = this.props.config
+
+            axios.get(`https://api.dealme.today/users?email=${resp.data.id}`).then(resp=> {
+              console.log(resp)
+            }).catch(err=>{
+              console.log(err)
+            })
+
+
+          }
+
         })
 
       }
@@ -220,9 +272,9 @@ class ExampleScreen extends Component {
     axios.put('https://api.dealme.today/auth/login/email', params).then(resp => {
 
       if(resp.data.status === 'Success'){
-        this.props.loginGoogleSuccess(resp.data.Bearer)
+        this.props.loginEmailSuccess(resp.data.Bearer, "")
         axios.defaults.headers.common = this.props.config
-        axios.get(`https://api.dealme.today/user/profile?id=5c386f357eb1a4767f9f1baf`, {}, this.props.config).then( resp => {
+        axios.get(`api.dealme.today/user/profile?id=5c82fd4be2ce828a403bca59`, {}, this.props.config).then( resp => {
           console.log(resp.data)
           this.props.updateUserProfile(resp.data)
           this.props.navigation.navigate('UserScreen')
@@ -303,9 +355,12 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loginGoogleSuccess: (Bearer)=> dispatch(ExampleActions.loginGoogleSuccess(Bearer)),
+  loginGoogleSuccess: (Bearer,id)=> dispatch(AuthActions.loginGoogleSuccess(Bearer,id)),
+  loginFacebookSuccess: (Bearer,id) => dispatch(AuthActions.loginFacebookSuccess(Bearer,id)),
+    loginEmailSuccess: (Bearer, id) => dispatch(AuthActions.loginEmailSuccess(Bearer,id)),
   updateUserProfile: (id) => dispatch(AuthActions.updateUserProfile(id)),
-  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey))
+  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey)),
+
 })
 
 export default connect(

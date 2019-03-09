@@ -8,11 +8,16 @@ import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { AuthTypes } from './Actions'
 
-export const loginFacebookSuccess = (state, {user}, {Bearer}) => {
+export const loginFacebookSuccess = (state, {Bearer, id}) => {
+
+  const config = {
+    Bearer: Bearer,
+    'Content-Type': 'application/json'
+  }
   return ({
     ...state,
-    user: user,
-    Bearer: Bearer,
+    id,
+    config,
     signInMethod: 'social',
     isLoggedIn: true
   })
@@ -20,14 +25,30 @@ export const loginFacebookSuccess = (state, {user}, {Bearer}) => {
 
 }
 
-export const loginGoogleSuccess = (state, {Bearer}) => {
+export const loginEmailSuccess = (state, {Bearer,id}) => {
+  const config = {
+    Bearer: Bearer,
+    'Content-Type': 'application/json'
+  }
+  return ({
+    ...state,
+    id,
+    config,
+    signInMethod: 'social',
+    isLoggedIn: true
+  })
+
+}
+
+export const loginGoogleSuccess = (state, {Bearer, id}) => {
   const config = {
       Bearer: Bearer,
       'Content-Type': 'application/json'
   }
   return ({
     ...state,
-    //config,
+    config,
+    id,
     signInMethod: 'social',
     isLoggedIn: true
   })
@@ -54,6 +75,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [AuthTypes.LOGIN_GOOGLE_SUCCESS]: loginGoogleSuccess,
   [AuthTypes.LOGIN_FACEBOOK_SUCCESS]: loginFacebookSuccess,
   [AuthTypes.UPDATE_USER_PROFILE]: updateUserProfile,
-  [AuthTypes.UPDATE_PUB_KEY]: updatePubKey
+  [AuthTypes.UPDATE_PUB_KEY]: updatePubKey,
+  [AuthTypes.LOGIN_EMAIL_SUCCESS]: loginEmailSuccess
 
 })
