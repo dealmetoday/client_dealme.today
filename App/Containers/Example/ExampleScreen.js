@@ -2,18 +2,17 @@ import React, { Component } from 'react'
 import { Platform, Text, View, Button, Linking, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import ExampleActions from 'App/Stores/Example/Actions'
-import AuthActions from 'App/Stores/Auth/Actions'
+import AuthActions from '../../Stores/Auth/Actions'
+import UserActions from '../../Stores/User/Actions'
 import Style from './ExampleScreenStyle'
 import SignUpForm from '../../Components/SignUpForm'
 import axios from 'axios'
 let { FBLogin, FBLoginManager } = require('react-native-facebook-login');
 import crpyto from 'react-native-crypto'
 import '../../../shim.js';
-
-
-
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin'
+import { DeviceEventEmitter } from 'react-native'
+import Beacons from 'react-native-beacons-manager'
 
 /**
  * This is an example of a container component.
@@ -28,6 +27,38 @@ const MailIcon = {
   color: '#F5B512',
   iconStyle: {paddingRight: 16, left: 0}
 }
+
+const region = {
+  identifier: 'Estimotes',
+  uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'
+};
+
+// Request for authorization while the app is open
+Beacons.requestWhenInUseAuthorization();
+
+Beacons.startMonitoringForRegion(region);
+Beacons.startRangingBeaconsInRegion(region);
+
+Beacons.startUpdatingLocation();
+
+// Listen for beacon changes
+const subscription = DeviceEventEmitter.addListener(
+  'beaconsDidRange',
+  (data) => {
+    // data.region - The current region
+    // data.region.identifier
+    // data.region.uuid
+
+    // data.beacons - Array of all beacons inside a region
+    //  in the following structure:
+    //    .uuid
+    //    .major - The major version of a beacon
+    //    .minor - The minor version of a beacon
+    //    .rssi - Signal strength: RSSI value (between -100 and 0)
+    //    .proximity - Proximity value, can either be "unknown", "far", "near" or "immediate"
+    //    .accuracy - The accuracy of a beacon
+  }
+);
 
 class ExampleScreen extends Component {
   constructor(props) {
@@ -95,7 +126,7 @@ class ExampleScreen extends Component {
               axios.defaults.headers.common = this.props.config
               axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
                 console.log(resp.data)
-                this.props.updateUserProfile(resp.data)
+                this.props.getUserProfile(resp.data)
                 this.props.navigation.navigate('UserScreen')
               }).catch(error => {
                 console.log(error)
@@ -176,7 +207,7 @@ class ExampleScreen extends Component {
                 axios.defaults.headers.common = this.props.config
                 axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
                   console.log(resp.data)
-                  this.props.updateUserProfile(resp.data)
+                  this.props.getUserProfile(resp.data)
                   this.props.navigation.navigate('UserScreen')
                 }).catch(error => {
                   console.log(error)
@@ -216,29 +247,16 @@ class ExampleScreen extends Component {
         let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
         let params = {
           email: email,
-          role: "user",
-          provider: "Email",
           password: hashed
         }
         console.log(params)
         axios.post('https://api.dealme.today/users/email', params).then(resp=>{
-
-          console.log(resp)
-          if(resp.data.status === 'Success'){
-            this.props.loginEmailSuccess(resp.data.Bearer, resp.data.id)
-            console.log( this.props.config)
-            axios.defaults.headers.common = this.props.config
-
-            axios.get(`https://api.dealme.today/users?email=${resp.data.id}`).then(resp=> {
-              console.log(resp)
-            }).catch(err=>{
-              console.log(err)
-            })
-
-
-          }
-
-        })
+         if(resp.data.status === 'Success'){
+           this.setState({
+             signUpComplete: "Sign up Successful! please try loggin in."
+           })
+         }
+        }).catch(err => console.err)
 
       }
       else{
@@ -268,15 +286,16 @@ class ExampleScreen extends Component {
       role: 'user',
       password: hashed
     }
+    console.log(params)
 
     axios.put('https://api.dealme.today/auth/login/email', params).then(resp => {
-
+      console.log(resp )
       if(resp.data.status === 'Success'){
-        this.props.loginEmailSuccess(resp.data.Bearer, "")
+        this.props.loginEmailSuccess(resp.data.Bearer, resp.data.id)
         axios.defaults.headers.common = this.props.config
-        axios.get(`api.dealme.today/user/profile?id=5c82fd4be2ce828a403bca59`, {}, this.props.config).then( resp => {
+        axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
           console.log(resp.data)
-          this.props.updateUserProfile(resp.data)
+          this.props.getUserProfile(resp.data)
           this.props.navigation.navigate('UserScreen')
         }).catch(error => {
           console.log(error)
@@ -286,7 +305,6 @@ class ExampleScreen extends Component {
         console.log('Something went wrong!')
       }
 
-      console.log(resp)
     }).catch( error => {
       console.log(error)
     })
@@ -340,6 +358,8 @@ class ExampleScreen extends Component {
             <SignUpForm Icon={MailIcon} emailSignUp={this.handleEmailSignUp} emailLogIn={this.handleEmailLogIn}/>
           </View>
           {this.state.signUpErr ? <Text style={{color: 'red'}}>{this.state.signUpErr}</Text> : null}
+          {this.state.signUpComplete ? <Text style={{color: 'green'}}>{this.state.signUpComplete}</Text> : null}
+
 
         </ScrollView>
       </View>
@@ -357,9 +377,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loginGoogleSuccess: (Bearer,id)=> dispatch(AuthActions.loginGoogleSuccess(Bearer,id)),
   loginFacebookSuccess: (Bearer,id) => dispatch(AuthActions.loginFacebookSuccess(Bearer,id)),
-    loginEmailSuccess: (Bearer, id) => dispatch(AuthActions.loginEmailSuccess(Bearer,id)),
-  updateUserProfile: (id) => dispatch(AuthActions.updateUserProfile(id)),
-  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey)),
+  loginEmailSuccess: (Bearer, id) => dispatch(AuthActions.loginEmailSuccess(Bearer,id)),
+  getUserProfile: (profile) => dispatch(UserActions.getUserProfile(profile)),
+  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey))
 
 })
 

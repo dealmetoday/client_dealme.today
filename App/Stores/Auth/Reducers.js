@@ -34,7 +34,7 @@ export const loginEmailSuccess = (state, {Bearer,id}) => {
     ...state,
     id,
     config,
-    signInMethod: 'social',
+    signInMethod: 'email',
     isLoggedIn: true
   })
 

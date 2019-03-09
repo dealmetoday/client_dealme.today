@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { ScrollView, View } from 'react-native'
-import { Button, Form, Item, Picker, Icon, Text, Input, Label } from 'native-base'
+import { Button, Form, Item, Picker, Icon, Text, Input, Label, Toast } from 'native-base'
 import HeaderNav from '../../Components/HeaderNav'
 import FooterNav from '../../Components/FooterNav'
 import axios from 'axios'
+import MultiSelect from 'react-native-multiple-select';
 
 // SCREENS
 // Styles
 import styles from '../Styles/LaunchScreenStyles'
-import ExampleActions from '../../Stores/Example/Actions'
 import { connect } from 'react-redux'
 import AuthActions from '../../Stores/Auth/Actions'
+import TagActions from '../../Stores/Tags/Actions'
 
 
 const ageList = [
@@ -70,23 +71,32 @@ class UserProfileScreen extends Component {
     super(props)
     this.state = {
       isSigninInProgress: false,
-      age: 0
+      age: 0,
+      showToast: false,
+      tags: []
     }
     this.handleInputChange.bind(this)
     this.onValueChange.bind(this)
     this.openQRScreen.bind(this)
     this.openDealScreen.bind(this)
+    this.handleSaveProfile.bind(this)
   }
 
   componentDidMount(){
-    const {email, first, last, gender, age, location} = this.props.auth.profile;
+    axios.get('https://api.dealme.today/tags').then(resp => {
+      console.log(resp)
+      this.props.getTags(resp.data)
+    })
+    const {email, first, last, gender, age, location, middle, tags} = this.props.user.profile;
     this.setState({
       first: first,
       last: last,
       email: email,
       age,
       gender,
-      location
+      location,
+      middle,
+      tags
 
 
     })
@@ -122,23 +132,41 @@ class UserProfileScreen extends Component {
 
     let updatedProfile = {
       id: this.props.auth.id,
-      first: this.state.first !== oldProfile.first ? this.state.first : oldProfile.first,
-      middle: this.state.middle !== oldProfile.middle ? this.state.middle : oldProfile.middle,
-      last: this.state.last !== oldProfile.last ? this.state.last : oldProfile.last,
-      email: this.state.email !== oldProfile.email ? this.state.email : oldProfile.email,
+      first: this.state.first !== oldProfile.first ? this.state.first : oldProfile.first || "",
+      middle: this.state.middle !== oldProfile.middle ? this.state.middle : oldProfile.middle || "",
+      last: this.state.last !== oldProfile.last ? this.state.last : oldProfile.last || "",
+      email: this.state.email !== oldProfile.email ? this.state.email : oldProfile.email || "",
       age: this.state.age !== oldProfile.age ? this.state.age : oldProfile.age,
-      gender: this.state.gender !== oldProfile.gender ? this.state.gender : oldProfile.gender,
-      location: this.state.location !== oldProfile.location ? this.state.location : oldProfile.location,
+      gender: this.state.gender !== oldProfile.gender ? this.state.gender : oldProfile.gender || "",
+      location: this.state.location !== oldProfile.location ? this.state.location : oldProfile.location || "",
+      tags: this.state.tags !== oldProfile.tags ? this.state.tags : oldProfile.tags || []
     }
     console.log(updatedProfile)
     axios.defaults.headers.common = this.props.config
 
     axios.put('https://api.dealme.today/users', updatedProfile).then(resp => {
-      console.log(resp)
-    }).catch( err => {
+      Toast.show({
+        text: "Profile Saved",
+        buttonText: "Okay",
+        duration: 3000
+
+      })
+    }).catch(err => {
       console.log(err)
+      Toast.show({
+        text: "Error Saving Profile",
+        buttonText: "Okay",
+        duration: 3000
+
+      })
     })
   }
+
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({
+      tags: selectedItems
+    })
+  };
 
   render () {
 
@@ -166,7 +194,7 @@ class UserProfileScreen extends Component {
               </Item>
               <Item fixedLabel>
                 <Label>Age</Label>
-                <Input keyboardType='numeric' value={this.state.age} onChange={event => this.handleInputChange(event, 'age')} />
+                <Input keyboardType='numeric' value={this.state.age.toString()} onChange={event => this.handleInputChange(event, 'age')} />
               </Item>
               <Item fixedLabel>
                 <Label>Location</Label>
@@ -190,15 +218,24 @@ class UserProfileScreen extends Component {
                   }
                 </Picker>
               </Item>
-              <Item inlineLabel last>
-                <Input placeholder={'Shopping Interest'} />
-              </Item>
             </Form>
-          </View>
-          <View style={{}}>
-            <Button rounded light onPress={this.handleSaveProfile}>
-              <Text>Save</Text>
-            </Button>
+            <MultiSelect
+              items={this.props.tags.tagList}
+              uniqueKey="id"
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.tags}
+              selectText="Pick Items"
+              searchInputPlaceholderText="Search Items..."
+              tagRemoveIconColor="#CCC"
+              tagBorderColor="#CCC"
+              tagTextColor="#CCC"
+              selectedItemTextColor="#CCC"
+              selectedItemIconColor="#CCC"
+              itemTextColor="#000"
+              searchInputStyle={{ color: '#CCC' }}
+              submitButtonColor="#CCC"
+              submitButtonText="Submit"
+            />
           </View>
         </ScrollView>
         <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} active={'ProfileScreen'}/>
@@ -210,14 +247,15 @@ class UserProfileScreen extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  config: state.auth.config
+  config: state.auth.config,
+  user: state.user,
+  tags: state.tags
 
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loginGoogleSuccess: (Bearer)=> dispatch(ExampleActions.loginGoogleSuccess(Bearer)),
   updateUserProfile: (id) => dispatch(AuthActions.updateUserProfile(id)),
-  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey))
+  getTags: (tags) => dispatch(TagActions.getTags(tags))
 })
 
 export default connect(
