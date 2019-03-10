@@ -122,56 +122,7 @@ class UserScreen extends Component {
       <View style={styles.mainContainer}>
         <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'Profile'} rightLabel={'Save'} />
         <ScrollView style={styles.container}>
-          <View>
-            <Form>
-              <Item inlineLabel>
-                <Input placeholder={'First Name'} onChange={event => this.handleInputChange(event, 'firstName')} />
-              </Item>
-              <Item inlineLabel last>
-                <Input placeholder={'Last Name'} onChange={event => this.handleInputChange(event, 'lastName')} />
-              </Item>
-              <Item inlineLabel>
-                <Input placeholder={'Email'} onChange={event => this.handleInputChange(event, 'email')} />
-              </Item>
-              <Item>
-                <Picker
-                  note
-                  mode='dropdown'
-                  selectedValue={this.state.age}
-                  onValueChange={value => this.onValueChange(value, 'age')}
-                  placeholder='Select Age Range'
-                  style={{ width: undefined }}
-                  iosIcon={<Icon name='arrow-down' />}
-                >
-                  {
-                    ageList.map(anOption => {
-                      return <Picker.Item key={anOption.value} label={anOption.label} value={anOption.value} />
-                    })
-                  }
-                </Picker>
-              </Item>
-              <Item inlineLabel last>
-                <Picker
-                  note
-                  mode='dropdown'
-                  selectedValue={this.state.gender}
-                  onValueChange={value => this.onValueChange(value, 'gender')}
-                  placeholder='Select Gender'
-                  style={{ width: undefined }}
-                  iosIcon={<Icon name='arrow-down' />}
-                >
-                  {
-                    genderList.map(anOption => {
-                      return <Picker.Item key={anOption.value} label={anOption.label} value={anOption.value} />
-                    })
-                  }
-                </Picker>
-              </Item>
-              <Item inlineLabel last>
-                <Input placeholder={'Shopping Interest'} />
-              </Item>
-            </Form>
-          </View>
+
         </ScrollView>
         <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} />
 

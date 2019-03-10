@@ -5,6 +5,10 @@ import { reducer as ExampleReducer } from './Example/Reducers'
 import { reducer as AuthReducer } from './Auth/Reducers'
 import { reducer as UserReducer } from './User/Reducers'
 import { reducer as TagReducer } from './Tags/Reducers'
+import {reducer as MallReducer } from './Malls/Reducers'
+import {reducer as DealsReducer} from './Deals/Reducers'
+import {reducer as StoreReducer} from './Stores/Reducers'
+
 
 export default () => {
   const rootReducer = combineReducers({
@@ -15,7 +19,10 @@ export default () => {
     example: ExampleReducer,
     auth: AuthReducer,
     user: UserReducer,
-    tags: TagReducer
+    tags: TagReducer,
+    malls: MallReducer,
+    deals: DealsReducer,
+    stores: StoreReducer
   })
 
   return configureStore(rootReducer, rootSaga)

@@ -12,38 +12,8 @@ import styles from '../Styles/LaunchScreenStyles'
 import { connect } from 'react-redux'
 import AuthActions from '../../Stores/Auth/Actions'
 import TagActions from '../../Stores/Tags/Actions'
+import MallActions from '../../Stores/Malls/Actions'
 
-
-const ageList = [
-  {
-    value: 1,
-    label: '0-13yrs'
-  },
-  {
-    value: 2,
-    label: '14-16yrs'
-  },
-  {
-    value: 3,
-    label: '17-19yrs'
-  },
-  {
-    value: 4,
-    label: '20-22yrs'
-  },
-  {
-    value: 5,
-    label: '23-25yrs'
-  },
-  {
-    value: 6,
-    label: '26-28yrs'
-  },
-  {
-    value: 7,
-    label: '+30yrs'
-  }
-]
 
 const genderList = [
   {
@@ -73,7 +43,8 @@ class UserProfileScreen extends Component {
       isSigninInProgress: false,
       age: 0,
       showToast: false,
-      tags: []
+      tags: [],
+      favouriteMalls: ""
     }
     this.handleInputChange.bind(this)
     this.onValueChange.bind(this)
@@ -83,26 +54,43 @@ class UserProfileScreen extends Component {
   }
 
   componentDidMount(){
-    axios.get('https://api.dealme.today/tags').then(resp => {
+
+    let promiseArr = []
+    promiseArr.push(axios.get('https://api.dealme.today/tags').then(resp => {
       console.log(resp)
       this.props.getTags(resp.data)
-    })
-    const {email, first, last, gender, age, location, middle, tags} = this.props.user.profile;
-    this.setState({
-      first: first,
-      last: last,
-      email: email,
-      age,
-      gender,
-      location,
-      middle,
-      tags
+    }))
+
+    promiseArr.push(axios.get('https://api.dealme.today/malls').then(resp =>{
+      console.log(resp)
+      this.props.getMalls(resp.data)
+    }))
 
 
-    })
+    Promise.all(promiseArr).then(resp => {
+      const {email, first, last, gender, age, location, middle, tags, favouriteMalls} = this.props.user.profile;
+      const {malls} = this.props.malls
+      console.log(malls)
+      this.setState({
+        first: first,
+        last: last,
+        email: email,
+        age,
+        gender,
+        location,
+        middle,
+        tags,
+        favouriteMalls: favouriteMalls[0]
+
+
+      })
+      }
+    )
+
   }
 
   onValueChange (value, field) {
+    console.log(value)
     this.setState({
       [field]: value
     })
@@ -128,7 +116,11 @@ class UserProfileScreen extends Component {
   }
 
   handleSaveProfile = () => {
+    console.log("in handle save profile")
     let oldProfile = this.props.auth.profile;
+    let updatedMalls = []
+    updatedMalls.push(this.state.favouriteMalls)
+    console.log(updatedMalls)
 
     let updatedProfile = {
       id: this.props.auth.id,
@@ -136,10 +128,12 @@ class UserProfileScreen extends Component {
       middle: this.state.middle !== oldProfile.middle ? this.state.middle : oldProfile.middle || "",
       last: this.state.last !== oldProfile.last ? this.state.last : oldProfile.last || "",
       email: this.state.email !== oldProfile.email ? this.state.email : oldProfile.email || "",
-      age: this.state.age !== oldProfile.age ? this.state.age : oldProfile.age,
+      age: this.state.age !== oldProfile.age ? this.state.age.toString() : oldProfile.age.toString(),
       gender: this.state.gender !== oldProfile.gender ? this.state.gender : oldProfile.gender || "",
       location: this.state.location !== oldProfile.location ? this.state.location : oldProfile.location || "",
-      tags: this.state.tags !== oldProfile.tags ? this.state.tags : oldProfile.tags || []
+      tags: this.state.tags !== oldProfile.tags ? this.state.tags : oldProfile.tags || [],
+      favouriteMalls: updatedMalls
+
     }
     console.log(updatedProfile)
     axios.defaults.headers.common = this.props.config
@@ -197,8 +191,21 @@ class UserProfileScreen extends Component {
                 <Input keyboardType='numeric' value={this.state.age.toString()} onChange={event => this.handleInputChange(event, 'age')} />
               </Item>
               <Item fixedLabel>
-                <Label>Location</Label>
-                <Input value={this.state.location} onChange={event => this.handleInputChange(event, 'location')} />
+                <Label>Favourite Mall</Label>
+                <Picker
+                  mode="dropdown"
+                  iosHeader="Select your default Mall"
+                  iosIcon={<Icon name="arrow-down" />}
+                  style={{ width: undefined }}
+                  selectedValue={this.state.favouriteMalls}
+                  onValueChange={value => this.onValueChange(value, 'favouriteMalls')}
+                >
+                  {
+                    this.props.malls.malls.map(aMall => {
+                      return <Picker.Item key={aMall._id} label={aMall.name} value={aMall._id} />
+                    })
+                  }
+                </Picker>
               </Item>
               <Item fixedLabel>
                 <Label>Gender</Label>
@@ -249,13 +256,15 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   config: state.auth.config,
   user: state.user,
-  tags: state.tags
+  tags: state.tags,
+  malls: state.malls
 
 })
 
 const mapDispatchToProps = (dispatch) => ({
   updateUserProfile: (id) => dispatch(AuthActions.updateUserProfile(id)),
-  getTags: (tags) => dispatch(TagActions.getTags(tags))
+  getTags: (tags) => dispatch(TagActions.getTags(tags)),
+  getMalls: (malls) => dispatch(MallActions.getMalls(malls))
 })
 
 export default connect(
