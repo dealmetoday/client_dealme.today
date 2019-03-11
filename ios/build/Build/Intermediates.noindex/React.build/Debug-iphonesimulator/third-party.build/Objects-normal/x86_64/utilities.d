@@ -1,13 +1,13 @@
 dependencies: \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/utilities.cc \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/utilities.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/base/mutex.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/config.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/glog/logging.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/glog/log_severity.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/glog/vlog_is_on.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/base/googleinit.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/stacktrace.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/symbolize.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/base/commandlineflags.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native/third-party/glog-0.3.5/src/stacktrace_x86_64-inl.h
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/utilities.cc \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/utilities.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/base/mutex.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/config.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/glog/logging.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/glog/log_severity.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/glog/vlog_is_on.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/base/googleinit.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/stacktrace.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/symbolize.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/base/commandlineflags.h \
+  /Users/alfredhong/client_dealme.today/node_modules/react-native/third-party/glog-0.3.5/src/stacktrace_x86_64-inl.h
