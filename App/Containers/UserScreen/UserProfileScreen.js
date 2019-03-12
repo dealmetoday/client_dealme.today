@@ -124,14 +124,14 @@ class UserProfileScreen extends Component {
 
     let updatedProfile = {
       id: this.props.auth.id,
-      first: this.state.first !== oldProfile.first ? this.state.first : oldProfile.first || "",
-      middle: this.state.middle !== oldProfile.middle ? this.state.middle : oldProfile.middle || "",
-      last: this.state.last !== oldProfile.last ? this.state.last : oldProfile.last || "",
-      email: this.state.email !== oldProfile.email ? this.state.email : oldProfile.email || "",
-      age: this.state.age !== oldProfile.age ? this.state.age.toString() : oldProfile.age.toString(),
-      gender: this.state.gender !== oldProfile.gender ? this.state.gender : oldProfile.gender || "",
-      location: this.state.location !== oldProfile.location ? this.state.location : oldProfile.location || "",
-      tags: this.state.tags !== oldProfile.tags ? this.state.tags : oldProfile.tags || [],
+      first: this.state.first !== oldProfile.first ? this.state.first : oldProfile ? oldProfile.first : "",
+      middle: this.state.middle !== oldProfile.middle ? this.state.middle : oldProfile ? oldProfile.middle : "",
+      last: this.state.last !== oldProfile.last ? this.state.last :oldProfile ?  oldProfile.last : "",
+      email: this.state.email !== oldProfile.email ? this.state.email : oldProfile ? oldProfile.email : "",
+      age: this.state.age !== oldProfile.age ? this.state.age.toString() : oldProfile ? oldProfile.age.toString() : "",
+      gender: this.state.gender !== oldProfile.gender ? this.state.gender : oldProfile ? oldProfile.gender : "",
+      location: this.state.location !== oldProfile.location ? this.state.location : oldProfile ? oldProfile.location : "",
+      tags: this.state.tags !== oldProfile.tags ? this.state.tags : oldProfile ? oldProfile.tags : [],
       favouriteMalls: updatedMalls
 
     }
@@ -165,30 +165,30 @@ class UserProfileScreen extends Component {
   render () {
 
     return (
-      <View style={styles.mainContainer}>
+      <View style={styles.mainContainer} testID={'UserProfileScreenContainer'}>
         <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'Profile'} rightLabel={'Save'} />
         <ScrollView style={styles.container}>
           <View>
             <Form>
               <Item fixedLabel>
                 <Label>First Name</Label>
-                <Input value={this.state.first} onChange={event => this.handleInputChange(event, 'first')} />
+                <Input value={this.state.first} onChange={event => this.handleInputChange(event, 'first')} testID={'user-profile-first'}/>
               </Item>
               <Item fixedLabel>
                 <Label>Middle Name</Label>
-                <Input value={this.state.middle} onChange={event => this.handleInputChange(event, 'middle')} />
+                <Input value={this.state.middle} onChange={event => this.handleInputChange(event, 'middle')} testID={'user-profile-middle'}/>
               </Item>
               <Item fixedLabel>
                 <Label>Last Name</Label>
-                <Input value={this.state.last} onChange={event => this.handleInputChange(event, 'last')} />
+                <Input value={this.state.last} onChange={event => this.handleInputChange(event, 'last')} testID={'user-profile-last'}/>
               </Item>
               <Item fixedLabel>
                 <Label>Email</Label>
-                <Input value={this.state.email} onChange={event => this.handleInputChange(event, 'email')} />
+                <Input value={this.state.email} onChange={event => this.handleInputChange(event, 'email')} testID={'user-profile-email'}/>
               </Item>
               <Item fixedLabel>
                 <Label>Age</Label>
-                <Input keyboardType='numeric' value={this.state.age.toString()} onChange={event => this.handleInputChange(event, 'age')} />
+                <Input keyboardType='numeric' value={this.state.age.toString()} onChange={event => this.handleInputChange(event, 'age')} testID={'user-profile-age'}/>
               </Item>
               <Item fixedLabel>
                 <Label>Favourite Mall</Label>
@@ -199,6 +199,7 @@ class UserProfileScreen extends Component {
                   style={{ width: undefined }}
                   selectedValue={this.state.favouriteMalls}
                   onValueChange={value => this.onValueChange(value, 'favouriteMalls')}
+                  testID={'user-profile-favourite-mall'}
                 >
                   {
                     this.props.malls.malls.map(aMall => {
@@ -217,6 +218,7 @@ class UserProfileScreen extends Component {
                   placeholder='Select Gender'
                   style={{ width: undefined }}
                   iosIcon={<Icon name='arrow-down' />}
+                  testID={'user-profile-gender'}
                 >
                   {
                     genderList.map(anOption => {

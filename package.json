@@ -4,18 +4,21 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
+    "test": "detox build && detox test",
     "prettier-fix": "prettier --write **/*.js",
     "prettier-check": "prettier --list-different **/*.js",
     "lint-fix": "eslint --fix .",
     "lint-check": "eslint .",
-    "rename": "react-native-rename"
+    "rename": "react-native-rename",
+    "postinstall": "rn-nodeify --install fs,dgram,process,path,console --hack"
   },
   "dependencies": {
+    "@babel/runtime": "^7.3.4",
     "@tradle/react-native-http": "^2.0.1",
     "apisauce": "^1.0.2",
     "assert": "^1.4.1",
     "asyncstorage-down": "^3.0.0",
+    "browserify-sign": "^4.0.0",
     "browserify-zlib": "^0.1.4",
     "console-browserify": "^1.1.0",
     "constants-browserify": "^1.0.0",
@@ -59,6 +62,7 @@
     "redux-persist-transform-immutable": "^5.0.0",
     "redux-saga": "^1.0.0",
     "reduxsauce": "^1.0.1",
+    "sjcl": "^1.0.8",
     "stream-browserify": "^1.0.0",
     "string_decoder": "^0.10.31",
     "timers-browserify": "^1.4.2",
@@ -70,6 +74,7 @@
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "23.2.0",
+    "detox": "^10.0.13",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",
@@ -85,10 +90,30 @@
     "prettier": "^1.11.1",
     "react-native-rename": "^2.2.2",
     "react-test-renderer": "16.3.1",
-    "rn-nodeify": "^10.0.1"
+    "rn-nodeify": "github:tradle/rn-nodeify"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+    },
+    "transformIgnorePatterns": []
   },
   "react-native": {
     "zlib": "browserify-zlib",
@@ -141,5 +166,17 @@
     "tty": "tty-browserify",
     "vm": "vm-browserify",
     "tls": false
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Boilerplate.app",
+        "build": "xcodebuild -project ios/Boilerplate.xcodeproj -scheme Boilerplate -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 8",
+        "test-runner": "jest"
+      }
+    },
+    "test-runner": "jest"
   }
 }

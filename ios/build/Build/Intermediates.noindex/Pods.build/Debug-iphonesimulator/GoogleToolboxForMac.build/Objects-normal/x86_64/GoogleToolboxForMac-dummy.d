@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alfredhong/client_dealme.today/ios/Pods/Target\ Support\ Files/GoogleToolboxForMac/GoogleToolboxForMac-dummy.m \
-  /Users/alfredhong/client_dealme.today/ios/Pods/Target\ Support\ Files/GoogleToolboxForMac/GoogleToolboxForMac-prefix.pch
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/Target\ Support\ Files/GoogleToolboxForMac/GoogleToolboxForMac-dummy.m \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/Target\ Support\ Files/GoogleToolboxForMac/GoogleToolboxForMac-prefix.pch

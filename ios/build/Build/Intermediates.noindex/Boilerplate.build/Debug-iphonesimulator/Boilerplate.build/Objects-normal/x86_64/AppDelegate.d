@@ -1,35 +1,35 @@
 dependencies: \
-  /Users/alfredhong/client_dealme.today/ios/Boilerplate/AppDelegate.m \
-  /Users/alfredhong/client_dealme.today/ios/Boilerplate/AppDelegate.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBundleURLProvider.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
-  /Users/alfredhong/client_dealme.today/node_modules/react-native-google-signin/ios/RNGoogleSignin/RNGoogleSignin.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
-  /Users/alfredhong/client_dealme.today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
-  /Users/alfredhong/client_dealme.today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Modules/module.modulemap \
-  /Users/alfredhong/client_dealme.today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDSignInButton.h \
-  /Users/alfredhong/client_dealme.today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDSignIn.h \
-  /Users/alfredhong/client_dealme.today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDProfileData.h \
-  /Users/alfredhong/client_dealme.today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDGoogleUser.h \
-  /Users/alfredhong/client_dealme.today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDAuthentication.h \
-  /Users/alfredhong/client_dealme.today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GoogleSignIn.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Boilerplate/AppDelegate.m \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Boilerplate/AppDelegate.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBundleURLProvider.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native-google-signin/ios/RNGoogleSignin/RNGoogleSignin.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Modules/module.modulemap \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDSignInButton.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDSignIn.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDProfileData.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDGoogleUser.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDAuthentication.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GoogleSignIn.h \
   ./FBSDKCoreKit.framework/Modules/module.modulemap \
   ./Bolts.framework/Modules/module.modulemap \
   ./Bolts.framework/Headers/BFWebViewAppLinkResolver.h \
@@ -59,7 +59,7 @@ dependencies: \
   ./FBSDKCoreKit.framework/Headers/FBSDKAppLinkUtility.h \
   ./FBSDKCoreKit.framework/Headers/FBSDKAppLinkReturnToRefererView.h \
   ./FBSDKCoreKit.framework/Headers/FBSDKAppLinkReturnToRefererController.h \
-  /Users/alfredhong/client_dealme.today/ios/Bolts.framework/Modules/module.modulemap \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Bolts.framework/Modules/module.modulemap \
   ./FBSDKCoreKit.framework/Headers/FBSDKAppLinkResolver.h \
   ./FBSDKCoreKit.framework/Headers/FBSDKAppLinkResolving.h \
   ./FBSDKCoreKit.framework/Headers/FBSDKAppLinkNavigation.h \
@@ -86,7 +86,7 @@ dependencies: \
   ./FBSDKLoginKit.framework/Headers/FBSDKLoginManager.h \
   ./FBSDKLoginKit.framework/Headers/FBSDKLoginButton.h \
   ./FBSDKLoginKit.framework/Headers/FBSDKLoginConstants.h \
-  /Users/alfredhong/client_dealme.today/ios/FBSDKCoreKit.framework/Modules/module.modulemap \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/FBSDKCoreKit.framework/Modules/module.modulemap \
   ./FBSDKLoginKit.framework/Headers/FBSDKDeviceLoginManagerResult.h \
   ./FBSDKLoginKit.framework/Headers/FBSDKDeviceLoginManager.h \
   ./FBSDKLoginKit.framework/Headers/FBSDKDeviceLoginCodeInfo.h \

@@ -41,7 +41,7 @@ export default class SignUpForm extends Component {
       <View style={{justifyContent: 'center'}}>
         <Form>
           <Item inlineLabel>
-            <Input placeholder={'Email'} onChange={event => this.handleInputChange(event, 'email')} />
+            <Input placeholder={'Email'} onChange={event => this.handleInputChange(event, 'email')} testID={"Email-input"} keyboardType={'email-address'}/>
           </Item>
           <Item inlineLabel>
             <Input
@@ -49,15 +49,16 @@ export default class SignUpForm extends Component {
               onChange={event => this.handleInputChange(event, 'password')}
               value={this.state.password}
               secureTextEntry
+              testID={"Password-input"}
             />
           </Item>
         </Form>
         <View style={{flexDirection: 'row'}}>
-          <Button rounded style={buttonStyle} onPress={() => this.props.emailSignUp(this.state.email,this.state.password)}>
+          <Button rounded style={buttonStyle} onPress={() => this.props.emailSignUp(this.state.email,this.state.password)} testID={'SignUp-Button'}>
             <Text style={buttonTextStyle}>Sign Up</Text>
           </Button>
           <View style={{width: 15}} />
-          <Button rounded style={buttonStyle} onPress={() => this.props.emailLogIn(this.state.email,this.state.password)}>
+          <Button rounded style={buttonStyle} onPress={() => this.props.emailLogIn(this.state.email,this.state.password)} testID={'Login-Button'}>
             <Text style={buttonTextStyle}>Log in</Text>
           </Button>
         </View>

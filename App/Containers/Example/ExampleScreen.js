@@ -335,7 +335,7 @@ class ExampleScreen extends Component {
 
   render() {
     return (
-      <View style={Style.container}>
+      <View style={Style.container} testID={'ExampleScreenContainer'}>
         <ScrollView contentContainerStyle={Style.container}>
           <View style={{...Style.section, alignItems: 'center', height: '33%'}}>
             <Text style={{textAlign: 'center', color: '#7C2218', marginTop: '45%', fontSize: 72, fontWeight: '600'}} h1>Dealme</Text>
@@ -357,7 +357,7 @@ class ExampleScreen extends Component {
             <Text style={{textAlign: 'center', marginBottom: 12}} h3> Log in or Sign up</Text>
             <SignUpForm Icon={MailIcon} emailSignUp={this.handleEmailSignUp} emailLogIn={this.handleEmailLogIn}/>
           </View>
-          {this.state.signUpErr ? <Text style={{color: 'red'}}>{this.state.signUpErr}</Text> : null}
+          {this.state.signUpErr ? <Text testID={'SignUpErrMessage'} style={{color: 'red'}}>{this.state.signUpErr}</Text> : null}
           {this.state.signUpComplete ? <Text style={{color: 'green'}}>{this.state.signUpComplete}</Text> : null}
 
 
