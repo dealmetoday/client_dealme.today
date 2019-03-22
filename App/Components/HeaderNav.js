@@ -24,8 +24,8 @@ class HeaderNav extends Component {
         <Title>{this.props.title}</Title>
         </Body>
         <Right>
-          <Button hasText transparent onPress={this.props.handleRightButton}>
-            <Text>{this.props.rightLabel}</Text>
+          <Button hasText transparent onPress={this.props.handleRightButton} testID={"header-right-button"}>
+          <Text>{this.props.rightLabel}</Text>
           </Button>
         </Right>
       </Header>

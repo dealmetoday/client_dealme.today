@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
-import { Platform, Text, View, Button, Linking, ScrollView } from 'react-native'
-import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
-import AuthActions from '../../Stores/Auth/Actions'
-import UserActions from '../../Stores/User/Actions'
-import Style from './ExampleScreenStyle'
-import SignUpForm from '../../Components/SignUpForm'
-import axios from 'axios'
-let { FBLogin, FBLoginManager } = require('react-native-facebook-login');
-import crpyto from 'react-native-crypto'
-import '../../../shim.js';
-import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin'
-import { DeviceEventEmitter } from 'react-native'
-import Beacons from 'react-native-beacons-manager'
+import React, { Component } from "react";
+import { Platform, Text, View, Button, Linking, ScrollView, Image } from "react-native";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
+import AuthActions from "../../Stores/Auth/Actions";
+import UserActions from "../../Stores/User/Actions";
+import Style from "./ExampleScreenStyle";
+import SignUpForm from "../../Components/SignUpForm";
+import axios from "axios";
+import Logo from '../../Images/logoNormal.png'
+
+let { FBLogin, FBLoginManager } = require("react-native-facebook-login");
+import crpyto from "react-native-crypto";
+import "../../../shim.js";
+import { GoogleSignin, GoogleSigninButton, statusCodes } from "react-native-google-signin";
 
 /**
  * This is an example of a container component.
@@ -22,93 +22,133 @@ import Beacons from 'react-native-beacons-manager'
  */
 
 const MailIcon = {
-  name: 'mail',
+  name: "mail",
   size: 24,
-  color: '#F5B512',
-  iconStyle: {paddingRight: 16, left: 0}
-}
-
-const region = {
-  identifier: 'Estimotes',
-  uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'
+  color: "#F5B512",
+  iconStyle: { paddingRight: 16, left: 0 }
 };
 
-// Request for authorization while the app is open
-Beacons.requestWhenInUseAuthorization();
+const region = {
+  identifier: "test",
+  uuid: "23b8a2f2-0f94-4bd6-9790-e2439bf47418"
+};
 
-Beacons.startMonitoringForRegion(region);
-Beacons.startRangingBeaconsInRegion(region);
+const store1 = {
+  identifier: "Children's-mart",
+  uuid: "00000000-5c82-fd4b-77e0-e601603bcadb",
+  major: 10065,
+  minor: 26049
+};
 
-Beacons.startUpdatingLocation();
+const store3 = {
+  identifier: "Aquatics Shop",
+  uuid: "00000000-5c82-fd4b-3a35-cfccb93bca61",
+  major: 10065,
+  minor: 26049
+};
 
-// Listen for beacon changes
-const subscription = DeviceEventEmitter.addListener(
-  'beaconsDidRange',
-  (data) => {
-    // data.region - The current region
-    // data.region.identifier
-    // data.region.uuid
-
-    // data.beacons - Array of all beacons inside a region
-    //  in the following structure:
-    //    .uuid
-    //    .major - The major version of a beacon
-    //    .minor - The minor version of a beacon
-    //    .rssi - Signal strength: RSSI value (between -100 and 0)
-    //    .proximity - Proximity value, can either be "unknown", "far", "near" or "immediate"
-    //    .accuracy - The accuracy of a beacon
-  }
-);
+const store2 = {
+  identifier: "Clothes Depot",
+  uuid: "00000000-5c82-fd4b-b7bd-36fb363bca9a",
+  major: 10065,
+  minor: 26049
+};
 
 class ExampleScreen extends Component {
-  constructor(props) {
-    super(props)
+  constructor (props) {
+    super(props);
     this.state = {
       isSigninInProgress: false,
       user: null,
       signUpErr: null
-    }
-    this.handleEmailLogIn.bind(this)
-    this.handleEmailSignUp.bind(this)
+    };
+    this.handleEmailLogIn.bind(this);
+    this.handleEmailSignUp.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     GoogleSignin.configure({
-      webClientId: '84477259757-3di3d87li4lgq4pr7q7987h6n83f5boo.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      webClientId: "84477259757-3di3d87li4lgq4pr7q7987h6n83f5boo.apps.googleusercontent.com", // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: false, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-      hostedDomain: '', // specifies a hosted domain restriction
-      loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
+      hostedDomain: "", // specifies a hosted domain restriction
+      loginHint: "", // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
       forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login.
-      accountName: '', // [Android] specifies an account name on the device that should be used
-      iosClientId: '84477259757-qst0agnr3uujrnmu73hsglf2stsf395e.apps.googleusercontent.com', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-    })
-    axios.get('https://api.dealme.today/pubkey').then(resp => {
-      this.props.updatePubKey(resp.data)
-    }).catch(err=>{
-      console.log(err)
-    })
+      accountName: "", // [Android] specifies an account name on the device that should be used
+      iosClientId: "84477259757-qst0agnr3uujrnmu73hsglf2stsf395e.apps.googleusercontent.com" // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+    });
+    /* Beacons.requestWhenInUseAuthorization();
+    Beacons.startMonitoringForRegion(region);
+    Beacons.startRangingBeaconsInRegion(region);
+    Beacons.startUpdatingLocation();*/
+
+    /* const subscription = DeviceEventEmitter.addListener(
+   "beaconsDidRange",
+   (data) => {
+     console.log(data)
+     let existingBeacons = this.props.beacons.beacons;
+     if (existingBeacons) {
+       data.beacons.map(aBeacon => {
+         let oldBeacon = existingBeacons.find(function(beacon) {
+           return beacon.uuid === aBeacon.uuid;
+         });
+         // If there already exist a beacon in App
+         if (oldBeacon) {
+           if (oldBeacon.proximity !== aBeacon.proximity) {
+             {
+               // If the new beacon is worth replacing
+               if ((aBeacon.rssi < -90) && aBeacon.proximity === "immediate") {
+                 existingBeacons.splice(existingBeacons.indexOf(oldBeacon, 1));
+                 existingBeacons.push(aBeacon);
+               }
+               else {
+                 // Remove the old becaon from list
+                 existingBeacons.splice(existingBeacons.indexOf(oldBeacon, 1));
+               }
+               this.props.updateBeacons(existingBeacons);
+             }
+           }
+         }
+         else{
+           if ((aBeacon.rssi < -50) && aBeacon.proximity === "immediate") {
+             existingBeacons.push(aBeacon);
+             this.props.updateBeacons(existingBeacons);
+
+           }
+         }
+       });
+     }
+     else{
+       this.props.updateBeacons(data.beacons);
+     }
+   });*/
+    axios.get("https://api.dealme.today/pubkey").then(resp => {
+      this.props.updatePubKey(resp.data);
+    }).catch(err => {
+      console.log(err);
+    });
+
   }
 
   handleGoogleLogin = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      let buffer = Buffer.from(userInfo.user.id)
+      let buffer = Buffer.from(userInfo.user.id);
       let key = {
         key: this.props.auth.pubKey,
         padding: 1
-      }
-      let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
+      };
+      let hashed = crpyto.publicEncrypt(key, buffer).toString("base64");
       const testparams = {
         email: userInfo.user.email,
         first: userInfo.user.givenName,
         last: userInfo.user.familyName,
         password: hashed,
         provider: "Google"
-      }
-      axios.put('https://api.dealme.today/user/check', testparams).then(resp => {
-        if(resp.data.status === 'Success'){
-          console.log('User exists!')
+      };
+      axios.put("https://api.dealme.today/user/check", testparams).then(resp => {
+        if (resp.data.status === "Success") {
+          console.log("User exists!");
 
           let params = {
             email: userInfo.user.email,
@@ -117,35 +157,33 @@ class ExampleScreen extends Component {
             token: hashed,
             role: "user",
             provider: "Google"
-          }
-          axios.put('https://api.dealme.today/auth/login/social', params).then(resp => {
-            if(resp.data.status === 'Success'){
-              console.log(resp.data)
-              this.props.loginGoogleSuccess(resp.data.Bearer, resp.data.id)
-              console.log( this.props.config)
-              axios.defaults.headers.common = this.props.config
-              axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
-                console.log(resp.data)
-                this.props.getUserProfile(resp.data)
-                this.props.navigation.navigate('UserScreen')
+          };
+          axios.put("https://api.dealme.today/auth/login/social", params).then(resp => {
+            if (resp.data.status === "Success") {
+              console.log(resp.data);
+              this.props.loginGoogleSuccess(resp.data.Bearer, resp.data.id);
+              console.log(this.props.config);
+              axios.defaults.headers.common = this.props.config;
+              axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
+                console.log(resp.data);
+                this.props.getUserProfile(resp.data);
+                this.props.navigation.navigate("UserScreen");
               }).catch(error => {
-                console.log(error)
-              })
+                console.log(error);
+              });
             }
             else {
-              console.log('Something went wrong!')
+              console.log("Something went wrong!");
             }
           }).catch(error => {
-            console.log('Error: ' + error)
-          })
-
+            console.log("Error: " + error);
+          });
 
         }
-        else{
+        else {
         }
 
-      })
-
+      });
 
     }
     catch (error) {
@@ -162,18 +200,17 @@ class ExampleScreen extends Component {
   };
 
   handleFacebookLogin = async (user) => {
-    try{
-      console.log(user)
+    try {
+      console.log(user);
       axios.get(`https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${user.credentials.token }`).then(resp => {
 
-        let buffer = Buffer.from(resp.data.id)
-        console.log(resp.data)
+        let buffer = Buffer.from(resp.data.id);
+        console.log(resp.data);
         let key = {
           key: this.props.auth.pubKey,
           padding: 1
-        }
-        let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
-
+        };
+        let hashed = crpyto.publicEncrypt(key, buffer).toString("base64");
 
         const testparams = {
           email: resp.data.email,
@@ -181,13 +218,12 @@ class ExampleScreen extends Component {
           last: resp.data.last_name,
           password: hashed,
           provider: "Facebook",
-          role: 'user'
-        }
+          role: "user"
+        };
 
-
-        axios.put('https://api.dealme.today/user/check', testparams).then(resp => {
-          if(resp.data.status === 'Success'){
-            console.log('User exists!')
+        axios.put("https://api.dealme.today/user/check", testparams).then(resp => {
+          if (resp.data.status === "Success") {
+            console.log("User exists!");
 
             let params = {
               email: testparams.email,
@@ -196,194 +232,221 @@ class ExampleScreen extends Component {
               token: hashed,
               role: "user",
               provider: "Facebook"
-            }
-            console.log(params)
-            axios.put('https://api.dealme.today/auth/login/social', params).then(resp => {
-              console.log(resp)
-              if(resp.data.status === 'Success'){
-                console.log(resp.data.id)
-                this.props.loginFacebookSuccess(resp.data.Bearer, resp.data.id)
-                console.log( this.props.config)
-                axios.defaults.headers.common = this.props.config
-                axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
-                  console.log(resp.data)
-                  this.props.getUserProfile(resp.data)
-                  this.props.navigation.navigate('UserScreen')
+            };
+            console.log(params);
+            axios.put("https://api.dealme.today/auth/login/social", params).then(resp => {
+              console.log(resp);
+              if (resp.data.status === "Success") {
+                console.log(resp.data.id);
+                this.props.loginFacebookSuccess(resp.data.Bearer, resp.data.id);
+                console.log(this.props.config);
+                axios.defaults.headers.common = this.props.config;
+                axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
+                  console.log(resp.data);
+                  this.props.getUserProfile(resp.data);
+                  if (resp.data.age === -1) this.props.navigation.navigate("UserProfileScreen");
+                  else this.props.navigation.navigate("UserDealsScreen");
                 }).catch(error => {
-                  console.log(error)
-                })
+                  console.log(error);
+                  axios.put("https://api.dealme.today/user/check", testparams).then(resp => {
+                    if (resp.data.status === "Success") {
+                      let params = {
+                        email: testparams.email,
+                        firstName: testparams.first,
+                        token: hashed,
+                        role: "user",
+                        provider: "Facebook"
+                      };
+                      console.log(params);
+                      axios.put("https://api.dealme.today/auth/login/social", params).then(resp => {
+                        console.log(resp);
+                        if (resp.data.status === "Success") {
+                          console.log(resp.data.id);
+                          this.props.loginFacebookSuccess(resp.data.Bearer, resp.data.id);
+                          console.log(this.props.config);
+                          axios.defaults.headers.common = this.props.config;
+                          axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
+                            this.props.getUserProfile(resp.data);
+                            if (resp.data.age === -1) this.props.navigation.navigateAndReset("UserProfileScreen");
+                            else this.props.navigation.navigateAndReset("UserDealsScreen");
+                          }).catch(error => {
+                            console.log(error);
+                          });
+                        }
+                        else {
+                          console.log("Something went wrong!");
+                        }
+                      }).catch(error => {
+                        console.log("Error: " + error);
+                      });
+
+                    }
+                    else {
+                      console.log("Something went wrong!");
+                    }
+
+                  }).catch(err => {
+                    console.log(err);
+                  });
+
+                });
+
               }
-              else {
-                console.log('Something went wrong!')
-              }
-            }).catch(error => {
-              console.log('Error: ' + error)
-            })
-
-
+            }).catch(err => console.log(err));
           }
-          else{
-          }
-
-        }).catch(err => {
-          console.log(err)
-        })
-
-      })
-
-    }catch (error) {
-      console.log(error)
+        });
+      });
     }
-  }
+    catch (error) {
+      console.log(error);
+    }
+  };
 
-  handleEmailSignUp = (email,password) => {
-    if(this.validateEmail(email)) {
-      if(this.validatePass(password)) {
-        let buffer = Buffer.from(password)
+  handleEmailSignUp = (email, password) => {
+    if (this.validateEmail(email)) {
+      if (this.validatePass(password)) {
+        let buffer = Buffer.from(password);
         let key = {
           key: this.props.auth.pubKey,
           padding: 1
-        }
-        let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
+        };
+        let hashed = crpyto.publicEncrypt(key, buffer).toString("base64");
         let params = {
           email: email,
           password: hashed
-        }
-        console.log(params)
-        axios.post('https://api.dealme.today/users/email', params).then(resp=>{
-         if(resp.data.status === 'Success'){
-           this.setState({
-             signUpComplete: "Sign up Successful! please try loggin in."
-           })
-         }
-        }).catch(err => console.err)
+        };
+        console.log(params);
+        axios.post("https://api.dealme.today/users/email", params).then(resp => {
+          if (resp.data.status === "Success") {
+            this.setState({
+              signUpComplete: "Sign up Successful! please try loggin in."
+            });
+          }
+        }).catch(err => console.err);
 
       }
-      else{
+      else {
         this.setState({
-          signUpErr: 'Invalid Password. Must contain: one lowercase letter, one uppercase letter, one number and minimum of 8 characters.'
-        })
+          signUpErr: "Invalid Password. Must contain: one lowercase letter, one uppercase letter, one number and minimum of 8 characters."
+        });
       }
     }
     else {
       this.setState({
-        signUpErr: 'invalid email'
-      })
+        signUpErr: "invalid email"
+      });
     }
 
+  };
 
-  }
-
-  handleEmailLogIn = (email,password) => {
-    let buffer = Buffer.from(password)
+  handleEmailLogIn = (email, password) => {
+    let buffer = Buffer.from(password);
     let key = {
       key: this.props.auth.pubKey,
       padding: 1
-    }
-    let hashed = crpyto.publicEncrypt(key, buffer).toString('base64')
+    };
+    let hashed = crpyto.publicEncrypt(key, buffer).toString("base64");
     const params = {
       email,
-      role: 'user',
+      role: "user",
       password: hashed
-    }
-    console.log(params)
+    };
+    console.log(params);
 
-    axios.put('https://api.dealme.today/auth/login/email', params).then(resp => {
-      console.log(resp )
-      if(resp.data.status === 'Success'){
-        this.props.loginEmailSuccess(resp.data.Bearer, resp.data.id)
-        axios.defaults.headers.common = this.props.config
-        axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then( resp => {
-          console.log(resp.data)
-          this.props.getUserProfile(resp.data)
-          this.props.navigation.navigate('UserScreen')
+    axios.put("https://api.dealme.today/auth/login/email", params).then(resp => {
+      console.log(resp);
+      if (resp.data.status === "Success") {
+        this.props.loginEmailSuccess(resp.data.Bearer, resp.data.id);
+        axios.defaults.headers.common = this.props.config;
+        axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
+          console.log(resp.data);
+          this.props.getUserProfile(resp.data);
+          this.props.navigation.navigate("UserScreen");
         }).catch(error => {
-          console.log(error)
-        })
+          console.log(error);
+        });
       }
       else {
-        console.log('Something went wrong!')
+        console.log("Something went wrong!");
       }
 
-    }).catch( error => {
-      console.log(error)
-    })
+    }).catch(error => {
+      console.log(error);
+    });
 
-
-  }
+  };
 
   navigate = (url) => { // E
-    const { navigate } = this.props.navigation
-    const route = url.replace(/.*?:\/\//g, '')
-    const routeName = route.split('/')[0]
-    if (routeName === 'LaunchScreen') {
-      navigate('UserScreen', {})
-    };
-  }
+    const { navigate } = this.props.navigation;
+    const route = url.replace(/.*?:\/\//g, "");
+    const routeName = route.split("/")[0];
+    if (routeName === "LaunchScreen") {
+      navigate("UserScreen", {});
+    }
+    ;
+  };
 
   validateEmail = (email) => {
-    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    return reg.test(email)
-  }
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return reg.test(email);
+  };
 
   validatePass = (password) => {
     let lowerCheck = /[a-z]/g;
     let upperCheck = /[A-Z]/g;
     let numCheck = /[0-9]/g;
-    return password.match(lowerCheck) && password.match(upperCheck) && password.match(numCheck) && password.length >= 8
-  }
+    return password.match(lowerCheck) && password.match(upperCheck) && password.match(numCheck) && password.length >= 8;
+  };
 
-  render() {
+  render () {
     return (
-      <View style={Style.container} testID={'ExampleScreenContainer'}>
-        <ScrollView contentContainerStyle={Style.container}>
-          <View style={{...Style.section, alignItems: 'center', height: '33%'}}>
-            <Text style={{textAlign: 'center', color: '#7C2218', marginTop: '45%', fontSize: 72, fontWeight: '600'}} h1>Dealme</Text>
-          </View>
 
-          <View style={{...Style.section, height: '15%'}} >
-            <FBLogin style={{width: '100%', height: 48}}
+      <View style={Style.container} testID={"ExampleScreenContainer"}>
+        <ScrollView contentContainerStyle={Style.container}>
+          <View style={{ ...Style.section, alignItems: "center", height: "25%" }}>
+            <Image source={Logo} style={{width: 200, height: 200}}/>
+          </View>
+          <View style={{ ...Style.section, height: "15%" }}>
+            <FBLogin style={{ width: "100%", height: 48 }}
                      onLogin={this.handleFacebookLogin}
                      permissions={["email", "public_profile"]}
             />
             <GoogleSigninButton
-              style={{ width: 192, height: 48 }}
+              style={{ width: 650, height: 48 }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={this.handleGoogleLogin}
-              disabled={this.state.isSigninInProgress} />
+              disabled={this.state.isSigninInProgress}/>
           </View>
-          <View style={Style.section} >
-            <Text style={{textAlign: 'center', marginBottom: 12}} h3> Log in or Sign up</Text>
-            <SignUpForm Icon={MailIcon} emailSignUp={this.handleEmailSignUp} emailLogIn={this.handleEmailLogIn}/>
+          <View style={Style.section}>
+            <Text style={{ textAlign: "center", marginBottom: 12, fontSize: 36 }} h3> Log in or Sign up</Text>
+            <SignUpForm Icon={MailIcon} emailSignUp={this.handleEmailSignUp}
+                        emailLogIn={this.handleEmailLogIn}/>
           </View>
-          {this.state.signUpErr ? <Text testID={'SignUpErrMessage'} style={{color: 'red'}}>{this.state.signUpErr}</Text> : null}
-          {this.state.signUpComplete ? <Text style={{color: 'green'}}>{this.state.signUpComplete}</Text> : null}
-
-
+          {this.state.signUpErr ? <Text testID={"SignUpErrMessage"}
+                                        style={{ color: "red" }}>{this.state.signUpErr}</Text> : null}
+          {this.state.signUpComplete ? <Text style={{ color: "green" }}>{this.state.signUpComplete}</Text> : null}
         </ScrollView>
       </View>
     )
+      ;
   }
 }
-
+;
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
   config: state.auth.config
 
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  loginGoogleSuccess: (Bearer,id)=> dispatch(AuthActions.loginGoogleSuccess(Bearer,id)),
-  loginFacebookSuccess: (Bearer,id) => dispatch(AuthActions.loginFacebookSuccess(Bearer,id)),
-  loginEmailSuccess: (Bearer, id) => dispatch(AuthActions.loginEmailSuccess(Bearer,id)),
+  loginGoogleSuccess: (Bearer, id) => dispatch(AuthActions.loginGoogleSuccess(Bearer, id)),
+  loginFacebookSuccess: (Bearer, id) => dispatch(AuthActions.loginFacebookSuccess(Bearer, id)),
+  loginEmailSuccess: (Bearer, id) => dispatch(AuthActions.loginEmailSuccess(Bearer, id)),
   getUserProfile: (profile) => dispatch(UserActions.getUserProfile(profile)),
   updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey))
 
-})
+});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExampleScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ExampleScreen);

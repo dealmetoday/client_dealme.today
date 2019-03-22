@@ -7,8 +7,8 @@ class FooterNav extends Component {
     return (
       <Footer>
         <FooterTab>
-          <Button onPress={this.props.openDealsScreen} active={this.props.active === 'DealsScreen'}>
-            <Icon name='apps' />
+          <Button onPress={this.props.openDealsScreen} active={this.props.active === 'DealsScreen'} testID={"footerDealsButton"}>
+          <Icon name='apps' />
           </Button>
           <Button onPress={this.props.openQRScreen} active={this.props.active === 'QRScreen'}>
             <Icon name='camera' />
@@ -16,8 +16,8 @@ class FooterNav extends Component {
           <Button>
             <Icon active name='navigate' />
           </Button>
-          <Button onPress={this.props.openProfileScreen} active={this.props.active === 'ProfileScreen'}>
-            <Icon name='person' />
+          <Button onPress={this.props.openProfileScreen} active={this.props.active === 'ProfileScreen'} testID={"footerProfileButton"}>
+          <Icon name='person' />
           </Button>
         </FooterTab>
       </Footer>

@@ -117,7 +117,7 @@ class UserProfileScreen extends Component {
 
   handleSaveProfile = () => {
     console.log("in handle save profile")
-    let oldProfile = this.props.auth.profile;
+    let oldProfile = this.props.auth.profile || {};
     let updatedMalls = []
     updatedMalls.push(this.state.favouriteMalls)
     console.log(updatedMalls)
@@ -145,6 +145,12 @@ class UserProfileScreen extends Component {
         duration: 3000
 
       })
+      axios.get(`https://api.dealme.today/user/profile?id=${this.props.auth.id}`).then(resp => {
+        this.props.getUserProfile(resp.data);
+      }).catch(error => {
+        console.log(error);
+      });
+
     }).catch(err => {
       console.log(err)
       Toast.show({
@@ -170,33 +176,35 @@ class UserProfileScreen extends Component {
         <ScrollView style={styles.container}>
           <View>
             <Form>
-              <Item fixedLabel>
-                <Label>First Name</Label>
-                <Input value={this.state.first} onChange={event => this.handleInputChange(event, 'first')} testID={'user-profile-first'}/>
+              <Item fixedLabel style={{height: 75}}>
+              <Label>First Name</Label>
+                <Input value={this.state.first} testID={'user-profile-first'} editable={false}/>
               </Item>
-              <Item fixedLabel>
-                <Label>Middle Name</Label>
+              <Item fixedLabel style={{height: 75}}>
+
+              <Label>Middle Name</Label>
                 <Input value={this.state.middle} onChange={event => this.handleInputChange(event, 'middle')} testID={'user-profile-middle'}/>
               </Item>
-              <Item fixedLabel>
-                <Label>Last Name</Label>
-                <Input value={this.state.last} onChange={event => this.handleInputChange(event, 'last')} testID={'user-profile-last'}/>
+              <Item fixedLabel style={{height: 75}}>
+
+              <Label>Last Name</Label>
+                <Input value={this.state.last} testID={'user-profile-last'} editable={false}/>
               </Item>
-              <Item fixedLabel>
-                <Label>Email</Label>
-                <Input value={this.state.email} onChange={event => this.handleInputChange(event, 'email')} testID={'user-profile-email'}/>
+              <Item fixedLabel style={{height: 75}}>
+
+              <Label>Email</Label>
+                <Input value={this.state.email} testID={'user-profile-email'} editable={false}/>
               </Item>
-              <Item fixedLabel>
-                <Label>Age</Label>
+              <Item fixedLabel style={{height: 75}}>
+
+              <Label>Age</Label>
                 <Input keyboardType='numeric' value={this.state.age.toString()} onChange={event => this.handleInputChange(event, 'age')} testID={'user-profile-age'}/>
               </Item>
-              <Item fixedLabel>
-                <Label>Favourite Mall</Label>
+              <Item picker style={{height: 75}}>
                 <Picker
                   mode="dropdown"
-                  iosHeader="Select your default Mall"
+                  placeholder="Select your default Mall"
                   iosIcon={<Icon name="arrow-down" />}
-                  style={{ width: undefined }}
                   selectedValue={this.state.favouriteMalls}
                   onValueChange={value => this.onValueChange(value, 'favouriteMalls')}
                   testID={'user-profile-favourite-mall'}
@@ -206,10 +214,10 @@ class UserProfileScreen extends Component {
                       return <Picker.Item key={aMall._id} label={aMall.name} value={aMall._id} />
                     })
                   }
+
                 </Picker>
               </Item>
-              <Item fixedLabel>
-                <Label>Gender</Label>
+              <Item fixedLabel style={{height: 75}}>
                 <Picker
                   note
                   mode='dropdown'
@@ -244,6 +252,8 @@ class UserProfileScreen extends Component {
               searchInputStyle={{ color: '#CCC' }}
               submitButtonColor="#CCC"
               submitButtonText="Submit"
+              styleDropdownMenu={{height: 100}}
+              styleMainWrapper={{height: 150}}
             />
           </View>
         </ScrollView>
@@ -266,7 +276,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateUserProfile: (id) => dispatch(AuthActions.updateUserProfile(id)),
   getTags: (tags) => dispatch(TagActions.getTags(tags)),
-  getMalls: (malls) => dispatch(MallActions.getMalls(malls))
+  getMalls: (malls) => dispatch(MallActions.getMalls(malls)),
+  getUserProfile: (profile) => dispatch(UserActions.getUserProfile(profile)),
+
 })
 
 export default connect(

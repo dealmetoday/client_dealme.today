@@ -8,7 +8,7 @@ const buttonStyle = {
   width: 100,
   borderRadius: 5,
   marginVertical: 10,
-  backgroundColor: '#F5B512',
+  backgroundColor: '#9c27b0',
   justifyContent: 'center',
   display: 'flex',
   flex: 1
@@ -53,11 +53,11 @@ export default class SignUpForm extends Component {
             />
           </Item>
         </Form>
-        <View style={{flexDirection: 'row'}}>
-          <Button rounded style={buttonStyle} onPress={() => this.props.emailSignUp(this.state.email,this.state.password)} testID={'SignUp-Button'}>
+        <View style={{flexDirection: 'row', marginTop: 30}}>
+        <Button rounded style={buttonStyle} onPress={() => this.props.emailSignUp(this.state.email,this.state.password)} testID={'SignUp-Button'}>
             <Text style={buttonTextStyle}>Sign Up</Text>
           </Button>
-          <View style={{width: 15}} />
+          <View style={{width: 28}} />
           <Button rounded style={buttonStyle} onPress={() => this.props.emailLogIn(this.state.email,this.state.password)} testID={'Login-Button'}>
             <Text style={buttonTextStyle}>Log in</Text>
           </Button>
