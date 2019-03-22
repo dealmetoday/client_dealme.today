@@ -4,8 +4,7 @@ import { Button, Form, Item, Picker, Icon, Text, Input } from 'native-base'
 import HeaderNav from '../../Components/HeaderNav'
 import FooterNav from '../../Components/FooterNav'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
-
-
+import NavigationService from 'App/Services/NavigationService'
 // SCREENS
 import UserDealsScreen from './UserDealsScreen'
 import UserProfileScreen from './UserProfileScreen'
@@ -79,6 +78,13 @@ class UserScreen extends Component {
     this.openDealScreen.bind(this)
   }
 
+  componentDidMount(){
+    if(this.props.navigation.state.isFirstTime) this.props.navigation.replace('UserProfileScreen')
+    else this.props.navigation.replace('UserDealsScreen')
+
+
+  }
+
   onValueChange (value, field) {
     this.setState({
       [field]: value
@@ -125,9 +131,6 @@ class UserScreen extends Component {
 
         </ScrollView>
         <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} />
-
-
-
       </View>
     )
   }
@@ -142,7 +145,7 @@ const stackNavigator = createStackNavigator({
   cardStyle: {
     opacity: 1
   },
-  initialRouteName: 'UserProfileScreen',
+  initialRouteName: 'UserScreen',
   headerMode: 'none',
   // Keeping this here for future when we can make
   navigationOptions: {

@@ -18,6 +18,13 @@ export const getMalls = (state, {malls}) => {
 
 }
 
+export const resetToInitialState = (state) => {
+  return ({
+    ...INITIAL_STATE
+  })
+}
+
+
 
 
 /**
@@ -25,5 +32,7 @@ export const getMalls = (state, {malls}) => {
  */
 export const reducer = createReducer(INITIAL_STATE, {
   [MallTypes.GET_MALLS]: getMalls,
+  [MallTypes.RESET_TO_INITIAL_STATE]: resetToInitialState
+
 
 })

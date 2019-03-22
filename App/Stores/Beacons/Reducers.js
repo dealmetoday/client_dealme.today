@@ -6,21 +6,14 @@
 
 import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
-import { DealTypes } from './Actions'
+import { BeaconTypes } from './Actions'
 
-export const getDeals = (state, {deals}) => {
+export const updateBeacons = (state, {beacons}) => {
   return ({
     ...state,
-    deals
+    beacons
   })
 }
-
-export const resetToInitialState = (state) => {
-  return ({
-    ...INITIAL_STATE
-  })
-}
-
 
 
 
@@ -31,6 +24,6 @@ export const resetToInitialState = (state) => {
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
 export const reducer = createReducer(INITIAL_STATE, {
-  [DealTypes.GET_DEALS]: getDeals,
-  [DealTypes.RESET_TO_INITIAL_STATE]: resetToInitialState
+  [BeaconTypes.UPDATE_BEACONS]: updateBeacons,
+
 })

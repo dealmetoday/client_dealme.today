@@ -20,6 +20,8 @@ import { createActions } from 'reduxsauce'
  */
 const { Types, Creators } = createActions({
   getStores: ['stores'],
+  resetToInitialState: []
+
 })
 
 export const StoreTypes = Types

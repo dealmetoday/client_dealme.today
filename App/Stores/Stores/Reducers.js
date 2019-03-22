@@ -16,6 +16,11 @@ export const getStores = (state, {stores}) => {
   })
 }
 
+export const resetToInitialState = (state) => {
+  return ({
+    ...INITIAL_STATE
+  })
+}
 
 
 
@@ -26,5 +31,7 @@ export const getStores = (state, {stores}) => {
  */
 export const reducer = createReducer(INITIAL_STATE, {
   [StoreTypes.GET_STORES]: getStores,
+  [StoreTypes.RESET_TO_INITIAL_STATE]: resetToInitialState
+
 
 })

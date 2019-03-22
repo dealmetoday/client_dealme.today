@@ -6,7 +6,7 @@
 
 import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
-import { AuthTypes } from './Actions'
+import { AuthTypes, TagTypes } from "./Actions";
 
 export const getTags = (state, {tags}) => {
 
@@ -24,6 +24,13 @@ export const getTags = (state, {tags}) => {
   })
 }
 
+export const resetToInitialState = (state) => {
+  return ({
+    ...INITIAL_STATE
+  })
+}
+
+
 
 
 
@@ -33,6 +40,8 @@ export const getTags = (state, {tags}) => {
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
 export const reducer = createReducer(INITIAL_STATE, {
-  [AuthTypes.GET_TAGS]: getTags,
+  [TagTypes.GET_TAGS]: getTags,
+  [TagTypes.RESET_TO_INITIAL_STATE]: resetToInitialState
+
 
 })

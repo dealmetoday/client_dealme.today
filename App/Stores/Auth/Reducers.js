@@ -68,6 +68,13 @@ export const updatePubKey = (state, {pubKey}) => {
   })
 }
 
+export const resetToInitialState = (state) => {
+  return ({
+    ...INITIAL_STATE
+  })
+}
+
+
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
@@ -76,6 +83,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [AuthTypes.LOGIN_FACEBOOK_SUCCESS]: loginFacebookSuccess,
   [AuthTypes.UPDATE_USER_PROFILE]: updateUserProfile,
   [AuthTypes.UPDATE_PUB_KEY]: updatePubKey,
-  [AuthTypes.LOGIN_EMAIL_SUCCESS]: loginEmailSuccess
-
+  [AuthTypes.LOGIN_EMAIL_SUCCESS]: loginEmailSuccess,
+  [AuthTypes.RESET_TO_INITIAL_STATE]: resetToInitialState
 })

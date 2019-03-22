@@ -20,7 +20,9 @@ import { createActions } from 'reduxsauce'
  */
 const { Types, Creators } = createActions({
   getTags: ['tags'],
+  resetToInitialState: []
+
 })
 
-export const AuthTypes = Types
+export const TagTypes = Types
 export default Creators

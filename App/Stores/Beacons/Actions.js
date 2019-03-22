@@ -19,13 +19,8 @@ import { createActions } from 'reduxsauce'
  * @see https://github.com/infinitered/reduxsauce#createactions
  */
 const { Types, Creators } = createActions({
-  loginFacebookSuccess: ['Bearer', 'id'],
-  loginGoogleSuccess: ['Bearer', 'id'],
-  loginEmailSuccess: ['Bearer', 'id'],
-  updateUserProfile:['profile'],
-  updatePubKey: ['pubKey'],
-  resetToInitialState: []
+  updateBeacons: ['beacons'],
 })
 
-export const AuthTypes = Types
+export const BeaconTypes = Types
 export default Creators

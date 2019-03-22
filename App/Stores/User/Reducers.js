@@ -6,7 +6,8 @@
 
 import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
-import { AuthTypes } from './Actions'
+import { AuthTypes, UserTypes } from "./Actions";
+import { TagTypes } from "../Tags/Actions";
 
 export const getUserProfile = (state, {profile}) => {
   return ({
@@ -24,13 +25,20 @@ export const updateUserProfile = (state, {profile}) => {
   })
 }
 
+export const resetToInitialState = (state) => {
+  return ({
+    ...INITIAL_STATE
+  })
+}
+
+
 
 
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
 export const reducer = createReducer(INITIAL_STATE, {
-  [AuthTypes.GET_USER_PROFILE]: getUserProfile,
-  [AuthTypes.UPDATE_USER_PROFILE]: updateUserProfile
-
+  [UserTypes.GET_USER_PROFILE]: getUserProfile,
+  [UserTypes.UPDATE_USER_PROFILE]: updateUserProfile,
+  [UserTypes.RESET_TO_INITIAL_STATE]: resetToInitialState
 })

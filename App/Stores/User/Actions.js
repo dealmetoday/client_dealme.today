@@ -21,7 +21,9 @@ import { createActions } from 'reduxsauce'
 const { Types, Creators } = createActions({
   getUserProfile: ['profile'],
   updateUserProfile: ['profile'],
+  resetToInitialState: []
+
 })
 
-export const AuthTypes = Types
+export const UserTypes = Types
 export default Creators

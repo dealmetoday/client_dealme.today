@@ -20,6 +20,7 @@ import { createActions } from 'reduxsauce'
  */
 const { Types, Creators } = createActions({
   getMalls: ['malls'],
+  resetToInitialState: []
 })
 
 export const MallTypes = Types

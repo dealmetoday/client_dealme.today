@@ -8,6 +8,8 @@ import Style from "./ExampleScreenStyle";
 import SignUpForm from "../../Components/SignUpForm";
 import axios from "axios";
 import Logo from '../../Images/logoNormal.png'
+import NavigationService from 'App/Services/NavigationService'
+
 
 let { FBLogin, FBLoginManager } = require("react-native-facebook-login");
 import crpyto from "react-native-crypto";
@@ -167,7 +169,7 @@ class ExampleScreen extends Component {
               axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
                 console.log(resp.data);
                 this.props.getUserProfile(resp.data);
-                this.props.navigation.navigate("UserScreen");
+                NavigationService.navigateAndReset("UserScreen");
               }).catch(error => {
                 console.log(error);
               });
@@ -244,8 +246,8 @@ class ExampleScreen extends Component {
                 axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
                   console.log(resp.data);
                   this.props.getUserProfile(resp.data);
-                  if (resp.data.age === -1) this.props.navigation.navigate("UserProfileScreen");
-                  else this.props.navigation.navigate("UserDealsScreen");
+                  if (resp.data.age === -1) NavigationService.navigateAndReset("UserScreen", {isFirstTime: true});
+                  else NavigationService.navigateAndReset("UserScreen", {isFirstTime: false});
                 }).catch(error => {
                   console.log(error);
                   axios.put("https://api.dealme.today/user/check", testparams).then(resp => {
@@ -267,8 +269,8 @@ class ExampleScreen extends Component {
                           axios.defaults.headers.common = this.props.config;
                           axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
                             this.props.getUserProfile(resp.data);
-                            if (resp.data.age === -1) this.props.navigation.navigateAndReset("UserProfileScreen");
-                            else this.props.navigation.navigateAndReset("UserDealsScreen");
+                            if (resp.data.age === -1) NavigationService.navigateAndReset("UserProfileScreen",{});
+                            else NavigationService.navigateAndReset("UserDealsScreen",{});
                           }).catch(error => {
                             console.log(error);
                           });
@@ -361,7 +363,7 @@ class ExampleScreen extends Component {
         axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
           console.log(resp.data);
           this.props.getUserProfile(resp.data);
-          this.props.navigation.navigate("UserScreen");
+          NavigationService.navigateAndReset("UserScreen");
         }).catch(error => {
           console.log(error);
         });
@@ -377,7 +379,7 @@ class ExampleScreen extends Component {
   };
 
   navigate = (url) => { // E
-    const { navigate } = this.props.navigation;
+    const { navigate } = NavigationService;
     const route = url.replace(/.*?:\/\//g, "");
     const routeName = route.split("/")[0];
     if (routeName === "LaunchScreen") {

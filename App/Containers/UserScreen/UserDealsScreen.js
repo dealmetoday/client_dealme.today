@@ -11,6 +11,11 @@ import QRCode from "../../Images/frame.png";
 import styles from "../Styles/LaunchScreenStyles";
 import DealActions from "../../Stores/Deals/Actions";
 import StoreActions from "../../Stores/Stores/Actions";
+import MallActions from '../../Stores/Malls/Actions'
+import UserActions from '../../Stores/User/Actions'
+import TagActions from '../../Stores/Tags/Actions'
+import AuthActions from '../../Stores/Auth/Actions'
+
 
 class UserDealsScreen extends Component {
   constructor (props) {
@@ -85,6 +90,14 @@ class UserDealsScreen extends Component {
   };
   handleLogout = () => {
     console.log("logging out");
+    this.props.resetDeals();
+    this.props.resetMalls();
+    this.props.resetStores();
+    this.props.resetTags();
+    this.props.resetUser();
+    this.props.resetAuth();
+    this.props.navigation.navigate("MainScreen")
+
   };
 
   openDealScreen = () => {
@@ -240,7 +253,16 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getDeals: (deals) => dispatch(DealActions.getDeals(deals)),
-  getStores: (stores) => dispatch(StoreActions.getStores(stores))
+  getStores: (stores) => dispatch(StoreActions.getStores(stores)),
+  getStores: (stores) => dispatch(StoreActions.getStores(stores)),
+  resetDeals: () => dispatch(DealActions.resetToInitialState()),
+  resetStores: () => dispatch(StoreActions.resetToInitialState()),
+  resetTags: () => dispatch(TagActions.resetToInitialState()),
+  resetUser: () => dispatch(UserActions.resetToInitialState()),
+  resetMalls: () => dispatch(MallActions.resetToInitialState()),
+  resetAuth: () => dispatch(AuthActions.resetToInitialState())
+
+
 });
 
 export default connect(

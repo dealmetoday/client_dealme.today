@@ -20,6 +20,7 @@ import { createActions } from 'reduxsauce'
  */
 const { Types, Creators } = createActions({
   getDeals: ['deals'],
+  resetToInitialState: []
 })
 
 export const DealTypes = Types
