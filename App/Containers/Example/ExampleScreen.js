@@ -124,7 +124,8 @@ class ExampleScreen extends Component {
               axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
                 console.log(resp.data);
                 this.props.getUserProfile(resp.data);
-                NavigationService.navigateAndReset("UserScreen");
+                if (resp.data.age === -1) NavigationService.navigateAndReset("UserScreen", { isFirstTime: true });
+                else NavigationService.navigateAndReset("UserScreen", { isFirstTime: false });
               }).catch(error => {
                 console.log(error);
               });
@@ -218,8 +219,8 @@ class ExampleScreen extends Component {
                           axios.defaults.headers.common = this.props.config;
                           axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
                             this.props.getUserProfile(resp.data);
-                            if (resp.data.age === -1) NavigationService.navigateAndReset("UserProfileScreen", {});
-                            else NavigationService.navigateAndReset("UserDealsScreen", {});
+                            if (resp.data.age === -1) NavigationService.navigateAndReset("UserScreen", { isFirstTime: true });
+                            else NavigationService.navigateAndReset("UserScreen", { isFirstTime: false });
                           }).catch(error => {
                             console.log(error);
                           });
@@ -310,9 +311,9 @@ class ExampleScreen extends Component {
         this.props.loginEmailSuccess(resp.data.Bearer, resp.data.id);
         axios.defaults.headers.common = this.props.config;
         axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
-          console.log(resp.data);
           this.props.getUserProfile(resp.data);
-          NavigationService.navigateAndReset("UserScreen");
+          if (resp.data.age === -1) NavigationService.navigateAndReset("UserScreen", { isFirstTime: true });
+          else NavigationService.navigateAndReset("UserScreen", { isFirstTime: false });
         }).catch(error => {
           console.log(error);
         });

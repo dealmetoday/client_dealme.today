@@ -79,7 +79,8 @@ class UserScreen extends Component {
   }
 
   componentDidMount(){
-    if(this.props.navigation.state.isFirstTime) this.props.navigation.replace('UserProfileScreen')
+    console.log(this.props.navigation)
+    if(this.props.navigation.state.params.isFirstTime) this.props.navigation.replace('UserProfileScreen')
     else this.props.navigation.replace('UserDealsScreen')
 
 
