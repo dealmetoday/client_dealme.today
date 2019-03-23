@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import axios from "axios";
 import QRCode from "../../Images/frame.png";
 import Beacons from "react-native-beacons-manager";
+import Moment from 'react-moment'
+import moment from 'moment'
 
 // Styles
 import styles from "../Styles/LaunchScreenStyles";
@@ -152,6 +154,7 @@ class UserDealsScreen extends Component {
         return aStore._id === this.state.selectedStore._id
       })
     }
+    let todaysDate = moment();
 
     return (
       <View style={styles.mainContainer} testID={"UserDealScreenContainer"}>
@@ -165,15 +168,29 @@ class UserDealsScreen extends Component {
             !this.state.showCode ?
               <View>
                 {
+
                   this.state.selectedStore && this.state.selectedStore.dealsList.map(aDeal => {
+                    let timeLeft = moment.duration(todaysDate.diff(aDeal.expiryDate))
+                    console.log(timeLeft)
+
+
                     return (
+                      aDeal.usesLeft > 0 ?
                       <Card style={{ marginTop: 6 }}>
                         <CardItem header>
                           <Left>
-                            <View style={{ textAlign: "left" }}>
-                              <Text p>{aDeal.description}</Text>
-                              <Text style={{ color: aDeal.usesLeft > 0 ? "green" : "red" }}
-                                    p>{aDeal.usesLeft > 0 ? `${aDeal.usesLeft} codes left!` : "unavailable"}</Text>
+                            <View style={{display: "flex", flexDirection:"column", justifyContent: "flex-start", alignItems: "flex-start"}}>
+                              <View style={{ textAlign: "left"}}>
+                                <Text style={{ fontWeight: 'bold'}}p>{aDeal.description}</Text>
+                              </View>
+                              <View style={{ textAlign: "left"}}>
+                                <Text style={{ color: "#3C3C3C", fontSize: 12 }} p>
+                                  {`Expires in : ${Math.floor(timeLeft.asDays())} days, ${timeLeft.hours()} hours, ${timeLeft.minutes()} mins`}
+                                </Text>
+                              </View>
+                              <View style={{ textAlign: "left"}}>
+                                <Text style={{ color: aDeal.usesLeft > 0 ? "green" : "red", fontSize: 12 }} p>{`${aDeal.usesLeft} codes left!`}</Text>
+                              </View>
                             </View>
                           </Left>
                           <Right>
@@ -186,7 +203,7 @@ class UserDealsScreen extends Component {
                             </Button>
                           </Right>
                         </CardItem>
-                      </Card>
+                      </Card> : null
                     );
                   })
 
@@ -254,7 +271,7 @@ class UserDealsScreen extends Component {
                       <Text note
                             numberOfLines={1}>{mall ? mall.name : "Mall name unavailable"}</Text>
                       <Text note numberOfLines={1}
-                            style={{ color: "green" }}>{aStore.dealsList.length + " Deals Available!"}</Text>
+                            style={{ color: "green", fontSize: 12 }}>{aStore.dealsList.length + " Deals Available!"}</Text>
                       </Body>
                       <Right>
                         <Button transparent onPress={() => {
