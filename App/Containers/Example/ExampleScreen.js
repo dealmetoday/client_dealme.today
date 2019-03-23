@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import AuthActions from "../../Stores/Auth/Actions";
 import UserActions from "../../Stores/User/Actions";
+import BeaconActions from '../../Stores/Beacons/Actions'
+import StoreActions from '../../Stores/Stores/Actions'
 import Style from "./ExampleScreenStyle";
 import SignUpForm from "../../Components/SignUpForm";
 import axios from "axios";
-import Logo from '../../Images/logoNormal.png'
-import NavigationService from 'App/Services/NavigationService'
+import Logo from "../../Images/logoNormal.png";
+import NavigationService from "App/Services/NavigationService";
 
 
 let { FBLogin, FBLoginManager } = require("react-native-facebook-login");
@@ -37,9 +39,7 @@ const region = {
 
 const store1 = {
   identifier: "Children's-mart",
-  uuid: "00000000-5c82-fd4b-77e0-e601603bcadb",
-  major: 10065,
-  minor: 26049
+  uuid: "00000000-5c82-fd4b-5497-0ebde13bcebf"
 };
 
 const store3 = {
@@ -78,51 +78,6 @@ class ExampleScreen extends Component {
       accountName: "", // [Android] specifies an account name on the device that should be used
       iosClientId: "84477259757-qst0agnr3uujrnmu73hsglf2stsf395e.apps.googleusercontent.com" // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
     });
-    /* Beacons.requestWhenInUseAuthorization();
-    Beacons.startMonitoringForRegion(region);
-    Beacons.startRangingBeaconsInRegion(region);
-    Beacons.startUpdatingLocation();*/
-
-    /* const subscription = DeviceEventEmitter.addListener(
-   "beaconsDidRange",
-   (data) => {
-     console.log(data)
-     let existingBeacons = this.props.beacons.beacons;
-     if (existingBeacons) {
-       data.beacons.map(aBeacon => {
-         let oldBeacon = existingBeacons.find(function(beacon) {
-           return beacon.uuid === aBeacon.uuid;
-         });
-         // If there already exist a beacon in App
-         if (oldBeacon) {
-           if (oldBeacon.proximity !== aBeacon.proximity) {
-             {
-               // If the new beacon is worth replacing
-               if ((aBeacon.rssi < -90) && aBeacon.proximity === "immediate") {
-                 existingBeacons.splice(existingBeacons.indexOf(oldBeacon, 1));
-                 existingBeacons.push(aBeacon);
-               }
-               else {
-                 // Remove the old becaon from list
-                 existingBeacons.splice(existingBeacons.indexOf(oldBeacon, 1));
-               }
-               this.props.updateBeacons(existingBeacons);
-             }
-           }
-         }
-         else{
-           if ((aBeacon.rssi < -50) && aBeacon.proximity === "immediate") {
-             existingBeacons.push(aBeacon);
-             this.props.updateBeacons(existingBeacons);
-
-           }
-         }
-       });
-     }
-     else{
-       this.props.updateBeacons(data.beacons);
-     }
-   });*/
     axios.get("https://api.dealme.today/pubkey").then(resp => {
       this.props.updatePubKey(resp.data);
     }).catch(err => {
@@ -225,7 +180,6 @@ class ExampleScreen extends Component {
 
         axios.put("https://api.dealme.today/user/check", testparams).then(resp => {
           if (resp.data.status === "Success") {
-            console.log("User exists!");
 
             let params = {
               email: testparams.email,
@@ -235,21 +189,16 @@ class ExampleScreen extends Component {
               role: "user",
               provider: "Facebook"
             };
-            console.log(params);
             axios.put("https://api.dealme.today/auth/login/social", params).then(resp => {
-              console.log(resp);
               if (resp.data.status === "Success") {
                 console.log(resp.data.id);
                 this.props.loginFacebookSuccess(resp.data.Bearer, resp.data.id);
-                console.log(this.props.config);
                 axios.defaults.headers.common = this.props.config;
                 axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
-                  console.log(resp.data);
                   this.props.getUserProfile(resp.data);
-                  if (resp.data.age === -1) NavigationService.navigateAndReset("UserScreen", {isFirstTime: true});
-                  else NavigationService.navigateAndReset("UserScreen", {isFirstTime: false});
+                  if (resp.data.age === -1) NavigationService.navigateAndReset("UserScreen", { isFirstTime: true });
+                  else NavigationService.navigateAndReset("UserScreen", { isFirstTime: false });
                 }).catch(error => {
-                  console.log(error);
                   axios.put("https://api.dealme.today/user/check", testparams).then(resp => {
                     if (resp.data.status === "Success") {
                       let params = {
@@ -269,8 +218,8 @@ class ExampleScreen extends Component {
                           axios.defaults.headers.common = this.props.config;
                           axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
                             this.props.getUserProfile(resp.data);
-                            if (resp.data.age === -1) NavigationService.navigateAndReset("UserProfileScreen",{});
-                            else NavigationService.navigateAndReset("UserDealsScreen",{});
+                            if (resp.data.age === -1) NavigationService.navigateAndReset("UserProfileScreen", {});
+                            else NavigationService.navigateAndReset("UserDealsScreen", {});
                           }).catch(error => {
                             console.log(error);
                           });
@@ -406,7 +355,7 @@ class ExampleScreen extends Component {
       <View style={Style.container} testID={"ExampleScreenContainer"}>
         <ScrollView contentContainerStyle={Style.container}>
           <View style={{ ...Style.section, alignItems: "center", height: "25%" }}>
-            <Image source={Logo} style={{width: 200, height: 200}}/>
+            <Image source={Logo} style={{ width: 200, height: 200 }}/>
           </View>
           <View style={{ ...Style.section, height: "15%" }}>
             <FBLogin style={{ width: "100%", height: 48 }}
@@ -438,7 +387,9 @@ class ExampleScreen extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  config: state.auth.config
+  config: state.auth.config,
+  beacons: state.beacons,
+  stores: state.stores
 
 });
 
@@ -447,8 +398,10 @@ const mapDispatchToProps = (dispatch) => ({
   loginFacebookSuccess: (Bearer, id) => dispatch(AuthActions.loginFacebookSuccess(Bearer, id)),
   loginEmailSuccess: (Bearer, id) => dispatch(AuthActions.loginEmailSuccess(Bearer, id)),
   getUserProfile: (profile) => dispatch(UserActions.getUserProfile(profile)),
-  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey))
-
+  updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey)),
+  updateBeacons: (beacons) => dispatch(BeaconActions.updateBeacons(beacons)),
+  storeInRange: (stores, uuid) => dispatch(StoreActions.storeInRange(stores,uuid)),
+  storeOutOfRange: (stores, uuid) => dispatch(StoreActions.storeOutOfRange(stores,uuid))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExampleScreen);

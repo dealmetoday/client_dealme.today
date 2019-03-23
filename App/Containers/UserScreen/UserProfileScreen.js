@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import AuthActions from '../../Stores/Auth/Actions'
 import TagActions from '../../Stores/Tags/Actions'
 import MallActions from '../../Stores/Malls/Actions'
+import UserActions from '../../Stores/User/Actions'
 
 
 const genderList = [
@@ -29,12 +30,6 @@ const genderList = [
     label: 'Other'
   }
 ]
-
-const tagsList = {
-  1: 'Haircuts',
-  2: 'Sandwiches'
-}
-
 
 class UserProfileScreen extends Component {
   constructor (props) {
@@ -116,11 +111,9 @@ class UserProfileScreen extends Component {
   }
 
   handleSaveProfile = () => {
-    console.log("in handle save profile")
     let oldProfile = this.props.auth.profile || {};
     let updatedMalls = []
     updatedMalls.push(this.state.favouriteMalls)
-    console.log(updatedMalls)
 
     let updatedProfile = {
       id: this.props.auth.id,
@@ -135,7 +128,6 @@ class UserProfileScreen extends Component {
       favouriteMalls: updatedMalls
 
     }
-    console.log(updatedProfile)
     axios.defaults.headers.common = this.props.config
 
     axios.put('https://api.dealme.today/users', updatedProfile).then(resp => {
@@ -145,7 +137,9 @@ class UserProfileScreen extends Component {
         duration: 3000
 
       })
+      axios.defaults.headers.common = this.props.config
       axios.get(`https://api.dealme.today/user/profile?id=${this.props.auth.id}`).then(resp => {
+        console.log(resp)
         this.props.getUserProfile(resp.data);
       }).catch(error => {
         console.log(error);
@@ -200,7 +194,7 @@ class UserProfileScreen extends Component {
               <Label>Age</Label>
                 <Input keyboardType='numeric' value={this.state.age.toString()} onChange={event => this.handleInputChange(event, 'age')} testID={'user-profile-age'}/>
               </Item>
-              <Item picker style={{height: 75}}>
+              <Item fixedLabel style={{height: 75}}>
                 <Picker
                   mode="dropdown"
                   placeholder="Select your default Mall"
@@ -236,25 +230,30 @@ class UserProfileScreen extends Component {
                 </Picker>
               </Item>
             </Form>
-            <MultiSelect
-              items={this.props.tags.tagList}
-              uniqueKey="id"
-              onSelectedItemsChange={this.onSelectedItemsChange}
-              selectedItems={this.state.tags}
-              selectText="Pick Items"
-              searchInputPlaceholderText="Search Items..."
-              tagRemoveIconColor="#CCC"
-              tagBorderColor="#CCC"
-              tagTextColor="#CCC"
-              selectedItemTextColor="#CCC"
-              selectedItemIconColor="#CCC"
-              itemTextColor="#000"
-              searchInputStyle={{ color: '#CCC' }}
-              submitButtonColor="#CCC"
-              submitButtonText="Submit"
-              styleDropdownMenu={{height: 100}}
-              styleMainWrapper={{height: 150}}
-            />
+            <Item fixedLabel style={{height: 150, marginLeft: 16}}>
+              <View style={{width: "100%"}}>
+                <MultiSelect
+                  items={this.props.tags.tagList}
+                  uniqueKey="id"
+                  onSelectedItemsChange={this.onSelectedItemsChange}
+                  selectedItems={this.state.tags}
+                  selectText="Pick Items"
+                  searchInputPlaceholderText="Search Items..."
+                  tagRemoveIconColor="#CCC"
+                  tagBorderColor="#CCC"
+                  tagTextColor="#CCC"
+                  selectedItemTextColor="#CCC"
+                  selectedItemIconColor="#CCC"
+                  itemTextColor="#000"
+                  searchInputStyle={{ color: '#CCC' }}
+                  submitButtonColor="#CCC"
+                  submitButtonText="Submit"
+                  styleMainWrapper={{width: 500, paddingLeft: 16}}
+                  styleInputGroup={{width: 500, paddingLeft: 16}}
+                  fontSize={16}
+                />
+              </View>
+            </Item>
           </View>
         </ScrollView>
         <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} active={'ProfileScreen'}/>

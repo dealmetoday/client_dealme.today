@@ -8,6 +8,7 @@ import { reducer as TagReducer } from './Tags/Reducers'
 import {reducer as MallReducer } from './Malls/Reducers'
 import {reducer as DealsReducer} from './Deals/Reducers'
 import {reducer as StoreReducer} from './Stores/Reducers'
+import {reducer as BeaconReducer} from './Beacons/Reducers'
 
 
 export default () => {
@@ -22,7 +23,8 @@ export default () => {
     tags: TagReducer,
     malls: MallReducer,
     deals: DealsReducer,
-    stores: StoreReducer
+    stores: StoreReducer,
+    beacons: BeaconReducer
   })
 
   return configureStore(rootReducer, rootSaga)

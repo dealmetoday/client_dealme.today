@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { ScrollView, View, Image, Modal, TouchableHighlight } from "react-native";
+import { ScrollView, View, Image, Modal, TouchableHighlight, DeviceEventEmitter } from "react-native";
 import { Thumbnail, Text, Button, Left, Body, Right, List, ListItem, Content, Alert, Card, CardItem } from "native-base";
 import HeaderNav from "../../Components/HeaderNav";
 import FooterNav from "../../Components/FooterNav";
 import { connect } from "react-redux";
 import axios from "axios";
 import QRCode from "../../Images/frame.png";
+import Beacons from "react-native-beacons-manager";
 
 // Styles
 import styles from "../Styles/LaunchScreenStyles";
@@ -15,6 +16,11 @@ import MallActions from '../../Stores/Malls/Actions'
 import UserActions from '../../Stores/User/Actions'
 import TagActions from '../../Stores/Tags/Actions'
 import AuthActions from '../../Stores/Auth/Actions'
+
+const store1 = {
+  identifier: "Children's-mart",
+  uuid: "00000000-5c82-fd4b-5497-0ebde13bcebf"
+};
 
 
 class UserDealsScreen extends Component {
@@ -65,19 +71,49 @@ class UserDealsScreen extends Component {
 
       });
 
+      Beacons.requestWhenInUseAuthorization();
+      /*  Beacons.startMonitoringForRegion(store3);
+        Beacons.startRangingBeaconsInRegion(store3);
+        Beacons.startMonitoringForRegion(store2);
+        Beacons.startRangingBeaconsInRegion(store2);*/
+      Beacons.startMonitoringForRegion(store1);
+      Beacons.startRangingBeaconsInRegion(store1);
+      Beacons.startUpdatingLocation();
+
+      const subscription = DeviceEventEmitter.addListener(
+        "beaconsDidRange",
+        (data) => {
+          let uuid = data.region.uuid
+          uuid = uuid.replace(/-/g, '')
+          uuid = uuid.substr(8);
+          uuid = uuid.toLowerCase()
+          console.log(uuid)
+          if (this.props.stores) {
+            let storeToUpdate = this.props.stores.stores.find(aStore=> {
+              console.log(aStore._id)
+              return aStore._id === uuid
+            })
+            console.log(storeToUpdate)
+            if(storeToUpdate) {
+              console.log(data.beacons)
+              if (data.beacons.length === 0) {
+                if(storeToUpdate.isStoreInRange) this.props.storeOutOfRange(this.props.stores.stores, uuid)
+              }
+              else {
+                if(!storeToUpdate.isStoreInRange)this.props.storeInRange(this.props.stores.stores, uuid)
+              }
+            }
+          }
+        });
+
     }).catch(err => console.log(err));
   }
 
   setModalVisible (visible, store) {
     this.setState({
       modalVisible: visible,
-      selectedStore: store
-    });
-  }
-
-  setQRModalVisible (visible) {
-    this.setState({
-      QRModalVisible: visible
+      selectedStore: store,
+      isStoreInRange: true
     });
   }
 
@@ -110,6 +146,13 @@ class UserDealsScreen extends Component {
   };
 
   render () {
+    let store
+    if(this.state.selectedStore){
+      store = this.props.stores.stores.find(aStore => {
+        return aStore._id === this.state.selectedStore._id
+      })
+    }
+
     return (
       <View style={styles.mainContainer} testID={"UserDealScreenContainer"}>
         <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleLogout} leftLabel={"Back"}
@@ -117,18 +160,15 @@ class UserDealsScreen extends Component {
         <Modal
           animationType="slide"
           transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}>
-          <View style={{ marginTop: 35 }}>{
+          visible={this.state.modalVisible}>
+          <View style={{ marginTop: 35, width: "100%"}}>{
             !this.state.showCode ?
               <View>
                 {
                   this.state.selectedStore && this.state.selectedStore.dealsList.map(aDeal => {
                     return (
                       <Card style={{ marginTop: 6 }}>
-                        <CardItem header button onPress={() => alert("This is Card Header")}>
+                        <CardItem header>
                           <Left>
                             <View style={{ textAlign: "left" }}>
                               <Text p>{aDeal.description}</Text>
@@ -137,12 +177,12 @@ class UserDealsScreen extends Component {
                             </View>
                           </Left>
                           <Right>
-                            <Button transparent disabled={false} onPress={() => {
+                            <Button transparent disabled={!store.isStoreInRange} onPress={() => {
                               this.setState({
                                 showCode: true
                               });
                             }}>
-                              <Text>{"view"}</Text>
+                              <Text>{ store.isStoreInRange ? "view" : "locked"}</Text>
                             </Button>
                           </Right>
                         </CardItem>
@@ -151,45 +191,44 @@ class UserDealsScreen extends Component {
                   })
 
                 }
-                <Button
-                  onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                  }}>
-                  <Text>CLOSE</Text>
-                </Button>
+                <View style={{justifyContent: 'center',
+                  alignItems: 'center', width: "100%"}}>
+                  <View>
+                  <Button
+                    onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}
+                    style={{width: 250, justifyContent: 'center',
+                      alignItems: 'center', marginTop: 35}}>
+                    <Text>CLOSE</Text>
+                  </Button>
+                  </View>
+                </View>
               </View>
               :
-              <View style={{ textAlign: "center" }}>
-                <Image source={QRCode}/>
-                <Button
-                  onPress={() => {
-                    this.setState({
-                      showCode: false
-                    });
-                  }}>
-                  <Text>BACK</Text>
-                </Button>
+              <View  style={{
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <View>
+                  <Image source={QRCode}/>
+                </View>
+                <View>
+                  <Button
+                    onPress={() => {
+                      this.setState({
+                        showCode: false
+                      });
+                    }}
+                    style={{width: 250, justifyContent: 'center',
+                      alignItems: 'center', marginTop: 35}}
+                  >
+                    <Text style={{textAlign: "center", width: "100%"}}>BACK</Text>
+                  </Button>
+                </View>
               </View>
           }
           </View>
-        </Modal>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.QRModalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}>
-          <View style={{ marginTop: 35 }}>
-            <Image soruce={QRCode}/>
-          </View>
-          <Button
-            onPress={() => {
-              this.setQRModalVisible(!this.state.QRModalVisible);
-            }}>
-            <Text>Hide Modal</Text>
-          </Button>
-
         </Modal>
 
         <ScrollView style={styles.container}>
@@ -213,7 +252,7 @@ class UserDealsScreen extends Component {
                       <Body>
                       <Text>{store ? store.name : "Store name unavailable"}</Text>
                       <Text note
-                            numberOfLines={1}>{mall ? mall.name : "Mall name unavailable"}{aStore.dealsList.length + " Deals Available!"}</Text>
+                            numberOfLines={1}>{mall ? mall.name : "Mall name unavailable"}</Text>
                       <Text note numberOfLines={1}
                             style={{ color: "green" }}>{aStore.dealsList.length + " Deals Available!"}</Text>
                       </Body>
@@ -227,9 +266,7 @@ class UserDealsScreen extends Component {
                     </ListItem>
                   );
                 })
-
               }
-
             </List>
           </Content>
         </ScrollView>
@@ -260,7 +297,9 @@ const mapDispatchToProps = (dispatch) => ({
   resetTags: () => dispatch(TagActions.resetToInitialState()),
   resetUser: () => dispatch(UserActions.resetToInitialState()),
   resetMalls: () => dispatch(MallActions.resetToInitialState()),
-  resetAuth: () => dispatch(AuthActions.resetToInitialState())
+  resetAuth: () => dispatch(AuthActions.resetToInitialState()),
+  storeInRange: (stores, uuid) => dispatch(StoreActions.storeInRange(stores,uuid)),
+  storeOutOfRange: (stores, uuid) => dispatch(StoreActions.storeOutOfRange(stores,uuid))
 
 
 });

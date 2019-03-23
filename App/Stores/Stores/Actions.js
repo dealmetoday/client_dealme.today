@@ -20,7 +20,10 @@ import { createActions } from 'reduxsauce'
  */
 const { Types, Creators } = createActions({
   getStores: ['stores'],
-  resetToInitialState: []
+  resetToInitialState: [],
+  storeInRange: ['stores', 'uuid'],
+  storeOutOfRange: ['stores', 'uuid']
+
 
 })
 
