@@ -14,6 +14,8 @@ import AuthActions from '../../Stores/Auth/Actions'
 import TagActions from '../../Stores/Tags/Actions'
 import MallActions from '../../Stores/Malls/Actions'
 import UserActions from '../../Stores/User/Actions'
+import DealActions from "../../Stores/Deals/Actions";
+import StoreActions from "../../Stores/Stores/Actions";
 
 
 const genderList = [
@@ -52,12 +54,10 @@ class UserProfileScreen extends Component {
 
     let promiseArr = []
     promiseArr.push(axios.get('https://api.dealme.today/tags').then(resp => {
-      console.log(resp)
       this.props.getTags(resp.data)
     }))
 
     promiseArr.push(axios.get('https://api.dealme.today/malls').then(resp =>{
-      console.log(resp)
       this.props.getMalls(resp.data)
     }))
 
@@ -65,7 +65,6 @@ class UserProfileScreen extends Component {
     Promise.all(promiseArr).then(resp => {
       const {email, first, last, gender, age, location, middle, tags, favouriteMalls} = this.props.user.profile;
       const {malls} = this.props.malls
-      console.log(malls)
       this.setState({
         first: first,
         last: last,
@@ -76,8 +75,6 @@ class UserProfileScreen extends Component {
         middle,
         tags,
         favouriteMalls: favouriteMalls[0]
-
-
       })
       }
     )
@@ -85,7 +82,6 @@ class UserProfileScreen extends Component {
   }
 
   onValueChange (value, field) {
-    console.log(value)
     this.setState({
       [field]: value
     })
@@ -100,7 +96,6 @@ class UserProfileScreen extends Component {
   }
 
   openQRScreen = () => {
-    console.log('HI')
     this.props.navigation.navigate('UserQRScreen')
   }
 
@@ -131,26 +126,52 @@ class UserProfileScreen extends Component {
     axios.defaults.headers.common = this.props.config
 
     axios.put('https://api.dealme.today/users', updatedProfile).then(resp => {
-      Toast.show({
-        text: "Profile Saved",
-        buttonText: "Okay",
-        duration: 3000
-
-      })
       axios.defaults.headers.common = this.props.config
       axios.get(`https://api.dealme.today/user/profile?id=${this.props.auth.id}`).then(resp => {
         console.log(resp)
         this.props.getUserProfile(resp.data);
+        Toast.show({
+          text: "Profile Saved",
+          buttonText: "Okay",
+          duration: 10000
+        })
+
+        let tags = this.props.user.profile.tags.join(",");
+        axios.get(`https://api.dealme.today/deals?available=true&mall=${this.props.user.profile.favouriteMalls[0]}&tags=${tags}`).then(resp => {
+          const dealsGroups = resp.data;
+          dealsGroups.sort((a, b) => (a._id > b._id) ? 1 : (a._id < b._id) ? -1 : 0);
+          let storeIds = [];
+          dealsGroups.map(dealGroup => {
+            storeIds.push(dealGroup._id);
+          });
+
+          axios.get(`https://api.dealme.today/stores?_id=${storeIds.join(",")}`).then(resp => {
+            let stores = resp.data;
+            stores.sort((a, b) => (a._id > b._id) ? 1 : (a._id < b._id) ? -1 : 0);
+            let finalDeals = [];
+            stores.map((aStore, index) => {
+              finalDeals.push({
+                ...aStore,
+                dealsList: dealsGroups[index].dealList
+              });
+            });
+            this.props.getDeals(finalDeals);
+            this.props.getStores(stores);
+
+          });
+
+        }).catch(error => {
+          console.log(error);
+        });
       }).catch(error => {
         console.log(error);
       });
-
     }).catch(err => {
       console.log(err)
       Toast.show({
         text: "Error Saving Profile",
         buttonText: "Okay",
-        duration: 3000
+        duration: 10000
 
       })
     })
@@ -277,6 +298,8 @@ const mapDispatchToProps = (dispatch) => ({
   getTags: (tags) => dispatch(TagActions.getTags(tags)),
   getMalls: (malls) => dispatch(MallActions.getMalls(malls)),
   getUserProfile: (profile) => dispatch(UserActions.getUserProfile(profile)),
+  getDeals: (deals) => dispatch(DealActions.getDeals(deals)),
+  getStores: (stores) => dispatch(StoreActions.getStores(stores))
 
 })
 

@@ -32,29 +32,6 @@ const MailIcon = {
   iconStyle: { paddingRight: 16, left: 0 }
 };
 
-const region = {
-  identifier: "test",
-  uuid: "23b8a2f2-0f94-4bd6-9790-e2439bf47418"
-};
-
-const store1 = {
-  identifier: "Children's-mart",
-  uuid: "00000000-5c82-fd4b-5497-0ebde13bcebf"
-};
-
-const store3 = {
-  identifier: "Aquatics Shop",
-  uuid: "00000000-5c82-fd4b-3a35-cfccb93bca61",
-  major: 10065,
-  minor: 26049
-};
-
-const store2 = {
-  identifier: "Clothes Depot",
-  uuid: "00000000-5c82-fd4b-b7bd-36fb363bca9a",
-  major: 10065,
-  minor: 26049
-};
 
 class ExampleScreen extends Component {
   constructor (props) {
@@ -362,6 +339,7 @@ class ExampleScreen extends Component {
             <FBLogin style={{ width: "100%", height: 48 }}
                      onLogin={this.handleFacebookLogin}
                      permissions={["email", "public_profile"]}
+                     onLoginFound={FBLoginManager.logout( ()=> {})}
             />
             <GoogleSigninButton
               style={{ width: 650, height: 48 }}

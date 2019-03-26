@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import axios from "axios";
 import QRCode from "../../Images/frame.png";
 import Beacons from "react-native-beacons-manager";
-import Moment from 'react-moment'
 import moment from 'moment'
 
 // Styles
@@ -19,10 +18,25 @@ import UserActions from '../../Stores/User/Actions'
 import TagActions from '../../Stores/Tags/Actions'
 import AuthActions from '../../Stores/Auth/Actions'
 
+
 const store1 = {
-  identifier: "Children's-mart",
-  uuid: "00000000-5c82-fd4b-5497-0ebde13bcebf"
+  identifier: "Bath republic",
+  uuid: "00000000-5c82-fd4b-dc2a-ed97be3bcaad",
+  major: 10065,
+  minor: 26049
 };
+
+
+const store2 = {
+  identifier: "All Supermarket",
+  uuid: "00000000-5c82-fd4b-1e9d-738b1b3bcb3d",
+};
+
+const inRange = {
+  proximity: "near",
+  accuracy: 2.7,
+  rssi: -89
+}
 
 
 class UserDealsScreen extends Component {
@@ -33,19 +47,15 @@ class UserDealsScreen extends Component {
       modalVisible: false,
       selectedStore: null,
       QRModalVisible: false,
-      showCode: false
+      showCode: false,
+      processBeacon: true
     };
   }
 
   componentDidMount () {
-    let dealsParams = {
-      expiryDate: "1970-01-18T23:08:08.395Z",
-      active: true,
-      mall: this.props.user.profile.favouriteMalls[0]
-    };
 
     let tags = this.props.user.profile.tags.join(",");
-    axios.get(`https://api.dealme.today/deals?expiryDate=${dealsParams.expiryDate}&available=true&mall=${dealsParams.mall}&tags=${tags}`).then(resp => {
+    axios.get(`https://api.dealme.today/deals?available=true&mall=${this.props.user.profile.favouriteMalls[0]}&tags=${tags}`).then(resp => {
       const dealsGroups = resp.data;
       dealsGroups.sort((a, b) => (a._id > b._id) ? 1 : (a._id < b._id) ? -1 : 0);
       let storeIds = [];
@@ -54,61 +64,66 @@ class UserDealsScreen extends Component {
       });
 
       axios.get(`https://api.dealme.today/stores?_id=${storeIds.join(",")}`).then(resp => {
-        console.log(resp.data);
         let stores = resp.data;
         stores.sort((a, b) => (a._id > b._id) ? 1 : (a._id < b._id) ? -1 : 0);
         let finalDeals = [];
-
         stores.map((aStore, index) => {
-          console.log(dealsGroups[index]);
           finalDeals.push({
             ...aStore,
             dealsList: dealsGroups[index].dealList
           });
         });
-        console.log(finalDeals);
-
         this.props.getDeals(finalDeals);
         this.props.getStores(stores);
 
       });
 
       Beacons.requestWhenInUseAuthorization();
-      /*  Beacons.startMonitoringForRegion(store3);
-        Beacons.startRangingBeaconsInRegion(store3);
-        Beacons.startMonitoringForRegion(store2);
-        Beacons.startRangingBeaconsInRegion(store2);*/
       Beacons.startMonitoringForRegion(store1);
       Beacons.startRangingBeaconsInRegion(store1);
+      Beacons.startMonitoringForRegion(store2);
+      Beacons.startRangingBeaconsInRegion(store2);
       Beacons.startUpdatingLocation();
 
       const subscription = DeviceEventEmitter.addListener(
         "beaconsDidRange",
         (data) => {
-          let uuid = data.region.uuid
-          uuid = uuid.replace(/-/g, '')
-          uuid = uuid.substr(8);
-          uuid = uuid.toLowerCase()
-          console.log(uuid)
-          if (this.props.stores) {
-            let storeToUpdate = this.props.stores.stores.find(aStore=> {
-              console.log(aStore._id)
-              return aStore._id === uuid
-            })
-            console.log(storeToUpdate)
-            if(storeToUpdate) {
-              console.log(data.beacons)
-              if (data.beacons.length === 0) {
-                if(storeToUpdate.isStoreInRange) this.props.storeOutOfRange(this.props.stores.stores, uuid)
-              }
-              else {
-                if(!storeToUpdate.isStoreInRange)this.props.storeInRange(this.props.stores.stores, uuid)
+          if (this.state.processBeacon) {
+            let uuid = data.region.uuid
+            uuid = uuid.replace(/-/g, '')
+            uuid = uuid.substr(8);
+            uuid = uuid.toLowerCase()
+            if (this.props.stores) {
+              let storeToUpdate = this.props.stores.stores.find(aStore => {
+                return aStore._id === uuid
+              })
+              if (storeToUpdate) {
+                if (data.beacons.length !== 0) {
+                  let theBeacon = data.beacons[0];
+                  if ((theBeacon.proximity === "near" || theBeacon.proximity === "immediate") && theBeacon.accuracy < 3) {
+                    this.props.storeInRange(this.props.stores.stores, uuid)
+                    this.setState({
+                      processBeacon: false,
+                      beaconInterval: setTimeout(() => this.toggleProcessBeacon(), 10000)
+                    })
+                  }
+                  else {
+                    this.props.storeOutOfRange(this.props.stores.stores, uuid)
+                  }
+                }
+
               }
             }
           }
-        });
+        })
+    })
+  }
 
-    }).catch(err => console.log(err));
+  toggleProcessBeacon = () => {
+   clearTimeout(this.state.beaconInterval)
+    this.setState({
+      processBeacon: true
+    })
   }
 
   setModalVisible (visible, store) {
@@ -127,7 +142,6 @@ class UserDealsScreen extends Component {
     this.props.navigation.navigate("UserProfileScreen");
   };
   handleLogout = () => {
-    console.log("logging out");
     this.props.resetDeals();
     this.props.resetMalls();
     this.props.resetStores();
@@ -143,19 +157,17 @@ class UserDealsScreen extends Component {
   };
 
   openQRScreen = () => {
-    console.log("HI");
     this.props.navigation.navigate("UserQRScreen");
   };
 
   render () {
-    let store
+    let selectedStore
     if(this.state.selectedStore){
-      store = this.props.stores.stores.find(aStore => {
+      selectedStore = this.props.stores.stores.find(aStore => {
         return aStore._id === this.state.selectedStore._id
       })
     }
     let todaysDate = moment();
-
     return (
       <View style={styles.mainContainer} testID={"UserDealScreenContainer"}>
         <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleLogout} leftLabel={"Back"}
@@ -171,12 +183,8 @@ class UserDealsScreen extends Component {
 
                   this.state.selectedStore && this.state.selectedStore.dealsList.map(aDeal => {
                     let timeLeft = moment.duration(todaysDate.diff(aDeal.expiryDate))
-                    console.log(timeLeft)
-
-
                     return (
-                      aDeal.usesLeft > 0 ?
-                      <Card style={{ marginTop: 6 }}>
+                      <Card style={{ marginTop: 6 }} key={aDeal._id}>
                         <CardItem header>
                           <Left>
                             <View style={{display: "flex", flexDirection:"column", justifyContent: "flex-start", alignItems: "flex-start"}}>
@@ -189,21 +197,21 @@ class UserDealsScreen extends Component {
                                 </Text>
                               </View>
                               <View style={{ textAlign: "left"}}>
-                                <Text style={{ color: aDeal.usesLeft > 0 ? "green" : "red", fontSize: 12 }} p>{`${aDeal.usesLeft} codes left!`}</Text>
+                                <Text style={{ color: "green", fontSize: 12 }} p>{`${aDeal.usesLeft < 0 ? "unlimited" : aDeal.usesLeft} codes left!`}</Text>
                               </View>
                             </View>
                           </Left>
                           <Right>
-                            <Button transparent disabled={!store.isStoreInRange} onPress={() => {
+                            <Button transparent disabled={!selectedStore.isStoreInRange} onPress={() => {
                               this.setState({
                                 showCode: true
                               });
                             }}>
-                              <Text>{ store.isStoreInRange ? "view" : "locked"}</Text>
+                              <Text>{ selectedStore.isStoreInRange ? "view" : "locked"}</Text>
                             </Button>
                           </Right>
                         </CardItem>
-                      </Card> : null
+                      </Card>
                     );
                   })
 
@@ -307,7 +315,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getDeals: (deals) => dispatch(DealActions.getDeals(deals)),
-  getStores: (stores) => dispatch(StoreActions.getStores(stores)),
   getStores: (stores) => dispatch(StoreActions.getStores(stores)),
   resetDeals: () => dispatch(DealActions.resetToInitialState()),
   resetStores: () => dispatch(StoreActions.resetToInitialState()),

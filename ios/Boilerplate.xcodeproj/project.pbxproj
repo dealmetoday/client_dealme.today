@@ -57,6 +57,7 @@
 		AE41E7E0BFD249068C70E708 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C77B89D2D7A84B36B7079DEA /* Feather.ttf */; };
 		BD95B6681E7D4DA5A4241290 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A90DE54ADDF41EEB8596F97 /* Foundation.ttf */; };
 		C1790C0254E1407EAD7E5D92 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD46959BCE948EBB6981058 /* Roboto.ttf */; };
+		C73F2FAB2246CCDF009C98BE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		C759FC59222CB77900A55643 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C759FC55222CB76E00A55643 /* libRNRandomBytes.a */; };
 		C76BDFF72223DC630006A251 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C76BDFF62223DC380006A251 /* libSafariViewManager.a */; };
 		C7EF05162224FDFE00D53600 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7EF04EB2224FDFE00D53600 /* FBSDKLoginKit.framework */; };
@@ -1465,6 +1466,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C73F2FAB2246CCDF009C98BE /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1741,7 +1743,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CB92C4C4FBB939212088F641 /* Pods-Boilerplate.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 37V5U74QJP;
@@ -1777,7 +1779,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50245BDF8D6216D27A7A6CDA /* Pods-Boilerplate.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37V5U74QJP;
 				FRAMEWORK_SEARCH_PATHS = (

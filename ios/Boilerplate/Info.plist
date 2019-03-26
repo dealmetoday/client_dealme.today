@@ -2,12 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>The application will receive lcoation updates in the background</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Boilerplate</string>
+	<string>Dealme</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -55,14 +53,14 @@
 			</array>
 		</dict>
 	</array>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>794859637527349</string>
 	<key>FacebookDisplayName</key>
 	<string>NVDBlueTwo</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -85,6 +83,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Your message to user when the camera is accessed for the first time</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>The application will receive lcoation updates in the background</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To get the best deals, Location services needs to be turned on!</string>
 	<key>NSMicrophoneUsageDescription</key>
