@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, View } from 'react-native'
-import { Button, Form, Item, Picker, Icon, Text, Input, Label, Toast } from 'native-base'
+import { Button, Form, Item, Picker, Icon, Text, Input, Label, Toast, Spinner } from 'native-base'
 import HeaderNav from '../../Components/HeaderNav'
 import FooterNav from '../../Components/FooterNav'
 import axios from 'axios'
@@ -41,7 +41,8 @@ class UserProfileScreen extends Component {
       age: 0,
       showToast: false,
       tags: [],
-      favouriteMalls: ""
+      favouriteMalls: "",
+      showSpinner: true
     }
     this.handleInputChange.bind(this)
     this.onValueChange.bind(this)
@@ -74,7 +75,8 @@ class UserProfileScreen extends Component {
         location,
         middle,
         tags,
-        favouriteMalls: favouriteMalls[0]
+        favouriteMalls: favouriteMalls[0],
+        showSpinner: false
       })
       }
     )
@@ -186,6 +188,14 @@ class UserProfileScreen extends Component {
   render () {
 
     return (
+      this.state.showSpinner ?
+        <View style={{justifyContent: 'center',
+          alignItems: 'center', width: "100%"}} testID={"User-Deal-Screen-Spinner"}>
+          <View style={{marginTop: 300}}>
+            <Spinner color="red" style={{width: 150, height: 150}}/>
+          </View>
+        </View>
+        :
       <View style={styles.mainContainer} testID={'UserProfileScreenContainer'}>
         <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'Profile'} rightLabel={'Save'} />
         <ScrollView style={styles.container}>

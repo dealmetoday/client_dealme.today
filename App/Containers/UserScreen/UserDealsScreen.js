@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { ScrollView, View, Image, Modal, TouchableHighlight, DeviceEventEmitter } from "react-native";
-import { Thumbnail, Text, Button, Left, Body, Right, List, ListItem, Content, Alert, Card, CardItem, Form, Label, Input, Item } from "native-base";
+import { Thumbnail, Text, Button, Left, Body, Right, List, ListItem, Content, Alert, Card, CardItem, Form, Label, Input, Item, Spinner } from "native-base";
 import HeaderNav from "../../Components/HeaderNav";
 import FooterNav from "../../Components/FooterNav";
 import { connect } from "react-redux";
 import axios from "axios";
 import QRCode from "../../Images/frame.png";
+import StoreLogo from '../../Images/storeLogo.png';
 import Beacons from "react-native-beacons-manager";
 import moment from 'moment'
 
@@ -30,14 +31,9 @@ const store1 = {
 const store2 = {
   identifier: "All Supermarket",
   uuid: "00000000-5c82-fd4b-1e9d-738b1b3bcb3d",
+  major: 10065,
+  minor: 26049
 };
-
-const inRange = {
-  proximity: "near",
-  accuracy: 2.7,
-  rssi: -89
-}
-
 
 class UserDealsScreen extends Component {
   constructor (props) {
@@ -50,8 +46,10 @@ class UserDealsScreen extends Component {
       showCode: false,
       processBeacon: true,
       storePIN: "",
-      selectedDeal: ""
+      selectedDeal: "",
+      showSpinner: true
     };
+    this.toggleSpinner.bind(this)
   }
 
   componentDidMount () {
@@ -78,6 +76,8 @@ class UserDealsScreen extends Component {
         this.props.getDeals(finalDeals);
         this.props.getStores(stores);
         this.props.initClaimedDeals(this.props.user.profile.dealHistory)
+        this.toggleSpinner();
+
 
       });
 
@@ -126,6 +126,12 @@ class UserDealsScreen extends Component {
    clearTimeout(this.state.beaconInterval)
     this.setState({
       processBeacon: true
+    })
+  }
+
+  toggleSpinner = () => {
+    this.setState({
+      showSpinner: !this.state.showSpinner
     })
   }
 
@@ -194,6 +200,16 @@ class UserDealsScreen extends Component {
     }
     let todaysDate = moment();
     return (
+
+      this.state.showSpinner ?
+        <View style={{justifyContent: 'center',
+          alignItems: 'center', width: "100%"}} testID={"User-Deal-Screen-Spinner"}>
+          <View style={{marginTop: 300}}>
+            <Spinner color="red" style={{width: 150, height: 150}}/>
+          </View>
+        </View>
+        :
+      this.props.user.profile.favouriteMalls[0] ?
       <View style={styles.mainContainer} testID={"UserDealScreenContainer"}>
         <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleLogout} leftLabel={"Back"}
                    title={"Deals"} rightLabel={"Logout"}/>
@@ -301,6 +317,7 @@ class UserDealsScreen extends Component {
                     }}
                     style={{width: 250, justifyContent: 'center',
                       alignItems: 'center', marginTop: 35}}
+                    primary
                   >
                     <Text style={{textAlign: "center", width: "100%"}}>BACK</Text>
                   </Button>
@@ -325,8 +342,7 @@ class UserDealsScreen extends Component {
                   return (
                     <ListItem thumbnail key={aStore._id}>
                     <Left>
-                        <Thumbnail square
-                                   source={{ uri: "https://facebook.github.io/react-native/docs/assets/favicon.png" }}/>
+                        <Thumbnail square source={StoreLogo}/>
                       </Left>
                       <Body>
                       <Text>{store ? store.name : "Store name unavailable"}</Text>
@@ -338,7 +354,8 @@ class UserDealsScreen extends Component {
                       <Right>
                         <Button transparent onPress={() => {
                           this.setModalVisible(true, aStore);
-                        }}>
+                        }}
+                                primary>
                           <Text>View</Text>
                         </Button>
                       </Right>
@@ -351,8 +368,11 @@ class UserDealsScreen extends Component {
         </ScrollView>
         <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen}
                    openQRScreen={this.openQRScreen} active={"DealsScreen"}/>
-      </View>
-    );
+      </View> :
+        <View style={styles.mainContainer} testID={"UserDealScreenContainer"}>
+          <Text> Please select A mall from the profile page</Text>
+        </View>
+        );
   }
 }
 

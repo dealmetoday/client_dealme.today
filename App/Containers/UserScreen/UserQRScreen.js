@@ -70,16 +70,20 @@ export default class UserQRScreen extends Component {
             <QRCodeScanner
               onRead={this.onSuccess.bind(this)}
               topContent={
-                <Text style={styles.centerText}>
-                  Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
-                </Text>
+                <View>
+                    <Text style={{...styles.centerText, fontSize: 22, marginTop: 12, marginBottom: 12}}>
+                     Coming soon!
+                    </Text>
+                </View>
               }
               bottomContent={
-                <TouchableOpacity style={styles.buttonTouchable}>
-                  <Text style={styles.buttonText}>OK. Got it!</Text>
-                </TouchableOpacity>
+                <View style={{marginTop: 16}}>
+                  <Text style={styles.centerText}>
+                    Scan QR Codes to get even more deals!
+                  </Text>
+                </View>
               }
-              cameraType={'front'}
+              cameraType={'back'}
             />
           </View>
         </ScrollView>
