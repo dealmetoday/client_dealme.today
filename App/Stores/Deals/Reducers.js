@@ -21,6 +21,25 @@ export const resetToInitialState = (state) => {
   })
 }
 
+export const claimDeal = (state, {dealID}) => {
+
+  let claimedDeals = state.claimedDeals
+  claimedDeals.push(dealID)
+  return({
+    ...state,
+    claimedDeals
+  })
+
+
+}
+
+export const initClaimedDeals = (state,{claimedDeals}) => {
+  return ({
+    ...state,
+    claimedDeals
+  })
+
+}
 
 
 
@@ -32,5 +51,7 @@ export const resetToInitialState = (state) => {
  */
 export const reducer = createReducer(INITIAL_STATE, {
   [DealTypes.GET_DEALS]: getDeals,
-  [DealTypes.RESET_TO_INITIAL_STATE]: resetToInitialState
+  [DealTypes.RESET_TO_INITIAL_STATE]: resetToInitialState,
+  [DealTypes.CLAIM_DEAL]: claimDeal,
+  [DealTypes.INIT_CLAIMED_DEALS]: initClaimedDeals
 })

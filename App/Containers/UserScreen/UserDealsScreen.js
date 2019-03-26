@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ScrollView, View, Image, Modal, TouchableHighlight, DeviceEventEmitter } from "react-native";
-import { Thumbnail, Text, Button, Left, Body, Right, List, ListItem, Content, Alert, Card, CardItem } from "native-base";
+import { Thumbnail, Text, Button, Left, Body, Right, List, ListItem, Content, Alert, Card, CardItem, Form, Label, Input, Item } from "native-base";
 import HeaderNav from "../../Components/HeaderNav";
 import FooterNav from "../../Components/FooterNav";
 import { connect } from "react-redux";
@@ -48,7 +48,9 @@ class UserDealsScreen extends Component {
       selectedStore: null,
       QRModalVisible: false,
       showCode: false,
-      processBeacon: true
+      processBeacon: true,
+      storePIN: "",
+      selectedDeal: ""
     };
   }
 
@@ -75,6 +77,7 @@ class UserDealsScreen extends Component {
         });
         this.props.getDeals(finalDeals);
         this.props.getStores(stores);
+        this.props.initClaimedDeals(this.props.user.profile.dealHistory)
 
       });
 
@@ -159,6 +162,28 @@ class UserDealsScreen extends Component {
   openQRScreen = () => {
     this.props.navigation.navigate("UserQRScreen");
   };
+  claimDeal = (dealID, userID) => {
+    let params = {
+      dealID,
+      userID
+    }
+    console.log(params)
+    axios.defaults.headers.common = this.props.config
+    axios.put("https://api.dealme.today/deals/claim", params).then(resp => {
+      console.log(resp.data)
+      this.props.claimDeals(dealID)
+      this.setState({
+        showCode: false,
+        selectedDead: "",
+        storePIN: ""
+      })
+    })
+  }
+  handleInputChange (event, field) {
+    this.setState({
+      [ field ]: event.nativeEvent.text
+    })
+  }
 
   render () {
     let selectedStore
@@ -180,7 +205,6 @@ class UserDealsScreen extends Component {
             !this.state.showCode ?
               <View>
                 {
-
                   this.state.selectedStore && this.state.selectedStore.dealsList.map(aDeal => {
                     let timeLeft = moment.duration(todaysDate.diff(aDeal.expiryDate))
                     return (
@@ -202,12 +226,13 @@ class UserDealsScreen extends Component {
                             </View>
                           </Left>
                           <Right>
-                            <Button transparent disabled={!selectedStore.isStoreInRange} onPress={() => {
+                            <Button transparent disabled={(this.props.deals.claimedDeals.indexOf(aDeal._id) !== -1) || !selectedStore.isStoreInRange} onPress={() => {
                               this.setState({
-                                showCode: true
+                                showCode: true,
+                                selectedDeal: aDeal._id
                               });
                             }}>
-                              <Text>{ selectedStore.isStoreInRange ? "view" : "locked"}</Text>
+                              <Text>{ this.props.deals.claimedDeals.indexOf(aDeal._id) !== -1 ? "CLAIMED" : selectedStore.isStoreInRange ? "view" : "locked"}</Text>
                             </Button>
                           </Right>
                         </CardItem>
@@ -236,7 +261,36 @@ class UserDealsScreen extends Component {
                 alignItems: 'center'
               }}>
                 <View>
+                  <Text>Ask an Employee to scan your code</Text>
+                </View>
+                <View>
                   <Image source={QRCode}/>
+                </View>
+                <View>
+                  <Text>OR</Text>
+                </View>
+                <View>
+                  <Form>
+                    <Item floatingLabel style={{height: 75}}>
+                      <Label>Store Pin Number</Label>
+                      <Input value={this.state.storePIN}
+                             testID={'store-pin'}
+                             secureTextEntry
+                             keyboardType={"number-pad"}
+                             onChange={event => this.handleInputChange(event, 'storePIN')}
+                      />
+                    </Item>
+                  </Form>
+                  <Button
+                    onPress={() => {
+                      this.claimDeal(this.state.selectedDeal, this.props.user.profile._id)
+                    }}
+                    style={{width: 250, justifyContent: 'center',
+                      alignItems: 'center', marginTop: 35}}
+                    disabled={this.state.storePIN.length !== 4}
+                  >
+                    <Text style={{textAlign: "center", width: "100%"}}>CLAIM</Text>
+                  </Button>
                 </View>
                 <View>
                   <Button
@@ -323,8 +377,9 @@ const mapDispatchToProps = (dispatch) => ({
   resetMalls: () => dispatch(MallActions.resetToInitialState()),
   resetAuth: () => dispatch(AuthActions.resetToInitialState()),
   storeInRange: (stores, uuid) => dispatch(StoreActions.storeInRange(stores,uuid)),
-  storeOutOfRange: (stores, uuid) => dispatch(StoreActions.storeOutOfRange(stores,uuid))
-
+  storeOutOfRange: (stores, uuid) => dispatch(StoreActions.storeOutOfRange(stores,uuid)),
+  claimDeals: (dealID) => dispatch(DealActions.claimDeal(dealID)),
+  initClaimedDeals: (claimedDeals) => dispatch(DealActions.initClaimedDeals(claimedDeals))
 
 });
 
