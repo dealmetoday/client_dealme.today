@@ -82,8 +82,6 @@ class ExampleScreen extends Component {
       };
       axios.put("https://api.dealme.today/user/check", testparams).then(resp => {
         if (resp.data.status === "Success") {
-          console.log("User exists!");
-
           let params = {
             email: userInfo.user.email,
             firstName: userInfo.user.givenName,
@@ -94,12 +92,9 @@ class ExampleScreen extends Component {
           };
           axios.put("https://api.dealme.today/auth/login/social", params).then(resp => {
             if (resp.data.status === "Success") {
-              console.log(resp.data);
               this.props.loginGoogleSuccess(resp.data.Bearer, resp.data.id);
-              console.log(this.props.config);
               axios.defaults.headers.common = this.props.config;
               axios.get(`https://api.dealme.today/user/profile?id=${resp.data.id}`, {}, this.props.config).then(resp => {
-                console.log(resp.data);
                 this.props.getUserProfile(resp.data);
                 if (resp.data.age === -1) NavigationService.navigateAndReset("UserScreen", { isFirstTime: true });
                 else NavigationService.navigateAndReset("UserScreen", { isFirstTime: false });
@@ -136,11 +131,9 @@ class ExampleScreen extends Component {
 
   handleFacebookLogin = async (user) => {
     try {
-      console.log(user);
       axios.get(`https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${user.credentials.token }`).then(resp => {
 
         let buffer = Buffer.from(resp.data.id);
-        console.log(resp.data);
         let key = {
           key: this.props.auth.pubKey,
           padding: 1
@@ -186,11 +179,9 @@ class ExampleScreen extends Component {
                         role: "user",
                         provider: "Facebook"
                       };
-                      console.log(params);
                       axios.put("https://api.dealme.today/auth/login/social", params).then(resp => {
                         console.log(resp);
                         if (resp.data.status === "Success") {
-                          console.log(resp.data.id);
                           this.props.loginFacebookSuccess(resp.data.Bearer, resp.data.id);
                           console.log(this.props.config);
                           axios.defaults.headers.common = this.props.config;
@@ -244,7 +235,6 @@ class ExampleScreen extends Component {
           email: email,
           password: hashed
         };
-        console.log(params);
         axios.post("https://api.dealme.today/users/email", params).then(resp => {
           if (resp.data.status === "Success") {
             this.setState({
@@ -288,7 +278,6 @@ class ExampleScreen extends Component {
     console.log(params);
 
     axios.put("https://api.dealme.today/auth/login/email", params).then(resp => {
-      console.log(resp);
       if (resp.data.status === "Success") {
         this.props.loginEmailSuccess(resp.data.Bearer, resp.data.id);
         axios.defaults.headers.common = this.props.config;
@@ -376,9 +365,7 @@ class ExampleScreen extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  config: state.auth.config,
-  beacons: state.beacons,
-  stores: state.stores
+  config: state.auth.config
 
 });
 
@@ -388,9 +375,6 @@ const mapDispatchToProps = (dispatch) => ({
   loginEmailSuccess: (Bearer, id) => dispatch(AuthActions.loginEmailSuccess(Bearer, id)),
   getUserProfile: (profile) => dispatch(UserActions.getUserProfile(profile)),
   updatePubKey: (pubKey) => dispatch(AuthActions.updatePubKey(pubKey)),
-  updateBeacons: (beacons) => dispatch(BeaconActions.updateBeacons(beacons)),
-  storeInRange: (stores, uuid) => dispatch(StoreActions.storeInRange(stores,uuid)),
-  storeOutOfRange: (stores, uuid) => dispatch(StoreActions.storeOutOfRange(stores,uuid))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExampleScreen);

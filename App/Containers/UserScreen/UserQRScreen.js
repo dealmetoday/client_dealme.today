@@ -34,7 +34,6 @@ export default class UserQRScreen extends Component {
   }
 
   openQRScreen = () => {
-    console.log('HI')
     this.props.navigation.navigate('UserQRScreen')
   }
 

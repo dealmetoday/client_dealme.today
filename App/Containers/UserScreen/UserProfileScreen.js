@@ -130,7 +130,6 @@ class UserProfileScreen extends Component {
     axios.put('https://api.dealme.today/users', updatedProfile).then(resp => {
       axios.defaults.headers.common = this.props.config
       axios.get(`https://api.dealme.today/user/profile?id=${this.props.auth.id}`).then(resp => {
-        console.log(resp)
         this.props.getUserProfile(resp.data);
         Toast.show({
           text: "Profile Saved",

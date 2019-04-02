@@ -13,57 +13,6 @@ import UserQRScreen from './UserQRScreen'
 // Styles
 import styles from '../Styles/LaunchScreenStyles'
 
-const ageList = [
-  {
-    value: 1,
-    label: '0-13yrs'
-  },
-  {
-    value: 2,
-    label: '14-16yrs'
-  },
-  {
-    value: 3,
-    label: '17-19yrs'
-  },
-  {
-    value: 4,
-    label: '20-22yrs'
-  },
-  {
-    value: 5,
-    label: '23-25yrs'
-  },
-  {
-    value: 6,
-    label: '26-28yrs'
-  },
-  {
-    value: 7,
-    label: '+30yrs'
-  }
-]
-
-const genderList = [
-  {
-    value: 1,
-    label: 'Female'
-  },
-  {
-    value: 2,
-    label: 'Male'
-  },
-  {
-    value: 3,
-    label: 'Other'
-  }
-]
-
-const tagsList = {
-  1: 'Haircuts',
-  2: 'Sandwiches'
-}
-
 
 class UserScreen extends Component {
   constructor (props) {
@@ -79,7 +28,6 @@ class UserScreen extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.navigation)
     if(this.props.navigation.state.params.isFirstTime) this.props.navigation.replace('UserProfileScreen')
     else this.props.navigation.replace('UserDealsScreen')
 
@@ -101,7 +49,6 @@ class UserScreen extends Component {
   }
 
   openQRScreen = () => {
-    console.log('HI')
     this.props.navigation.navigate('UserQRScreen')
   }
 
@@ -120,11 +67,9 @@ class UserScreen extends Component {
       age,
       gender
     }
-    console.log(updatedProfile)
   }
 
   render () {
-
     return (
       <View style={styles.mainContainer}>
         <HeaderNav handleLeftButton={this.handleBackButton} handleRightButton={this.handleSaveProfile} leftLabel={'Back'} title={'Profile'} rightLabel={'Save'} />
@@ -148,7 +93,6 @@ const stackNavigator = createStackNavigator({
   },
   initialRouteName: 'UserScreen',
   headerMode: 'none',
-  // Keeping this here for future when we can make
   navigationOptions: {
     header: {
       left: (

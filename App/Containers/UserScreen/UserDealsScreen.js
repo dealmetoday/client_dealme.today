@@ -155,12 +155,12 @@ class UserDealsScreen extends Component {
     this.props.navigation.navigate("UserProfileScreen");
   };
   handleLogout = () => {
-/*    this.props.resetDeals();
+    this.props.resetDeals();
     this.props.resetMalls();
     this.props.resetStores();
     this.props.resetTags();
     this.props.resetUser();
-    this.props.resetAuth();*/
+    this.props.resetAuth();
     this.props.navigation.navigate("MainScreen")
 
   };
@@ -177,7 +177,6 @@ class UserDealsScreen extends Component {
       dealID,
       userID
     }
-    console.log(params)
     axios.defaults.headers.common = this.props.config
     axios.put("https://api.dealme.today/deals/claim", params).then(resp => {
       console.log(resp.data)
