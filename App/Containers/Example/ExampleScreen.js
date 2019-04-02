@@ -251,6 +251,11 @@ class ExampleScreen extends Component {
               signUpComplete: "Sign up Successful! please try loggin in."
             });
           }
+          else{
+            this.setState({
+              signUpComplete: "Error! Please try again"
+            });
+          }
         }).catch(err => console.err);
 
       }
@@ -336,18 +341,23 @@ class ExampleScreen extends Component {
             <Image source={Logo} style={{ width: 200, height: 200 }}/>
           </View>
           <View style={{ ...Style.section, height: "15%" }}>
-            <FBLogin style={{ width: "100%", height: 48 }}
-                     onLogin={this.handleFacebookLogin}
-                     permissions={["email", "public_profile"]}
-                     onLoginFound={FBLoginManager.logout( ()=> {})}
-            />
-            <GoogleSigninButton
-              style={{ width: 650, height: 48 }}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-              onPress={this.handleGoogleLogin}
-              disabled={this.state.isSigninInProgress}/>
+            <View testID={'facebook-button'}>
+              <FBLogin style={{ width: "100%", height: 48 }}
+                       onLogin={this.handleFacebookLogin}
+                       permissions={["email", "public_profile"]}
+                       onLoginFound={FBLoginManager.logout( ()=> {})}
+              />
+            </View>
+              <View testID={'google-button'}>
+              <GoogleSigninButton
+                style={{ width: 650, height: 48 }}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark}
+                onPress={this.handleGoogleLogin}
+                disabled={this.state.isSigninInProgress}/>
+            </View>
           </View>
+
           <View style={Style.section}>
             <Text style={{ textAlign: "center", marginBottom: 12, fontSize: 36 }} h3> Log in or Sign up</Text>
             <SignUpForm Icon={MailIcon} emailSignUp={this.handleEmailSignUp}
@@ -355,7 +365,7 @@ class ExampleScreen extends Component {
           </View>
           {this.state.signUpErr ? <Text testID={"SignUpErrMessage"}
                                         style={{ color: "red" }}>{this.state.signUpErr}</Text> : null}
-          {this.state.signUpComplete ? <Text style={{ color: "green" }}>{this.state.signUpComplete}</Text> : null}
+          {this.state.signUpComplete ? <Text style={{ color: "green" }} testID={'signup-message'}>{this.state.signUpComplete}</Text> : null}
         </ScrollView>
       </View>
     )

@@ -79,6 +79,8 @@ class UserDealsScreen extends Component {
         this.toggleSpinner();
 
 
+      }).catch(err => {
+        this.toggleSpinner();
       });
 
       Beacons.requestWhenInUseAuthorization();
@@ -119,6 +121,8 @@ class UserDealsScreen extends Component {
             }
           }
         })
+    }).catch(err => {
+      this.toggleSpinner();
     })
   }
 
@@ -151,12 +155,12 @@ class UserDealsScreen extends Component {
     this.props.navigation.navigate("UserProfileScreen");
   };
   handleLogout = () => {
-    this.props.resetDeals();
+/*    this.props.resetDeals();
     this.props.resetMalls();
     this.props.resetStores();
     this.props.resetTags();
     this.props.resetUser();
-    this.props.resetAuth();
+    this.props.resetAuth();*/
     this.props.navigation.navigate("MainScreen")
 
   };
@@ -217,37 +221,39 @@ class UserDealsScreen extends Component {
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}>
-          <View style={{ marginTop: 35, width: "100%"}}>{
+          <View style={{ marginTop: 35, width: "100%"}} testID={'Deals-modal'}>{
             !this.state.showCode ?
               <View>
                 {
-                  this.state.selectedStore && this.state.selectedStore.dealsList.map(aDeal => {
+                  this.state.selectedStore && this.state.selectedStore.dealsList.map((aDeal,index) => {
                     let timeLeft = moment.duration(todaysDate.diff(aDeal.expiryDate))
                     return (
                       <Card style={{ marginTop: 6 }} key={aDeal._id}>
                         <CardItem header>
                           <Left>
                             <View style={{display: "flex", flexDirection:"column", justifyContent: "flex-start", alignItems: "flex-start"}}>
-                              <View style={{ textAlign: "left"}}>
-                                <Text style={{ fontWeight: 'bold'}}p>{aDeal.description}</Text>
+                              <View style={{ textAlign: "left"}} >
+                                <Text style={{ fontWeight: 'bold'}} p testID={`promotion${index}_description`}>{aDeal.description}</Text>
                               </View>
                               <View style={{ textAlign: "left"}}>
-                                <Text style={{ color: "#3C3C3C", fontSize: 12 }} p>
+                                <Text style={{ color: "#3C3C3C", fontSize: 12 }} p testID={`promotion${index}_expirey`}>
                                   {`Expires in : ${Math.floor(timeLeft.asDays())} days, ${timeLeft.hours()} hours, ${timeLeft.minutes()} mins`}
                                 </Text>
                               </View>
                               <View style={{ textAlign: "left"}}>
-                                <Text style={{ color: "green", fontSize: 12 }} p>{`${aDeal.usesLeft < 0 ? "unlimited" : aDeal.usesLeft} codes left!`}</Text>
+                                <Text style={{ color: "green", fontSize: 12 }} p testID={`promotion${index}_quantity`}>{`${aDeal.usesLeft < 0 ? "unlimited" : aDeal.usesLeft} codes left!`}</Text>
                               </View>
                             </View>
                           </Left>
                           <Right>
-                            <Button transparent disabled={(this.props.deals.claimedDeals.indexOf(aDeal._id) !== -1) || !selectedStore.isStoreInRange} onPress={() => {
+                            <Button transparent onPress={() => {
                               this.setState({
                                 showCode: true,
                                 selectedDeal: aDeal._id
                               });
-                            }}>
+                            }}
+                                    testID={`unlock-promotion${index}-button`}
+                            >
                               <Text>{ this.props.deals.claimedDeals.indexOf(aDeal._id) !== -1 ? "CLAIMED" : selectedStore.isStoreInRange ? "view" : "locked"}</Text>
                             </Button>
                           </Right>
@@ -265,7 +271,9 @@ class UserDealsScreen extends Component {
                       this.setModalVisible(!this.state.modalVisible);
                     }}
                     style={{width: 250, justifyContent: 'center',
-                      alignItems: 'center', marginTop: 35}}>
+                      alignItems: 'center', marginTop: 35}}
+                    testID={'promotions-close-button'}
+                  >
                     <Text>CLOSE</Text>
                   </Button>
                   </View>
@@ -280,7 +288,7 @@ class UserDealsScreen extends Component {
                   <Text>Ask an Employee to scan your code</Text>
                 </View>
                 <View>
-                  <Image source={QRCode}/>
+                  <Image source={QRCode} testID={'QR-Code'}/>
                 </View>
                 <View>
                   <Text>OR</Text>
@@ -292,7 +300,7 @@ class UserDealsScreen extends Component {
                       <Input value={this.state.storePIN}
                              testID={'store-pin'}
                              secureTextEntry
-                             keyboardType={"number-pad"}
+
                              onChange={event => this.handleInputChange(event, 'storePIN')}
                       />
                     </Item>
@@ -304,6 +312,7 @@ class UserDealsScreen extends Component {
                     style={{width: 250, justifyContent: 'center',
                       alignItems: 'center', marginTop: 35}}
                     disabled={this.state.storePIN.length !== 4}
+                    testID={'claim-button'}
                   >
                     <Text style={{textAlign: "center", width: "100%"}}>CLAIM</Text>
                   </Button>
@@ -318,6 +327,7 @@ class UserDealsScreen extends Component {
                     style={{width: 250, justifyContent: 'center',
                       alignItems: 'center', marginTop: 35}}
                     primary
+                    testID={'promotion-back-button'}
                   >
                     <Text style={{textAlign: "center", width: "100%"}}>BACK</Text>
                   </Button>
@@ -331,7 +341,7 @@ class UserDealsScreen extends Component {
           <Content>
             <List>
               {
-                this.props.deals.deals.map(aStore => {
+                this.props.deals.deals.map((aStore,index) => {
                   let mall;
                   let store;
                   if (this.props.stores.stores && this.props.malls.malls) {
@@ -345,17 +355,22 @@ class UserDealsScreen extends Component {
                         <Thumbnail square source={StoreLogo}/>
                       </Left>
                       <Body>
-                      <Text>{store ? store.name : "Store name unavailable"}</Text>
-                      <Text note
-                            numberOfLines={1}>{mall ? mall.name : "Mall name unavailable"}</Text>
-                      <Text note numberOfLines={1}
-                            style={{ color: "green", fontSize: 12 }}>{aStore.dealsList.length + " Deals Available!"}</Text>
+                        <Text testID={`store${index}_NAME`}>{store ? store.name : "Store name unavailable"}</Text>
+                        <Text note
+                              numberOfLines={1}
+                              testID={`store${index}_MALL`}
+                        >{mall ? mall.name : "Mall name unavailable"}</Text>
+                        <Text note numberOfLines={1}
+                              style={{ color: "green", fontSize: 12 }}
+                              testID={`store${index}_DEALNUM`}
+                        >{aStore.dealsList.length + " Deals Available!"}</Text>
                       </Body>
                       <Right>
-                        <Button transparent onPress={() => {
-                          this.setModalVisible(true, aStore);
-                        }}
-                                primary>
+                        <Button transparent
+                                onPress={() => {this.setModalVisible(true, aStore);}}
+                                primary
+                                testID={`store${index}_viewButton`}
+                        >
                           <Text>View</Text>
                         </Button>
                       </Right>
@@ -369,7 +384,7 @@ class UserDealsScreen extends Component {
         <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen}
                    openQRScreen={this.openQRScreen} active={"DealsScreen"}/>
       </View> :
-        <View style={styles.mainContainer} testID={"UserDealScreenContainer"}>
+        <View style={styles.mainContainer} testID={"UserDealScreenContainer-noMallSelected"}>
           <Text> Please select A mall from the profile page</Text>
         </View>
         );
@@ -407,3 +422,7 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(UserDealsScreen);
+
+//disabled={(this.props.deals.claimedDeals.indexOf(aDeal._id) !== -1) || !selectedStore.isStoreInRange}
+
+//keyboardType={"number-pad"}

@@ -16,7 +16,7 @@ class HeaderNav extends Component {
     return (
       <Header>
         <Left>
-          <Button hasText transparent onPress={this.props.handleLeftButton}>
+          <Button hasText transparent onPress={this.props.handleLeftButton} testID={`${this.props.title}_backButton`}>
             <Text>{this.props.leftLabel}</Text>
           </Button>
         </Left>

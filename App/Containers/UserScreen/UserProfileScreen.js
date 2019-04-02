@@ -64,8 +64,7 @@ class UserProfileScreen extends Component {
 
 
     Promise.all(promiseArr).then(resp => {
-      const {email, first, last, gender, age, location, middle, tags, favouriteMalls} = this.props.user.profile;
-      const {malls} = this.props.malls
+      const {email, first, last, gender, age, location, middle, tags, favouriteMalls, provider} = this.props.user.profile;
       this.setState({
         first: first,
         last: last,
@@ -76,7 +75,8 @@ class UserProfileScreen extends Component {
         middle,
         tags,
         favouriteMalls: favouriteMalls[0],
-        showSpinner: false
+        showSpinner: false,
+        provider
       })
       }
     )
@@ -189,8 +189,7 @@ class UserProfileScreen extends Component {
 
     return (
       this.state.showSpinner ?
-        <View style={{justifyContent: 'center',
-          alignItems: 'center', width: "100%"}} testID={"User-Deal-Screen-Spinner"}>
+        <View style={{justifyContent: 'center', alignItems: 'center', width: "100%"}} testID={"User-Deal-Screen-Spinner"}>
           <View style={{marginTop: 300}}>
             <Spinner color="red" style={{width: 150, height: 150}}/>
           </View>
@@ -203,7 +202,7 @@ class UserProfileScreen extends Component {
             <Form>
               <Item fixedLabel style={{height: 75}}>
               <Label>First Name</Label>
-                <Input value={this.state.first} testID={'user-profile-first'} editable={false}/>
+                <Input value={this.state.first} testID={'user-profile-first'} />
               </Item>
               <Item fixedLabel style={{height: 75}}>
 
@@ -213,7 +212,7 @@ class UserProfileScreen extends Component {
               <Item fixedLabel style={{height: 75}}>
 
               <Label>Last Name</Label>
-                <Input value={this.state.last} testID={'user-profile-last'} editable={false}/>
+                <Input value={this.state.last} testID={'user-profile-last'} />
               </Item>
               <Item fixedLabel style={{height: 75}}>
 
@@ -288,7 +287,6 @@ class UserProfileScreen extends Component {
           </View>
         </ScrollView>
         <FooterNav openDealsScreen={this.openDealScreen} openProfileScreen={this.openProfileScreen} openQRScreen={this.openQRScreen} active={'ProfileScreen'}/>
-
       </View>
     )
   }

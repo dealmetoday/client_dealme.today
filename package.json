@@ -173,7 +173,7 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Boilerplate.app",
-        "build": "xcodebuild -project ios/Boilerplate.xcodeproj -scheme Boilerplate -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "xcodebuild -workspace ios/Boilerplate.xcworkspace -scheme Boilerplate -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone 8",
         "test-runner": "jest"

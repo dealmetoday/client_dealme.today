@@ -10,7 +10,7 @@ dependencies: \
   /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
   /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
   /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
-  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native-google-signin/ios/RNGoogleSignin/RNGoogleSignin.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/../node_modules/react-native-google-signin/ios/RNGoogleSignin/RNGoogleSignin.h \
   /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
   /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
   /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
