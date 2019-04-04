@@ -1,0 +1,25 @@
+dependencies: \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/node_modules/react-native-google-signin/ios/RNGoogleSignin/RNGoogleSignin.m \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  RNGoogleSignin/RNGoogleSignin.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Modules/module.modulemap \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDSignInButton.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDSignIn.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDProfileData.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDGoogleUser.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GIDAuthentication.h \
+  /Users/alfredhong/Desktop/school/NVD/client_dealme_today/ios/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/Headers/GoogleSignIn.h \
+  RNGoogleSignin/RNGSPromiseWrapper.h

@@ -3,25 +3,21 @@ import { Button, Icon, Footer, FooterTab } from 'native-base'
 import { connect } from 'react-redux'
 
 class FooterNav extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return (
       <Footer>
         <FooterTab>
-          <Button onPress={this.props.openDealsScreen}>
-            <Icon name='apps' />
+          <Button onPress={this.props.openDealsScreen} active={this.props.active === 'DealsScreen'} testID={"footerDealsButton"}>
+          <Icon name='apps' />
           </Button>
-          <Button>
+          <Button onPress={this.props.openQRScreen} active={this.props.active === 'QRScreen'}>
             <Icon name='camera' />
           </Button>
-          <Button active>
+          <Button>
             <Icon active name='navigate' />
           </Button>
-          <Button onPress={this.props.openProfileScreen}>
-            <Icon name='person' />
+          <Button onPress={this.props.openProfileScreen} active={this.props.active === 'ProfileScreen'} testID={"footerProfileButton"}>
+          <Icon name='person' />
           </Button>
         </FooterTab>
       </Footer>
@@ -30,11 +26,10 @@ class FooterNav extends Component {
 }
 
 const mapStateToProps = state => ({
-  nav: state.nav
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatch
+  dispatch,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FooterNav)
